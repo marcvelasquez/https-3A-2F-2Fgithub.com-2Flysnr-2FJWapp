@@ -98,24 +98,49 @@ const Dashboard = () => {
 
       {/* Bottom Row - Therapist Activity and Case Progress Status Side by Side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Therapist Activity Chart - Vertical */}
+        {/* Radiologist Activity Chart - Vertical */}
         <div className="medical-card p-6">
-          <h3 className="text-lg font-semibold text-foreground mb-4">Therapist Activity</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-4">Radiologist Activity</h3>
+          <div className="mb-4">
+            <p className="text-sm text-muted-foreground">Weekly diagnostic report completion rates</p>
+          </div>
           <div className="flex items-end justify-between h-48 space-x-4">
-            {therapistActivity.map((item) => (
+            {radiologistActivity.map((item) => (
               <div key={item.day} className="flex flex-col items-center space-y-2 flex-1">
+                <div className="text-xs font-medium text-foreground mb-1">
+                  {item.value}%
+                </div>
                 <div className="flex-1 flex items-end">
                   <div
-                    className="bg-medical-blue rounded-t w-full min-w-8"
+                    className="bg-medical-blue rounded-t w-full min-w-8 relative"
                     style={{ height: `${item.value}%` }}
-                    title={`${item.day}: ${item.value}%`}
+                    title={`${item.day}: ${item.value}% - ${item.reports} reports`}
                   ></div>
                 </div>
-                <div className="text-xs text-muted-foreground transform -rotate-45 origin-bottom-left mt-2">
-                  {item.day}
+                <div className="text-xs text-muted-foreground text-center">
+                  <div className="transform -rotate-45 origin-bottom-left mt-2">
+                    {item.day}
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {item.reports} reports
+                  </div>
                 </div>
               </div>
             ))}
+          </div>
+          <div className="mt-4 p-3 bg-muted/50 rounded-lg">
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-muted-foreground">Weekly Average:</span>
+              <span className="font-medium text-foreground">
+                {Math.round(radiologistActivity.reduce((acc, item) => acc + item.value, 0) / radiologistActivity.length)}%
+              </span>
+            </div>
+            <div className="flex justify-between items-center text-sm mt-1">
+              <span className="text-muted-foreground">Total Reports:</span>
+              <span className="font-medium text-foreground">
+                {radiologistActivity.reduce((acc, item) => acc + item.reports, 0)}
+              </span>
+            </div>
           </div>
         </div>
 
