@@ -160,16 +160,16 @@ const Dashboard = () => {
         </div>
 
         {/* Case Progress Status */}
-        <div className="medical-card p-6">
-          <h3 className="text-lg font-semibold text-foreground mb-4">Case Progress Status</h3>
-          <div className="space-y-4">
+        <div className="medical-card p-4">
+          <h3 className="text-lg font-semibold text-foreground mb-3">Case Progress Status</h3>
+          <div className="space-y-3">
             {progressData.map((item) => (
-              <div key={item.id} className="space-y-2">
+              <div key={item.id} className="space-y-1">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium text-foreground">{item.label}</span>
                   <span className="text-xs text-muted-foreground">{item.id}</span>
                 </div>
-                <div className="w-full bg-muted rounded-full h-4 overflow-hidden">
+                <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
                   <div className="h-full flex">
                     <div
                       className="bg-green-500 h-full"
@@ -188,8 +188,8 @@ const Dashboard = () => {
                     ></div>
                   </div>
                 </div>
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <div className="flex items-center space-x-4">
+                <div className="flex text-xs text-muted-foreground">
+                  <div className="flex items-center space-x-3">
                     <div className="flex items-center space-x-1">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                       <span>Completed</span>
