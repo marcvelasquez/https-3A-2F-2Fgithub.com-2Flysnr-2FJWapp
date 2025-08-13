@@ -98,78 +98,80 @@ const Dashboard = () => {
               </table>
             </div>
           </div>
+        </div>
 
-          {/* Therapist Activity Chart */}
-          <div className="medical-card p-6 mt-6">
+        {/* Right Sidebar - Therapist Activity */}
+        <div className="space-y-6">
+          {/* Therapist Activity Chart - Vertical */}
+          <div className="medical-card p-6">
             <h3 className="text-lg font-semibold text-foreground mb-4">Therapist Activity</h3>
-            <div className="space-y-3">
+            <div className="flex items-end justify-between h-48 space-x-4">
               {therapistActivity.map((item) => (
-                <div key={item.day} className="flex items-center space-x-4">
-                  <div className="w-16 text-sm text-muted-foreground">{item.day}</div>
-                  <div className="flex-1 bg-muted rounded-full h-2">
-                    <div 
-                      className="bg-medical-blue h-2 rounded-full" 
-                      style={{ width: `${item.value}%` }}
+                <div key={item.day} className="flex flex-col items-center space-y-2 flex-1">
+                  <div className="flex-1 flex items-end">
+                    <div
+                      className="bg-medical-blue rounded-t w-full min-w-8"
+                      style={{ height: `${item.value}%` }}
+                      title={`${item.day}: ${item.value}%`}
                     ></div>
                   </div>
-                  <div className="text-sm text-foreground">{item.value}%</div>
+                  <div className="text-xs text-muted-foreground transform -rotate-45 origin-bottom-left mt-2">
+                    {item.day}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Right Sidebar */}
-        <div className="space-y-6">
-          {/* Progress Status - Stacked Bar Chart */}
-          <div className="medical-card p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Case Progress Status</h3>
-            <div className="space-y-4">
-              {progressData.map((item) => (
-                <div key={item.id} className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-foreground">{item.label}</span>
-                    <span className="text-xs text-muted-foreground">{item.id}</span>
+      {/* Case Progress Status - Moved to Bottom */}
+      <div className="medical-card p-6 mt-6">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Case Progress Status</h3>
+        <div className="space-y-4">
+          {progressData.map((item) => (
+            <div key={item.id} className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-medium text-foreground">{item.label}</span>
+                <span className="text-xs text-muted-foreground">{item.id}</span>
+              </div>
+              <div className="w-full bg-muted rounded-full h-4 overflow-hidden">
+                <div className="h-full flex">
+                  <div
+                    className="bg-green-500 h-full"
+                    style={{ width: `${item.completed}%` }}
+                    title={`Completed: ${item.completed}%`}
+                  ></div>
+                  <div
+                    className="bg-medical-blue h-full"
+                    style={{ width: `${item.inProgress}%` }}
+                    title={`In Progress: ${item.inProgress}%`}
+                  ></div>
+                  <div
+                    className="bg-gray-400 h-full"
+                    style={{ width: `${item.pending}%` }}
+                    title={`Pending: ${item.pending}%`}
+                  ></div>
+                </div>
+              </div>
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-1">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span>Completed</span>
                   </div>
-                  <div className="w-full bg-muted rounded-full h-4 overflow-hidden">
-                    <div className="h-full flex">
-                      <div
-                        className="bg-green-500 h-full"
-                        style={{ width: `${item.completed}%` }}
-                        title={`Completed: ${item.completed}%`}
-                      ></div>
-                      <div
-                        className="bg-medical-blue h-full"
-                        style={{ width: `${item.inProgress}%` }}
-                        title={`In Progress: ${item.inProgress}%`}
-                      ></div>
-                      <div
-                        className="bg-gray-400 h-full"
-                        style={{ width: `${item.pending}%` }}
-                        title={`Pending: ${item.pending}%`}
-                      ></div>
-                    </div>
+                  <div className="flex items-center space-x-1">
+                    <div className="w-2 h-2 bg-medical-blue rounded-full"></div>
+                    <span>In Progress</span>
                   </div>
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-1">
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                        <span>Completed</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <div className="w-2 h-2 bg-medical-blue rounded-full"></div>
-                        <span>In Progress</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                        <span>Pending</span>
-                      </div>
-                    </div>
+                  <div className="flex items-center space-x-1">
+                    <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                    <span>Pending</span>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
