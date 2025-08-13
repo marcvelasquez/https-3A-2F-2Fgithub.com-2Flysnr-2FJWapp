@@ -16,12 +16,12 @@ const Dashboard = () => {
     { id: '05.1', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 16, 2025', time: '9:10 AM', status: 'details' },
   ];
 
-  const therapistActivity = [
-    { day: 'Monday', value: 85 },
-    { day: 'Tuesday', value: 92 },
-    { day: 'Wednesday', value: 78 },
-    { day: 'Thursday', value: 95 },
-    { day: 'Friday', value: 88 },
+  const radiologistActivity = [
+    { day: 'Monday', value: 85, reports: 34 },
+    { day: 'Tuesday', value: 92, reports: 37 },
+    { day: 'Wednesday', value: 78, reports: 31 },
+    { day: 'Thursday', value: 95, reports: 38 },
+    { day: 'Friday', value: 88, reports: 35 },
   ];
 
   const progressData = [
