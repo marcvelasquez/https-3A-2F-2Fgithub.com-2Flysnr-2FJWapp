@@ -114,12 +114,12 @@ const Dashboard = () => {
                   <div
                     className="rounded-t-lg w-full min-w-12 relative shadow-sm border-2 border-opacity-20"
                     style={{
-                      height: `${Math.max(item.value * 0.8, 10)}%`,
+                      height: `${item.value}%`,
                       backgroundColor: item.color,
                       borderColor: item.color,
-                      minHeight: '20px'
+                      minHeight: '15px'
                     }}
-                    title={`${item.day}: ${item.value}% - ${item.reports} reports`}
+                    title={`${item.day}: ${item.value}% completion - ${item.reports} reports processed`}
                   ></div>
                 </div>
                 <div className="text-xs text-muted-foreground text-center mt-2">
