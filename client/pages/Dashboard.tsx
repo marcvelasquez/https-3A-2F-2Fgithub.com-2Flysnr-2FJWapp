@@ -17,11 +17,11 @@ const Dashboard = () => {
   ];
 
   const radiologistActivity = [
-    { day: 'Monday', value: 85, reports: 34, color: 'bg-blue-500' },
-    { day: 'Tuesday', value: 92, reports: 37, color: 'bg-green-500' },
-    { day: 'Wednesday', value: 78, reports: 31, color: 'bg-purple-500' },
-    { day: 'Thursday', value: 95, reports: 38, color: 'bg-orange-500' },
-    { day: 'Friday', value: 88, reports: 35, color: 'bg-pink-500' },
+    { day: 'Monday', value: 85, reports: 34, color: '#3b82f6' },
+    { day: 'Tuesday', value: 92, reports: 37, color: '#10b981' },
+    { day: 'Wednesday', value: 78, reports: 31, color: '#8b5cf6' },
+    { day: 'Thursday', value: 95, reports: 38, color: '#f97316' },
+    { day: 'Friday', value: 88, reports: 35, color: '#ec4899' },
   ];
 
   const progressData = [
