@@ -104,35 +104,46 @@ const Dashboard = () => {
           <div className="mb-4">
             <p className="text-sm text-muted-foreground">Weekly diagnostic report completion rates</p>
           </div>
-          <div className="flex items-end justify-between h-64 space-x-6 px-4">
+          <div className="flex items-end justify-between h-80 space-x-3 px-2">
             {radiologistActivity.map((item) => {
-              // Calculate height based on reports (scale to max 38 reports = 100% height)
+              // Combine percentage and reports for height calculation
+              // Use percentage as primary factor (70%) and reports as secondary factor (30%)
               const maxReports = Math.max(...radiologistActivity.map(i => i.reports));
-              const reportHeight = (item.reports / maxReports) * 100;
+              const maxPercentage = Math.max(...radiologistActivity.map(i => i.value));
+
+              const percentageWeight = (item.value / maxPercentage) * 70;
+              const reportsWeight = (item.reports / maxReports) * 30;
+              const combinedHeight = percentageWeight + reportsWeight;
 
               return (
-                <div key={item.day} className="flex flex-col items-center space-y-2 flex-1">
-                  <div className="text-sm font-semibold text-foreground mb-2">
-                    {item.reports}
+                <div key={item.day} className="flex flex-col items-center space-y-1 flex-1">
+                  <div className="text-xs font-bold text-foreground mb-1 text-center">
+                    <div>{item.reports}</div>
+                    <div className="text-xs text-muted-foreground">reports</div>
                   </div>
                   <div className="flex-1 flex items-end h-full w-full">
                     <div
-                      className="rounded-t-lg w-full min-w-12 relative shadow-sm border-2 border-opacity-20"
+                      className="rounded-t-lg w-full relative shadow-lg border-2 border-opacity-30 transition-all hover:scale-105"
                       style={{
-                        height: `${reportHeight}%`,
+                        height: `${Math.max(combinedHeight, 15)}%`,
                         backgroundColor: item.color,
                         borderColor: item.color,
-                        minHeight: '20px'
+                        minHeight: '30px',
+                        minWidth: '40px'
                       }}
                       title={`${item.day}: ${item.reports} reports - ${item.value}% completion rate`}
-                    ></div>
-                  </div>
-                  <div className="text-xs text-muted-foreground text-center mt-2">
-                    <div className="font-medium text-foreground">
-                      {item.day.slice(0, 3)}
+                    >
+                      {/* Percentage indicator inside bar */}
+                      <div className="absolute inset-x-0 top-2 text-center">
+                        <div className="text-xs font-bold text-white drop-shadow-sm">
+                          {item.value}%
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1">
-                      {item.value}%
+                  </div>
+                  <div className="text-xs text-center mt-1">
+                    <div className="font-semibold text-foreground">
+                      {item.day.slice(0, 3)}
                     </div>
                   </div>
                 </div>
