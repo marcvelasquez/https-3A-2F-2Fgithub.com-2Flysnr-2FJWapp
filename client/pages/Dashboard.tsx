@@ -64,114 +64,109 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Patient Data Table */}
-        <div className="lg:col-span-2">
-          <div className="medical-card p-6">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left py-3 px-4 font-medium text-muted-foreground">No.</th>
-                    <th className="text-left py-3 px-4 font-medium text-muted-foreground">Patient Name</th>
-                    <th className="text-left py-3 px-4 font-medium text-muted-foreground">Body Part</th>
-                    <th className="text-left py-3 px-4 font-medium text-muted-foreground">Date</th>
-                    <th className="text-left py-3 px-4 font-medium text-muted-foreground">Time</th>
-                    <th className="text-left py-3 px-4 font-medium text-muted-foreground">File</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {patientData.map((patient) => (
-                    <tr key={patient.id} className="border-b border-border hover:bg-muted/50">
-                      <td className="py-3 px-4 text-foreground">{patient.id}</td>
-                      <td className="py-3 px-4 text-foreground">{patient.name}</td>
-                      <td className="py-3 px-4 text-foreground">{patient.bodyPart}</td>
-                      <td className="py-3 px-4 text-foreground">{patient.date}</td>
-                      <td className="py-3 px-4 text-foreground">{patient.time}</td>
-                      <td className="py-3 px-4">
-                        <FileText className="w-4 h-4 text-muted-foreground" />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Sidebar - Therapist Activity */}
-        <div className="space-y-6">
-          {/* Therapist Activity Chart - Vertical */}
-          <div className="medical-card p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Therapist Activity</h3>
-            <div className="flex items-end justify-between h-48 space-x-4">
-              {therapistActivity.map((item) => (
-                <div key={item.day} className="flex flex-col items-center space-y-2 flex-1">
-                  <div className="flex-1 flex items-end">
-                    <div
-                      className="bg-medical-blue rounded-t w-full min-w-8"
-                      style={{ height: `${item.value}%` }}
-                      title={`${item.day}: ${item.value}%`}
-                    ></div>
-                  </div>
-                  <div className="text-xs text-muted-foreground transform -rotate-45 origin-bottom-left mt-2">
-                    {item.day}
-                  </div>
-                </div>
+      {/* Patient Data Table - Full Width */}
+      <div className="medical-card p-6 mb-6">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">No.</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Patient Name</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Body Part</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Date</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Time</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">File</th>
+              </tr>
+            </thead>
+            <tbody>
+              {patientData.map((patient) => (
+                <tr key={patient.id} className="border-b border-border hover:bg-muted/50">
+                  <td className="py-3 px-4 text-foreground">{patient.id}</td>
+                  <td className="py-3 px-4 text-foreground">{patient.name}</td>
+                  <td className="py-3 px-4 text-foreground">{patient.bodyPart}</td>
+                  <td className="py-3 px-4 text-foreground">{patient.date}</td>
+                  <td className="py-3 px-4 text-foreground">{patient.time}</td>
+                  <td className="py-3 px-4">
+                    <FileText className="w-4 h-4 text-muted-foreground" />
+                  </td>
+                </tr>
               ))}
-            </div>
-          </div>
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {/* Case Progress Status - Moved to Bottom */}
-      <div className="medical-card p-6 mt-6">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Case Progress Status</h3>
-        <div className="space-y-4">
-          {progressData.map((item) => (
-            <div key={item.id} className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium text-foreground">{item.label}</span>
-                <span className="text-xs text-muted-foreground">{item.id}</span>
-              </div>
-              <div className="w-full bg-muted rounded-full h-4 overflow-hidden">
-                <div className="h-full flex">
+      {/* Bottom Row - Therapist Activity and Case Progress Status Side by Side */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Therapist Activity Chart - Vertical */}
+        <div className="medical-card p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-4">Therapist Activity</h3>
+          <div className="flex items-end justify-between h-48 space-x-4">
+            {therapistActivity.map((item) => (
+              <div key={item.day} className="flex flex-col items-center space-y-2 flex-1">
+                <div className="flex-1 flex items-end">
                   <div
-                    className="bg-green-500 h-full"
-                    style={{ width: `${item.completed}%` }}
-                    title={`Completed: ${item.completed}%`}
-                  ></div>
-                  <div
-                    className="bg-medical-blue h-full"
-                    style={{ width: `${item.inProgress}%` }}
-                    title={`In Progress: ${item.inProgress}%`}
-                  ></div>
-                  <div
-                    className="bg-gray-400 h-full"
-                    style={{ width: `${item.pending}%` }}
-                    title={`Pending: ${item.pending}%`}
+                    className="bg-medical-blue rounded-t w-full min-w-8"
+                    style={{ height: `${item.value}%` }}
+                    title={`${item.day}: ${item.value}%`}
                   ></div>
                 </div>
+                <div className="text-xs text-muted-foreground transform -rotate-45 origin-bottom-left mt-2">
+                  {item.day}
+                </div>
               </div>
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-1">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span>Completed</span>
+            ))}
+          </div>
+        </div>
+
+        {/* Case Progress Status */}
+        <div className="medical-card p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-4">Case Progress Status</h3>
+          <div className="space-y-4">
+            {progressData.map((item) => (
+              <div key={item.id} className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-foreground">{item.label}</span>
+                  <span className="text-xs text-muted-foreground">{item.id}</span>
+                </div>
+                <div className="w-full bg-muted rounded-full h-4 overflow-hidden">
+                  <div className="h-full flex">
+                    <div
+                      className="bg-green-500 h-full"
+                      style={{ width: `${item.completed}%` }}
+                      title={`Completed: ${item.completed}%`}
+                    ></div>
+                    <div
+                      className="bg-medical-blue h-full"
+                      style={{ width: `${item.inProgress}%` }}
+                      title={`In Progress: ${item.inProgress}%`}
+                    ></div>
+                    <div
+                      className="bg-gray-400 h-full"
+                      style={{ width: `${item.pending}%` }}
+                      title={`Pending: ${item.pending}%`}
+                    ></div>
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <div className="w-2 h-2 bg-medical-blue rounded-full"></div>
-                    <span>In Progress</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                    <span>Pending</span>
+                </div>
+                <div className="flex justify-between text-xs text-muted-foreground">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span>Completed</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 bg-medical-blue rounded-full"></div>
+                      <span>In Progress</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                      <span>Pending</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
