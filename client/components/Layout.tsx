@@ -20,7 +20,6 @@ const sidebarItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
   { icon: FileText, label: 'Patient Record', path: '/patient-record' },
   { icon: FolderOpen, label: 'File Folder', path: '/file-folder' },
-  { icon: Image, label: 'Images', path: '/images' },
   { icon: Upload, label: 'Upload Study', path: '/upload-study' },
   { icon: Settings, label: 'Settings', path: '/settings' },
 ];
