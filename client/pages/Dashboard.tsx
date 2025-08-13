@@ -121,59 +121,51 @@ const Dashboard = () => {
 
         {/* Right Sidebar */}
         <div className="space-y-6">
-          {/* Patient Recovery Status */}
+          {/* Progress Status - Stacked Bar Chart */}
           <div className="medical-card p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Patient Recovery Status</h3>
-            <div className="relative w-32 h-32 mx-auto mb-4">
-              <div className="w-full h-full rounded-full border-8 border-muted relative">
-                <div 
-                  className="absolute inset-0 rounded-full border-8 border-medical-blue"
-                  style={{
-                    borderTopColor: 'hsl(var(--medical-blue))',
-                    borderRightColor: 'hsl(var(--muted))',
-                    borderBottomColor: 'hsl(var(--muted))',
-                    borderLeftColor: 'hsl(var(--muted))',
-                    transform: `rotate(${(recoveryStatus.completed / 100) * 360}deg)`
-                  }}
-                ></div>
-              </div>
-            </div>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-medical-blue rounded-full"></div>
-                  <span className="text-muted-foreground">Completed Recovery</span>
-                </div>
-                <span className="text-foreground">{recoveryStatus.completed}%</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
-                  <span className="text-muted-foreground">In Progress</span>
-                </div>
-                <span className="text-foreground">{recoveryStatus.inProgress}%</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-muted rounded-full"></div>
-                  <span className="text-muted-foreground">Not Started</span>
-                </div>
-                <span className="text-foreground">{recoveryStatus.notStarted}%</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Progress Status */}
-          <div className="medical-card p-6">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Progress Status</h3>
-            <div className="space-y-3">
+            <h3 className="text-lg font-semibold text-foreground mb-4">Case Progress Status</h3>
+            <div className="space-y-4">
               {progressData.map((item) => (
-                <div key={item.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                  <div>
-                    <div className="text-sm font-medium text-foreground">{item.id}</div>
-                    <div className="text-xs text-muted-foreground">{item.status}</div>
+                <div key={item.id} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-foreground">{item.label}</span>
+                    <span className="text-xs text-muted-foreground">{item.id}</span>
                   </div>
-                  <div className="text-xs text-muted-foreground">{item.bodyPart}</div>
+                  <div className="w-full bg-muted rounded-full h-4 overflow-hidden">
+                    <div className="h-full flex">
+                      <div
+                        className="bg-green-500 h-full"
+                        style={{ width: `${item.completed}%` }}
+                        title={`Completed: ${item.completed}%`}
+                      ></div>
+                      <div
+                        className="bg-medical-blue h-full"
+                        style={{ width: `${item.inProgress}%` }}
+                        title={`In Progress: ${item.inProgress}%`}
+                      ></div>
+                      <div
+                        className="bg-gray-400 h-full"
+                        style={{ width: `${item.pending}%` }}
+                        title={`Pending: ${item.pending}%`}
+                      ></div>
+                    </div>
+                  </div>
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-1">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span>Completed</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <div className="w-2 h-2 bg-medical-blue rounded-full"></div>
+                        <span>In Progress</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                        <span>Pending</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
