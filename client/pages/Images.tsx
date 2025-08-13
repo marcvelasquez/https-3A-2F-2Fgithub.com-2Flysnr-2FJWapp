@@ -3,6 +3,13 @@ import { Search, X, ChevronLeft, Plus, Image as ImageIcon } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const Images = () => {
+  const { folderId } = useParams();
+  const navigate = useNavigate();
+
+  const handleBackToFolders = () => {
+    navigate('/file-folder');
+  };
+
   // Medical images data
   const medicalImages = [
     { id: 'K123456789-1', name: 'K123456789' },
