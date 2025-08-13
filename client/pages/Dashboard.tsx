@@ -24,16 +24,11 @@ const Dashboard = () => {
     { day: 'Friday', value: 88 },
   ];
 
-  const recoveryStatus = {
-    completed: 45,
-    inProgress: 30,
-    notStarted: 25,
-  };
-
   const progressData = [
-    { id: '01.1', status: 'Total Cases Reviewed', bodyPart: 'Right Knee' },
-    { id: '02.1', status: 'In Progress', bodyPart: 'Left Knee' },
-    { id: '04.1', status: 'Completed', bodyPart: 'Bilateral Knees' },
+    { id: '01.1', completed: 75, inProgress: 20, pending: 5, label: 'Right Knee Cases' },
+    { id: '02.1', completed: 60, inProgress: 30, pending: 10, label: 'Left Knee Cases' },
+    { id: '03.1', completed: 85, inProgress: 10, pending: 5, label: 'Bilateral Cases' },
+    { id: '04.1', completed: 90, inProgress: 8, pending: 2, label: 'Follow-up Cases' },
   ];
 
   return (
