@@ -99,9 +99,9 @@ const Dashboard = () => {
       {/* Bottom Row - Therapist Activity and Case Progress Status Side by Side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Radiologist Activity Chart - Vertical */}
-        <div className="medical-card p-6">
-          <h3 className="text-lg font-semibold text-foreground mb-4">Radiologist Activity</h3>
-          <div className="mb-4">
+        <div className="medical-card p-4">
+          <h3 className="text-lg font-semibold text-foreground mb-3">Radiologist Activity</h3>
+          <div className="mb-3">
             <p className="text-sm text-muted-foreground">Weekly diagnostic report completion rates</p>
           </div>
           <div className="flex items-end justify-between h-56 space-x-2 px-1">
