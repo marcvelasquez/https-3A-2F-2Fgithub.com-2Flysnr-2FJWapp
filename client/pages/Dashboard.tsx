@@ -112,8 +112,11 @@ const Dashboard = () => {
                 </div>
                 <div className="flex-1 flex items-end">
                   <div
-                    className={`${item.color} rounded-t w-full min-w-8 relative`}
-                    style={{ height: `${item.value}%` }}
+                    className="rounded-t w-full min-w-8 relative"
+                    style={{
+                      height: `${item.value}%`,
+                      backgroundColor: item.color
+                    }}
                     title={`${item.day}: ${item.value}% - ${item.reports} reports`}
                   ></div>
                 </div>
