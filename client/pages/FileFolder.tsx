@@ -61,9 +61,10 @@ const FileFolder = () => {
       {/* Folder Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-6">
         {patientFolders.map((folder) => (
-          <div 
-            key={folder.id} 
+          <div
+            key={folder.id}
             className="flex flex-col items-center p-4 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer group"
+            onClick={() => handleFolderClick(folder.id)}
           >
             {/* Folder Icon */}
             <div className="relative mb-3">
