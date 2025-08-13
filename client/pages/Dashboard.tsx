@@ -104,25 +104,27 @@ const Dashboard = () => {
           <div className="mb-4">
             <p className="text-sm text-muted-foreground">Weekly diagnostic report completion rates</p>
           </div>
-          <div className="flex items-end justify-between h-48 space-x-4">
+          <div className="flex items-end justify-between h-64 space-x-6 px-4">
             {radiologistActivity.map((item) => (
               <div key={item.day} className="flex flex-col items-center space-y-2 flex-1">
-                <div className="text-xs font-medium text-foreground mb-1">
+                <div className="text-sm font-semibold text-foreground mb-2">
                   {item.value}%
                 </div>
-                <div className="flex-1 flex items-end">
+                <div className="flex-1 flex items-end h-full w-full">
                   <div
-                    className="rounded-t w-full min-w-8 relative"
+                    className="rounded-t-lg w-full min-w-12 relative shadow-sm border-2 border-opacity-20"
                     style={{
-                      height: `${item.value}%`,
-                      backgroundColor: item.color
+                      height: `${Math.max(item.value * 0.8, 10)}%`,
+                      backgroundColor: item.color,
+                      borderColor: item.color,
+                      minHeight: '20px'
                     }}
                     title={`${item.day}: ${item.value}% - ${item.reports} reports`}
                   ></div>
                 </div>
-                <div className="text-xs text-muted-foreground text-center">
-                  <div className="transform -rotate-45 origin-bottom-left mt-2">
-                    {item.day}
+                <div className="text-xs text-muted-foreground text-center mt-2">
+                  <div className="font-medium text-foreground">
+                    {item.day.slice(0, 3)}
                   </div>
                   <div className="text-xs text-muted-foreground mt-1">
                     {item.reports} reports
