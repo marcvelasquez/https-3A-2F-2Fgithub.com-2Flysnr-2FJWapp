@@ -17,11 +17,11 @@ const Dashboard = () => {
   ];
 
   const radiologistActivity = [
-    { day: 'Monday', value: 85, reports: 34 },
-    { day: 'Tuesday', value: 92, reports: 37 },
-    { day: 'Wednesday', value: 78, reports: 31 },
-    { day: 'Thursday', value: 95, reports: 38 },
-    { day: 'Friday', value: 88, reports: 35 },
+    { day: 'Monday', value: 85, reports: 34, color: 'bg-blue-500' },
+    { day: 'Tuesday', value: 92, reports: 37, color: 'bg-green-500' },
+    { day: 'Wednesday', value: 78, reports: 31, color: 'bg-purple-500' },
+    { day: 'Thursday', value: 95, reports: 38, color: 'bg-orange-500' },
+    { day: 'Friday', value: 88, reports: 35, color: 'bg-pink-500' },
   ];
 
   const progressData = [
