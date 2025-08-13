@@ -143,14 +143,14 @@ const Dashboard = () => {
               );
             })}
           </div>
-          <div className="mt-4 p-3 bg-muted/50 rounded-lg">
+          <div className="mt-3 p-2 bg-muted/50 rounded-lg">
             <div className="flex justify-between items-center text-sm">
               <span className="text-muted-foreground">Weekly Average:</span>
               <span className="font-medium text-foreground">
                 {Math.round(radiologistActivity.reduce((acc, item) => acc + item.value, 0) / radiologistActivity.length)}%
               </span>
             </div>
-            <div className="flex justify-between items-center text-sm mt-1">
+            <div className="flex justify-between items-center text-sm">
               <span className="text-muted-foreground">Total Reports:</span>
               <span className="font-medium text-foreground">
                 {radiologistActivity.reduce((acc, item) => acc + item.reports, 0)}
