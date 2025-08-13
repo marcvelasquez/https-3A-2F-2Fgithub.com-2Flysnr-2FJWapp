@@ -105,33 +105,39 @@ const Dashboard = () => {
             <p className="text-sm text-muted-foreground">Weekly diagnostic report completion rates</p>
           </div>
           <div className="flex items-end justify-between h-64 space-x-6 px-4">
-            {radiologistActivity.map((item) => (
-              <div key={item.day} className="flex flex-col items-center space-y-2 flex-1">
-                <div className="text-sm font-semibold text-foreground mb-2">
-                  {item.value}%
-                </div>
-                <div className="flex-1 flex items-end h-full w-full">
-                  <div
-                    className="rounded-t-lg w-full min-w-12 relative shadow-sm border-2 border-opacity-20"
-                    style={{
-                      height: `${item.value}%`,
-                      backgroundColor: item.color,
-                      borderColor: item.color,
-                      minHeight: '15px'
-                    }}
-                    title={`${item.day}: ${item.value}% completion - ${item.reports} reports processed`}
-                  ></div>
-                </div>
-                <div className="text-xs text-muted-foreground text-center mt-2">
-                  <div className="font-medium text-foreground">
-                    {item.day.slice(0, 3)}
+            {radiologistActivity.map((item) => {
+              // Calculate height based on reports (scale to max 38 reports = 100% height)
+              const maxReports = Math.max(...radiologistActivity.map(i => i.reports));
+              const reportHeight = (item.reports / maxReports) * 100;
+
+              return (
+                <div key={item.day} className="flex flex-col items-center space-y-2 flex-1">
+                  <div className="text-sm font-semibold text-foreground mb-2">
+                    {item.reports}
                   </div>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    {item.reports} reports
+                  <div className="flex-1 flex items-end h-full w-full">
+                    <div
+                      className="rounded-t-lg w-full min-w-12 relative shadow-sm border-2 border-opacity-20"
+                      style={{
+                        height: `${reportHeight}%`,
+                        backgroundColor: item.color,
+                        borderColor: item.color,
+                        minHeight: '20px'
+                      }}
+                      title={`${item.day}: ${item.reports} reports - ${item.value}% completion rate`}
+                    ></div>
+                  </div>
+                  <div className="text-xs text-muted-foreground text-center mt-2">
+                    <div className="font-medium text-foreground">
+                      {item.day.slice(0, 3)}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {item.value}%
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className="mt-4 p-3 bg-muted/50 rounded-lg">
             <div className="flex justify-between items-center text-sm">
