@@ -3,6 +3,12 @@ import { Search, X, ChevronLeft, Plus, Folder } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const FileFolder = () => {
+  const navigate = useNavigate();
+
+  const handleFolderClick = (folderId: string) => {
+    navigate(`/file-folder/${folderId}/images`);
+  };
+
   // Patient folder data
   const patientFolders = [
     { id: 'K123456789', name: 'K123456789' },
