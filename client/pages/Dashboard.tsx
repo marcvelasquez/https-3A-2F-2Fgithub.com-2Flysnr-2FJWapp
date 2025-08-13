@@ -104,45 +104,38 @@ const Dashboard = () => {
           <div className="mb-4">
             <p className="text-sm text-muted-foreground">Weekly diagnostic report completion rates</p>
           </div>
-          <div className="flex items-end justify-between h-80 space-x-3 px-2">
+          <div className="flex items-end justify-between h-56 space-x-2 px-1">
             {radiologistActivity.map((item) => {
-              // Combine percentage and reports for height calculation
-              // Use percentage as primary factor (70%) and reports as secondary factor (30%)
-              const maxReports = Math.max(...radiologistActivity.map(i => i.reports));
-              const maxPercentage = Math.max(...radiologistActivity.map(i => i.value));
-
-              const percentageWeight = (item.value / maxPercentage) * 70;
-              const reportsWeight = (item.reports / maxReports) * 30;
-              const combinedHeight = percentageWeight + reportsWeight;
+              // Calculate height primarily based on percentage (reports as visual indicator)
+              // Scale percentage directly for bar height
+              const barHeight = item.value; // Direct percentage mapping
 
               return (
-                <div key={item.day} className="flex flex-col items-center space-y-1 flex-1">
-                  <div className="text-xs font-bold text-foreground mb-1 text-center">
-                    <div>{item.reports}</div>
-                    <div className="text-xs text-muted-foreground">reports</div>
+                <div key={item.day} className="flex flex-col items-center flex-1">
+                  <div className="text-xs font-semibold text-foreground mb-1 text-center">
+                    {item.reports}
                   </div>
                   <div className="flex-1 flex items-end h-full w-full">
                     <div
-                      className="rounded-t-lg w-full relative shadow-lg border-2 border-opacity-30 transition-all hover:scale-105"
+                      className="rounded-t w-full relative border transition-all hover:scale-105"
                       style={{
-                        height: `${Math.max(combinedHeight, 15)}%`,
+                        height: `${barHeight}%`,
                         backgroundColor: item.color,
                         borderColor: item.color,
-                        minHeight: '30px',
-                        minWidth: '40px'
+                        minHeight: '25px',
+                        minWidth: '35px'
                       }}
-                      title={`${item.day}: ${item.reports} reports - ${item.value}% completion rate`}
+                      title={`${item.day}: ${item.value}% completion - ${item.reports} reports`}
                     >
-                      {/* Percentage indicator inside bar */}
-                      <div className="absolute inset-x-0 top-2 text-center">
-                        <div className="text-xs font-bold text-white drop-shadow-sm">
+                      <div className="absolute inset-x-0 bottom-1 text-center">
+                        <div className="text-xs font-bold text-white drop-shadow">
                           {item.value}%
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="text-xs text-center mt-1">
-                    <div className="font-semibold text-foreground">
+                    <div className="font-medium text-foreground">
                       {item.day.slice(0, 3)}
                     </div>
                   </div>
