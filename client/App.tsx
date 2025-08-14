@@ -29,17 +29,57 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout><Dashboard /></Layout>} />
-          <Route path="/patient-record" element={<Layout><PatientRecord /></Layout>} />
-          <Route path="/file-folder" element={<Layout><FileFolder /></Layout>} />
-          <Route path="/file-folder/:folderId/images" element={<Layout><Images /></Layout>} />
-          <Route path="/upload-study" element={<Layout><UploadStudy /></Layout>} />
-          <Route path="/dicom-viewer" element={<DICOMViewer />} />
-          <Route path="/settings" element={<Layout><Settings /></Layout>} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<Layout><NotFound /></Layout>} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+
+            {/* Protected Routes */}
+            <Route path="/" element={
+              <ProtectedRoute>
+                <Layout><Dashboard /></Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/patient-record" element={
+              <ProtectedRoute>
+                <Layout><PatientRecord /></Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/file-folder" element={
+              <ProtectedRoute>
+                <Layout><FileFolder /></Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/file-folder/:folderId/images" element={
+              <ProtectedRoute>
+                <Layout><Images /></Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/upload-study" element={
+              <ProtectedRoute>
+                <Layout><UploadStudy /></Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/dicom-viewer" element={
+              <ProtectedRoute>
+                <DICOMViewer />
+              </ProtectedRoute>
+            } />
+            <Route path="/settings" element={
+              <ProtectedRoute>
+                <Layout><Settings /></Layout>
+              </ProtectedRoute>
+            } />
+
+            {/* Catch-all route */}
+            <Route path="*" element={
+              <ProtectedRoute>
+                <Layout><NotFound /></Layout>
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
