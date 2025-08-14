@@ -56,7 +56,7 @@ export default function Layout({ children }: LayoutProps) {
               <User className="w-6 h-6" />
             </div>
             <div>
-              <div className="font-medium">John Doe</div>
+              <div className="font-medium">{user?.name || 'User'}</div>
             </div>
           </div>
         </div>
