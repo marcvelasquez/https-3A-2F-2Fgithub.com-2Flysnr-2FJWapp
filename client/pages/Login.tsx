@@ -115,14 +115,6 @@ const Login = () => {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground">
-              Don't have an account?{' '}
-              <Link to="/signup" className="text-medical-blue hover:text-medical-blue-dark font-medium">
-                Sign up
-              </Link>
-            </p>
-          </div>
 
           <div className="mt-4 p-3 bg-muted/50 rounded-lg">
             <p className="text-xs text-muted-foreground text-center">
