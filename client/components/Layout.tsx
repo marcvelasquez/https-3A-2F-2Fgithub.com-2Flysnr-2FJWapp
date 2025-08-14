@@ -1,16 +1,17 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { 
-  LayoutDashboard, 
-  FileText, 
-  FolderOpen, 
-  Image, 
-  Upload, 
-  Settings, 
-  LogOut, 
-  User 
+import {
+  LayoutDashboard,
+  FileText,
+  FolderOpen,
+  Image,
+  Upload,
+  Settings,
+  LogOut,
+  User
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 interface LayoutProps {
   children: React.ReactNode;
