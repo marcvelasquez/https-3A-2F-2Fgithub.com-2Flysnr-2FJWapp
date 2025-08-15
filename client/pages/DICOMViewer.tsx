@@ -22,11 +22,17 @@ const DICOMViewer = () => {
             <h1 className="text-xl font-semibold text-foreground">DICOM Viewer</h1>
           </div>
           <div className="flex items-center space-x-4">
-            <button className="flex items-center space-x-2 px-4 py-2 bg-muted hover:bg-muted/80 text-foreground rounded-lg transition-colors">
+            <button
+              onClick={() => console.log('File menu clicked')}
+              className="flex items-center space-x-2 px-4 py-2 bg-muted hover:bg-muted/80 text-foreground rounded-lg transition-colors"
+            >
               <FileText className="w-4 h-4" />
               <span>File</span>
             </button>
-            <button className="flex items-center space-x-2 px-4 py-2 bg-muted hover:bg-muted/80 text-foreground rounded-lg transition-colors">
+            <button
+              onClick={() => console.log('Tools menu clicked')}
+              className="flex items-center space-x-2 px-4 py-2 bg-muted hover:bg-muted/80 text-foreground rounded-lg transition-colors"
+            >
               <Menu className="w-4 h-4" />
               <span>Tools</span>
             </button>
@@ -80,7 +86,10 @@ const DICOMViewer = () => {
         </div>
 
         <div className="p-4 border-t border-border">
-          <button className="w-full bg-medical-blue hover:bg-medical-blue-dark text-white py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2">
+          <button
+            onClick={() => console.log('Saving notes:', patientNotes)}
+            className="w-full bg-medical-blue hover:bg-medical-blue-dark text-white py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
+          >
             <Save className="w-4 h-4" />
             <span>Save Notes</span>
           </button>
