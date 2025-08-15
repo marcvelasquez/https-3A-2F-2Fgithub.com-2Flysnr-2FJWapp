@@ -11,9 +11,9 @@ const Dashboard = () => {
 
   // Sample data for the dashboard
   const stats = [
-    { value: '12', label: 'Total Scans This Week', bgColor: 'bg-blue-500' },
-    { value: '9', label: 'Scans with Detected Issues', bgColor: 'bg-blue-600' },
-    { value: 'Meniscus Tear', label: 'Most Common Finding', bgColor: 'bg-blue-700' },
+    { value: '12', label: 'Total Scans This Week', bgColor: 'bg-gradient-to-br from-blue-500 to-blue-600' },
+    { value: '9', label: 'Scans with Detected Issues', bgColor: 'bg-gradient-to-br from-orange-500 to-orange-600' },
+    { value: 'Meniscus Tear', label: 'Most Common Finding', bgColor: 'bg-gradient-to-br from-purple-500 to-purple-600' },
   ];
 
   const patientData = [
