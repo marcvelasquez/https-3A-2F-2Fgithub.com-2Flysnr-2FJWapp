@@ -1,5 +1,6 @@
 import React from 'react';
-import { Search, X, MoreVertical, Calendar, Clock, FileText } from 'lucide-react';
+import { Search, X, MoreVertical, Calendar, Clock, FileText, FolderOpen } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   // Sample data for the dashboard
