@@ -7,7 +7,7 @@ const Images = () => {
   const navigate = useNavigate();
 
   const handleBackToFolders = () => {
-    navigate('/file-folder');
+    navigate(-1); // Go back to previous page
   };
 
   // Medical images data
