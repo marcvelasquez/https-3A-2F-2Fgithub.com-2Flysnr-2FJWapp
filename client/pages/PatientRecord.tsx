@@ -96,11 +96,11 @@ const PatientRecord = () => {
 
       {/* Action Buttons */}
       <div className="flex space-x-3 mb-6">
-        <button className="bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg font-medium transition-colors">
-          Add
+        <button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl">
+          Add Patient
         </button>
-        <button className="bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg font-medium transition-colors">
-          Remove
+        <button className="bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl">
+          Import Data
         </button>
       </div>
 
