@@ -85,6 +85,45 @@ const Settings = () => {
             </div>
 
             <div className="space-y-6">
+              {/* Profile Image */}
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Profile Image
+                </label>
+                <div className="flex items-center space-x-4">
+                  <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center overflow-hidden">
+                    {profileImage ? (
+                      <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <User className="w-8 h-8 text-muted-foreground" />
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex space-x-2">
+                      <label className="bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer flex items-center space-x-2">
+                        <Upload className="w-4 h-4" />
+                        <span>Upload Photo</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          className="hidden"
+                        />
+                      </label>
+                      <button
+                        onClick={handleSetDefault}
+                        className="px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted transition-colors"
+                      >
+                        Set Default
+                      </button>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Upload a photo to personalize your profile. JPG, PNG or GIF (max 5MB).
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Name Field */}
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
