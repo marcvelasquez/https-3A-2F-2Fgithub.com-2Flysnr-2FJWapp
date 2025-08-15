@@ -3,6 +3,12 @@ import { Search, X, FileText, Plus, FolderOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const PatientRecord = () => {
+  const navigate = useNavigate();
+
+  const handleFileFolder = (patientId: string) => {
+    navigate(`/file-folder/${patientId}`);
+  };
+
   // Extended patient data for the Patient Record page
   const patientRecords = [
     { id: '01.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D' },
