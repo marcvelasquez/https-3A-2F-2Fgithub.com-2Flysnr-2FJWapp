@@ -1,6 +1,7 @@
-import React from 'react';
-import { Search, X, FileText, Plus, FolderOpen } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, X, FileText, Plus, FolderOpen, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import DeleteDialog from '../components/DeleteDialog';
 
 const PatientRecord = () => {
   const navigate = useNavigate();
