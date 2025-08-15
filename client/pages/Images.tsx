@@ -58,7 +58,11 @@ const Images = () => {
             <span className="text-sm text-foreground">Patient: {folderId ? `Patient ${folderId}` : 'Unknown Patient'}</span>
           </div>
         </div>
-        <button className="flex items-center justify-center w-10 h-10 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors">
+        <button
+          onClick={() => console.log('Add new image clicked')}
+          className="flex items-center justify-center w-10 h-10 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors"
+          title="Add New Image"
+        >
           <Plus className="w-5 h-5" />
         </button>
       </div>

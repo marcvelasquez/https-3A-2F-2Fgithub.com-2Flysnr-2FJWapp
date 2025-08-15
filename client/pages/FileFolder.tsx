@@ -58,7 +58,11 @@ const FileFolder = () => {
             <span className="text-sm text-foreground">Patient ID: {patientId || 'Unknown'}</span>
           </div>
         </div>
-        <button className="flex items-center justify-center w-10 h-10 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors">
+        <button
+          onClick={() => console.log('Add new folder clicked')}
+          className="flex items-center justify-center w-10 h-10 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors"
+          title="Add New Folder"
+        >
           <Plus className="w-5 h-5" />
         </button>
       </div>
