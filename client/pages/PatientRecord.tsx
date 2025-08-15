@@ -96,10 +96,16 @@ const PatientRecord = () => {
 
       {/* Action Buttons */}
       <div className="flex space-x-3 mb-6">
-        <button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl">
+        <button
+          onClick={() => console.log('Add Patient clicked')}
+          className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl"
+        >
           Add Patient
         </button>
-        <button className="bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl">
+        <button
+          onClick={() => console.log('Import Data clicked')}
+          className="bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl"
+        >
           Import Data
         </button>
       </div>
@@ -157,16 +163,28 @@ const PatientRecord = () => {
             Showing {patientRecords.length} records
           </div>
           <div className="flex space-x-2">
-            <button className="px-3 py-1 border border-border rounded text-sm text-muted-foreground hover:bg-muted transition-colors">
+            <button
+              onClick={() => console.log('Previous page')}
+              className="px-3 py-1 border border-border rounded text-sm text-muted-foreground hover:bg-muted transition-colors"
+            >
               Previous
             </button>
-            <button className="px-3 py-1 bg-medical-blue text-white rounded text-sm hover:bg-medical-blue-dark transition-colors">
+            <button
+              onClick={() => console.log('Page 1')}
+              className="px-3 py-1 bg-medical-blue text-white rounded text-sm hover:bg-medical-blue-dark transition-colors"
+            >
               1
             </button>
-            <button className="px-3 py-1 border border-border rounded text-sm text-muted-foreground hover:bg-muted transition-colors">
+            <button
+              onClick={() => console.log('Page 2')}
+              className="px-3 py-1 border border-border rounded text-sm text-muted-foreground hover:bg-muted transition-colors"
+            >
               2
             </button>
-            <button className="px-3 py-1 border border-border rounded text-sm text-muted-foreground hover:bg-muted transition-colors">
+            <button
+              onClick={() => console.log('Next page')}
+              className="px-3 py-1 border border-border rounded text-sm text-muted-foreground hover:bg-muted transition-colors"
+            >
               Next
             </button>
           </div>
