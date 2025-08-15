@@ -55,7 +55,7 @@ const Images = () => {
             <span className="text-sm">Back to Folders</span>
           </button>
           <div className="bg-card border border-border rounded-lg px-4 py-2">
-            <span className="text-sm text-foreground">Folder: {folderId || 'Unknown'}</span>
+            <span className="text-sm text-foreground">Patient: {folderId ? `Patient ${folderId}` : 'Unknown Patient'}</span>
           </div>
         </div>
         <button className="flex items-center justify-center w-10 h-10 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors">
