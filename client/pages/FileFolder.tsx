@@ -7,10 +7,6 @@ const FileFolder = () => {
   const { patientId } = useParams();
 
   const handleFolderClick = (folderId: string) => {
-    navigate(`/file-folder/${folderId}/images`);
-  };
-
-  const handleViewReport = (folderId: string) => {
     navigate(`/report/${folderId}`);
   };
 
