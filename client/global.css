@@ -116,7 +116,8 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-family);
+    font-size: var(--base-font-size);
   }
 
   /* Add dark class to html by default for medical app */
