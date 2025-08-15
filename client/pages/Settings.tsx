@@ -341,7 +341,7 @@ const Settings = () => {
               {/* Save Button */}
               <button
                 onClick={handleAppearanceSave}
-                className="bg-medical-blue hover:bg-medical-blue-dark text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
+                className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-all flex items-center space-x-2 shadow-lg hover:shadow-xl"
               >
                 <Save className="w-4 h-4" />
                 <span>Update Appearance</span>
