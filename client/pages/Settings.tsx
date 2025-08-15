@@ -8,9 +8,14 @@ const Settings = () => {
     email: 'dr.smith@joinwise.com'
   });
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [appearanceData, setAppearanceData] = useState({
-    font: 'Inter (Default)',
-    theme: 'Light'
+  const [appearanceData, setAppearanceData] = useState(() => {
+    // Load saved appearance settings from localStorage
+    const saved = localStorage.getItem('appearanceSettings');
+    return saved ? JSON.parse(saved) : {
+      font: 'Inter',
+      fontSize: 'Medium',
+      theme: 'Light'
+    };
   });
 
   const tabs = [
