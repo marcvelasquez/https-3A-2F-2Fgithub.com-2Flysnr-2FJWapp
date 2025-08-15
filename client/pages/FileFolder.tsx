@@ -1,6 +1,6 @@
 import React from 'react';
-import { Search, X, ChevronLeft, Plus, Folder } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Search, X, ChevronLeft, Plus, Folder, FileText } from 'lucide-react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const FileFolder = () => {
   const navigate = useNavigate();
