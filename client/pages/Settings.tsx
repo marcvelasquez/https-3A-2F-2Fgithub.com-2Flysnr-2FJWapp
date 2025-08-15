@@ -247,23 +247,45 @@ const Settings = () => {
             </div>
 
             <div className="space-y-6">
-              {/* Font Selection */}
+              {/* Font Family Selection */}
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
-                  Font
+                  Font Family
                 </label>
                 <select
                   value={appearanceData.font}
                   onChange={(e) => setAppearanceData({ ...appearanceData, font: e.target.value })}
                   className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
                 >
-                  <option value="Inter (Default)">Inter (Default)</option>
+                  <option value="Inter">Inter (Default)</option>
                   <option value="Roboto">Roboto</option>
+                  <option value="Open Sans">Open Sans</option>
+                  <option value="Lato">Lato</option>
                   <option value="Arial">Arial</option>
                   <option value="Helvetica">Helvetica</option>
                 </select>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Set the font for the application.
+                  Choose the font family for the application.
+                </p>
+              </div>
+
+              {/* Font Size Selection */}
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Font Size
+                </label>
+                <select
+                  value={appearanceData.fontSize}
+                  onChange={(e) => setAppearanceData({ ...appearanceData, fontSize: e.target.value })}
+                  className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                >
+                  <option value="Small">Small (14px)</option>
+                  <option value="Medium">Medium (16px)</option>
+                  <option value="Large">Large (18px)</option>
+                  <option value="Extra Large">Extra Large (20px)</option>
+                </select>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Adjust the base font size for better readability.
                 </p>
               </div>
 
@@ -286,6 +308,33 @@ const Settings = () => {
                       <span className="text-sm text-foreground">{theme}</span>
                     </label>
                   ))}
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Switch between light and dark mode.
+                </p>
+              </div>
+
+              {/* Preview Section */}
+              <div className="p-4 border border-border rounded-lg bg-muted/30">
+                <h4 className="text-sm font-medium text-foreground mb-2">Preview</h4>
+                <div
+                  className="text-foreground"
+                  style={{
+                    fontFamily: appearanceData.font === 'Inter' ? 'Inter, system-ui, -apple-system, sans-serif' :
+                               appearanceData.font === 'Roboto' ? 'Roboto, sans-serif' :
+                               appearanceData.font === 'Open Sans' ? 'Open Sans, sans-serif' :
+                               appearanceData.font === 'Lato' ? 'Lato, sans-serif' :
+                               appearanceData.font === 'Arial' ? 'Arial, sans-serif' :
+                               appearanceData.font === 'Helvetica' ? 'Helvetica, Arial, sans-serif' :
+                               'Inter, system-ui, -apple-system, sans-serif',
+                    fontSize: appearanceData.fontSize === 'Small' ? '14px' :
+                             appearanceData.fontSize === 'Medium' ? '16px' :
+                             appearanceData.fontSize === 'Large' ? '18px' :
+                             appearanceData.fontSize === 'Extra Large' ? '20px' : '16px'
+                  }}
+                >
+                  <p className="mb-2">This is how your text will appear with the selected font and size.</p>
+                  <p className="text-muted-foreground">Secondary text in {appearanceData.theme.toLowerCase()} theme.</p>
                 </div>
               </div>
 
