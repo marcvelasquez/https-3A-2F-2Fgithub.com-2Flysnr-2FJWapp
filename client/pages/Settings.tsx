@@ -23,6 +23,65 @@ const Settings = () => {
     { id: 'appearance' as const, label: 'Appearance', icon: Palette },
   ];
 
+  // Apply appearance settings on mount
+  useEffect(() => {
+    applyAppearanceSettings();
+  }, []);
+
+  const applyAppearanceSettings = () => {
+    const root = document.documentElement;
+
+    // Apply theme
+    if (appearanceData.theme === 'Dark') {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+
+    // Apply font
+    let fontFamily = 'Inter, system-ui, -apple-system, sans-serif';
+    switch (appearanceData.font) {
+      case 'Roboto':
+        fontFamily = 'Roboto, sans-serif';
+        break;
+      case 'Arial':
+        fontFamily = 'Arial, sans-serif';
+        break;
+      case 'Helvetica':
+        fontFamily = 'Helvetica, Arial, sans-serif';
+        break;
+      case 'Open Sans':
+        fontFamily = 'Open Sans, sans-serif';
+        break;
+      case 'Lato':
+        fontFamily = 'Lato, sans-serif';
+        break;
+      default:
+        fontFamily = 'Inter, system-ui, -apple-system, sans-serif';
+    }
+    root.style.setProperty('--font-family', fontFamily);
+    document.body.style.fontFamily = fontFamily;
+
+    // Apply font size
+    let fontSize = '16px';
+    switch (appearanceData.fontSize) {
+      case 'Small':
+        fontSize = '14px';
+        break;
+      case 'Medium':
+        fontSize = '16px';
+        break;
+      case 'Large':
+        fontSize = '18px';
+        break;
+      case 'Extra Large':
+        fontSize = '20px';
+        break;
+    }
+    root.style.setProperty('--base-font-size', fontSize);
+    document.body.style.fontSize = fontSize;
+  };
+
   const handleAccountSave = () => {
     // Handle account save logic
     console.log('Saving account data:', accountData);
