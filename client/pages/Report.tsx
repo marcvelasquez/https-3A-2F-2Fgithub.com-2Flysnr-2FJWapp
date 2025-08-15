@@ -149,7 +149,7 @@ const Report = () => {
 
         {/* Metadata Panel - Sliding from right */}
         {showMetadata && (
-          <div className="fixed right-0 top-0 h-full w-80 bg-card border-l border-border shadow-xl z-50 animate-in slide-in-from-right duration-300">
+          <div className="fixed right-0 top-0 h-screen w-80 bg-card border-l border-border shadow-xl z-50 animate-in slide-in-from-right duration-300">
             <div className="flex items-center justify-between p-4 border-b border-border">
               <h3 className="text-lg font-semibold text-foreground">Study Metadata</h3>
               <button
