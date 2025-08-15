@@ -88,8 +88,13 @@ const Settings = () => {
   };
 
   const handleAppearanceSave = () => {
-    // Handle appearance save logic
-    console.log('Saving appearance data:', appearanceData);
+    // Save to localStorage
+    localStorage.setItem('appearanceSettings', JSON.stringify(appearanceData));
+
+    // Apply the settings immediately
+    applyAppearanceSettings();
+
+    console.log('Appearance settings saved and applied:', appearanceData);
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
