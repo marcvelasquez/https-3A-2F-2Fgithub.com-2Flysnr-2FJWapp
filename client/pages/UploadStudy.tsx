@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Upload, Cloud, FileText } from 'lucide-react';
+import { Upload, Cloud, FileText, Check } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const UploadStudy = () => {
   const [patientName, setPatientName] = useState('John Doe');
