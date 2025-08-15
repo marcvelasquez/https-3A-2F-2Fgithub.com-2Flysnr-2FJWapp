@@ -24,8 +24,23 @@ const Settings = () => {
   };
 
   const handleAppearanceSave = () => {
-    // Handle appearance save logic  
+    // Handle appearance save logic
     console.log('Saving appearance data:', appearanceData);
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfileImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSetDefault = () => {
+    setProfileImage(null);
   };
 
   return (
