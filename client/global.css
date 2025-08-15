@@ -11,6 +11,10 @@
    * A different format will require also updating the theme in tailwind.config.ts.
   */
   :root {
+    /* Font and typography variables */
+    --font-family: Inter, system-ui, -apple-system, sans-serif;
+    --base-font-size: 16px;
+
     /* Updated blue theme colors matching provided palette */
     --background: 0 0% 100%;
     --foreground: 222 84% 4.9%;
