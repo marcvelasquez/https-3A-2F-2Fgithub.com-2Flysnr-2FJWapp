@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, RotateCw, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RotateCw, ZoomIn, ZoomOut, RotateCcw, Info, X } from 'lucide-react';
 
 const Report = () => {
   const { studyId } = useParams();
