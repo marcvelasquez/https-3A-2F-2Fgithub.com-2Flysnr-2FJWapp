@@ -68,35 +68,17 @@ const FileFolder = () => {
         {patientFolders.map((folder) => (
           <div
             key={folder.id}
-            className="flex flex-col items-center p-4 rounded-lg hover:bg-muted/50 transition-colors group"
+            className="flex flex-col items-center p-4 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer group"
+            onClick={() => handleFolderClick(folder.id)}
           >
             {/* Folder Icon */}
-            <div className="relative mb-3 cursor-pointer" onClick={() => handleFolderClick(folder.id)}>
+            <div className="relative mb-3">
               <Folder className="w-16 h-16 text-yellow-500 fill-yellow-500" />
             </div>
 
             {/* Folder Name */}
-            <div className="text-center mb-3">
+            <div className="text-center">
               <div className="text-sm font-medium text-foreground mb-1">{folder.name}</div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex space-x-2">
-              <button
-                onClick={() => handleFolderClick(folder.id)}
-                className="px-3 py-1 bg-medical-blue hover:bg-medical-blue-dark text-white text-xs rounded transition-colors"
-                title="View Images"
-              >
-                Images
-              </button>
-              <button
-                onClick={() => handleViewReport(folder.id)}
-                className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded transition-colors flex items-center space-x-1"
-                title="View Report"
-              >
-                <FileText className="w-3 h-3" />
-                <span>Report</span>
-              </button>
             </div>
           </div>
         ))}
