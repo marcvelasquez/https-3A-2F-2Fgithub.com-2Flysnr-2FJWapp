@@ -94,7 +94,13 @@ const Dashboard = () => {
                   <td className="py-3 px-4 text-foreground">{patient.date}</td>
                   <td className="py-3 px-4 text-foreground">{patient.time}</td>
                   <td className="py-3 px-4">
-                    <FileText className="w-4 h-4 text-muted-foreground" />
+                    <button
+                      onClick={() => handleFileFolder(patient.id)}
+                      className="w-8 h-8 bg-medical-blue hover:bg-medical-blue-dark text-white rounded flex items-center justify-center transition-colors"
+                      title="Open File Folder"
+                    >
+                      <FolderOpen className="w-4 h-4" />
+                    </button>
                   </td>
                 </tr>
               ))}
