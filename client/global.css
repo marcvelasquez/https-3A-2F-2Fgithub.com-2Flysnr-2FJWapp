@@ -9,57 +9,57 @@
    * A different format will require also updating the theme in tailwind.config.ts.
   */
   :root {
-    /* Dark medical theme - main colors */
-    --background: 215 28% 17%;
-    --foreground: 0 0% 98%;
+    /* Updated blue theme colors matching provided palette */
+    --background: 0 0% 100%;
+    --foreground: 222 84% 4.9%;
 
-    --card: 215 28% 17%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 84% 4.9%;
 
-    --popover: 215 28% 17%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 84% 4.9%;
 
-    --primary: 217 91% 60%;
+    --primary: 210 79% 51%; /* #1E88E5 */
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 215 25% 27%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 227 100% 98%; /* #E3F2FD */
+    --secondary-foreground: 222 84% 4.9%;
 
-    --muted: 215 25% 27%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 227 100% 98%; /* #E3F2FD */
+    --muted-foreground: 215 16% 46.9%;
 
-    --accent: 217 91% 60%;
+    --accent: 199 98% 48%; /* #29B6F6 */
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 215 25% 27%;
-    --input: 215 25% 27%;
-    --ring: 217 91% 60%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 210 79% 51%;
 
     --radius: 0.5rem;
 
     /* Sidebar specific colors - blue gradient */
-    --sidebar-background: 217 91% 60%;
+    --sidebar-background: 210 79% 51%; /* #1E88E5 */
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 217 91% 50%;
+    --sidebar-primary: 211 100% 43%; /* #1565C0 */
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 217 91% 55%;
+    --sidebar-accent: 210 79% 56%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 217 91% 50%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-border: 211 100% 43%;
+    --sidebar-ring: 210 79% 51%;
 
-    /* Medical app specific colors */
-    --medical-blue: 217 91% 60%;
-    --medical-blue-dark: 217 91% 50%;
-    --medical-blue-light: 217 91% 70%;
-    --medical-gray: 215 28% 17%;
-    --medical-gray-light: 215 25% 27%;
-    --medical-gray-lighter: 215 20% 35%;
+    /* Medical app specific colors - updated blue palette */
+    --medical-blue: 210 79% 51%; /* #1E88E5 */
+    --medical-blue-dark: 211 100% 43%; /* #1565C0 */
+    --medical-blue-light: 210 96% 79%; /* #90CAF9 */
+    --medical-gray: 200 18% 46%; /* #90A4AE */
+    --medical-gray-light: 227 100% 98%; /* #E3F2FD */
+    --medical-gray-lighter: 227 100% 95%;
     --success: 142 76% 36%;
     --warning: 38 92% 50%;
-    --info: 199 89% 48%;
+    --info: 199 98% 48%; /* #29B6F6 */
   }
 
   /* Keep dark theme same as root since we're using dark by default */
