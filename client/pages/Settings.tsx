@@ -169,7 +169,7 @@ const Settings = () => {
                   </div>
                   <div className="space-y-2">
                     <div className="flex space-x-2">
-                      <label className="bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer flex items-center space-x-2">
+                      <label className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-all cursor-pointer flex items-center space-x-2 shadow-lg hover:shadow-xl">
                         <Upload className="w-4 h-4" />
                         <span>Upload Photo</span>
                         <input
