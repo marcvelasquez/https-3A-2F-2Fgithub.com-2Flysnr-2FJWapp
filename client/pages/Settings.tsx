@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Palette, Save } from 'lucide-react';
+import { User, Palette, Save, Camera, Upload } from 'lucide-react';
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState<'account' | 'appearance'>('account');
