@@ -17,6 +17,7 @@ import FileFolder from "./pages/FileFolder";
 import Images from "./pages/Images";
 import UploadStudy from "./pages/UploadStudy";
 import DICOMViewer from "./pages/DICOMViewer";
+import Report from "./pages/Report";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
