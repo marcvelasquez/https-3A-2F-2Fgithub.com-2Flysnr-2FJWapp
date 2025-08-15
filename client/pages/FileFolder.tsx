@@ -4,9 +4,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const FileFolder = () => {
   const navigate = useNavigate();
+  const { patientId } = useParams();
 
   const handleFolderClick = (folderId: string) => {
     navigate(`/file-folder/${folderId}/images`);
+  };
+
+  const handleViewReport = (folderId: string) => {
+    navigate(`/report/${folderId}`);
   };
 
   // Patient folder data
