@@ -15,8 +15,8 @@
     --font-family: Inter, system-ui, -apple-system, sans-serif;
     --base-font-size: 16px;
 
-    /* Enhanced light theme colors with more color */
-    --background: 227 100% 99%; /* Very light blue tint */
+    /* Enhanced light theme colors with more vibrant colors */
+    --background: 227 85% 97%; /* Light blue background */
     --foreground: 222 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -28,10 +28,10 @@
     --primary: 210 79% 51%; /* #1E88E5 */
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 227 100% 96%; /* Slightly more blue tint */
+    --secondary: 227 85% 94%; /* More blue tint */
     --secondary-foreground: 222 84% 4.9%;
 
-    --muted: 227 100% 95%; /* Light blue background */
+    --muted: 227 85% 92%; /* Vibrant light blue background */
     --muted-foreground: 215 16% 46.9%;
 
     --accent: 199 98% 48%; /* #29B6F6 */
@@ -40,7 +40,7 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 20% 85%; /* Slightly more visible borders */
+    --border: 220 30% 80%; /* More visible blue-tinted borders */
     --input: 0 0% 100%; /* White input backgrounds */
     --ring: 210 79% 51%;
 
@@ -56,16 +56,22 @@
     --sidebar-border: 211 100% 43%;
     --sidebar-ring: 210 79% 51%;
 
-    /* Medical app specific colors - updated blue palette */
+    /* Medical app specific colors - enhanced vibrant palette */
     --medical-blue: 210 79% 51%; /* #1E88E5 */
     --medical-blue-dark: 211 100% 43%; /* #1565C0 */
     --medical-blue-light: 210 96% 79%; /* #90CAF9 */
     --medical-gray: 200 18% 46%; /* #90A4AE */
-    --medical-gray-light: 227 100% 98%; /* #E3F2FD */
-    --medical-gray-lighter: 227 100% 95%;
+    --medical-gray-light: 227 85% 95%; /* #E3F2FD */
+    --medical-gray-lighter: 227 85% 92%;
     --success: 142 76% 36%;
     --warning: 38 92% 50%;
     --info: 199 98% 48%; /* #29B6F6 */
+
+    /* Enhanced color accents */
+    --green-accent: 142 76% 36%;
+    --orange-accent: 25 95% 53%;
+    --purple-accent: 262 83% 58%;
+    --teal-accent: 173 80% 40%;
 
     /* Auth page specific colors */
     --auth-bg: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
