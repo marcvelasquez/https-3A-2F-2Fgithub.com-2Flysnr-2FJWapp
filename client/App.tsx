@@ -46,7 +46,7 @@ const App = () => (
                 <Layout><PatientRecord /></Layout>
               </ProtectedRoute>
             } />
-            <Route path="/file-folder" element={
+            <Route path="/file-folder/:patientId" element={
               <ProtectedRoute>
                 <Layout><FileFolder /></Layout>
               </ProtectedRoute>
@@ -54,6 +54,11 @@ const App = () => (
             <Route path="/file-folder/:folderId/images" element={
               <ProtectedRoute>
                 <Layout><Images /></Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/report/:studyId" element={
+              <ProtectedRoute>
+                <Report />
               </ProtectedRoute>
             } />
             <Route path="/upload-study" element={
