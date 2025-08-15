@@ -116,6 +116,7 @@ const PatientRecord = () => {
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Date</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Time</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">File</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Actions</th>
               </tr>
             </thead>
             <tbody>
