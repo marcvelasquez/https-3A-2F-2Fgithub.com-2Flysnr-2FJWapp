@@ -172,6 +172,15 @@ const PatientRecord = () => {
           </div>
         </div>
       </div>
+
+      {/* Delete Dialog */}
+      <DeleteDialog
+        isOpen={deleteDialog.isOpen}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        patientName={deleteDialog.patientName}
+        recordId={deleteDialog.recordId}
+      />
     </div>
   );
 };
