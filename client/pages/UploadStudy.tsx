@@ -6,6 +6,9 @@ const UploadStudy = () => {
   const [patientName, setPatientName] = useState('John Doe');
   const [studyDescription, setStudyDescription] = useState('');
   const [isDragOver, setIsDragOver] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const navigate = useNavigate();
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
