@@ -65,6 +65,9 @@ const UploadStudy = () => {
     // Store file data in sessionStorage for the report page
     sessionStorage.setItem('uploadedStudy', JSON.stringify(fileData));
 
+    // Also store for adding to patient records
+    sessionStorage.setItem('newPatientRecord', JSON.stringify(fileData));
+
     navigate(`/report/${Date.now()}`);
   };
 
