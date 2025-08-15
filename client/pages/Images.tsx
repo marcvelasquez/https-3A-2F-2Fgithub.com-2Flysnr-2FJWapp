@@ -40,7 +40,10 @@ const Images = () => {
             placeholder="Search"
             className="flex-1 bg-transparent border-none outline-none text-foreground placeholder-muted-foreground"
           />
-          <X className="w-5 h-5 text-muted-foreground cursor-pointer" />
+          <X
+            onClick={() => console.log('Clear search')}
+            className="w-5 h-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+          />
         </div>
       </div>
 
