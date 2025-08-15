@@ -136,6 +136,15 @@ const PatientRecord = () => {
                       <FolderOpen className="w-4 h-4" />
                     </button>
                   </td>
+                  <td className="py-3 px-4">
+                    <button
+                      onClick={() => handleDeleteClick(record.id, record.name)}
+                      className="w-8 h-8 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded flex items-center justify-center transition-colors"
+                      title="Delete Record"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
