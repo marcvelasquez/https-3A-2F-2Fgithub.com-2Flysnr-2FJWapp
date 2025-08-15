@@ -8,6 +8,7 @@ const Report = () => {
   const [studyData, setStudyData] = useState<any>(null);
   const [currentSlice, setCurrentSlice] = useState(4);
   const [totalSlices] = useState(7);
+  const [showMetadata, setShowMetadata] = useState(false);
   
   useEffect(() => {
     // Get uploaded study data from sessionStorage
