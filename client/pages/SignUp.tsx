@@ -58,8 +58,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" 
-         style={{ background: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%)' }}>
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-medical-blue-light via-background to-medical-blue-light dark:from-slate-900 dark:via-background dark:to-slate-800">
       <div className="w-full max-w-md">
         {/* Logo/Brand */}
         <div className="text-center mb-8">
@@ -67,22 +66,22 @@ const SignUp = () => {
             <div className="w-12 h-12 bg-medical-blue rounded-xl flex items-center justify-center shadow-lg">
               <div className="w-8 h-8 bg-white rounded-lg"></div>
             </div>
-            <span className="text-3xl font-bold text-medical-blue-dark">JointWise</span>
+            <span className="text-3xl font-bold text-medical-blue dark:text-primary">JointWise</span>
           </div>
-          <p className="text-medical-gray text-lg">Create your account</p>
+          <p className="text-muted-foreground text-lg">Create your account</p>
         </div>
 
         {/* Sign Up Form */}
-        <div className="bg-white/95 backdrop-blur-sm shadow-xl rounded-2xl p-8 border border-white/50">
+        <div className="bg-card/95 backdrop-blur-sm shadow-xl rounded-2xl p-8 border border-border/50">
           <div className="mb-6">
-            <h1 className="text-2xl font-bold text-gray-900 text-center">Sign Up</h1>
-            <p className="text-gray-600 text-center mt-2">Join JointWise today</p>
+            <h1 className="text-2xl font-bold text-foreground text-center">Sign Up</h1>
+            <p className="text-muted-foreground text-center mt-2">Join JointWise today</p>
           </div>
 
           {/* Google Sign Up Button */}
           <button
             onClick={handleGoogleSignUp}
-            className="w-full flex items-center justify-center space-x-3 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors mb-6"
+            className="w-full flex items-center justify-center space-x-3 py-3 px-4 border border-input rounded-lg hover:bg-accent/10 transition-colors mb-6 bg-card"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -90,21 +89,21 @@ const SignUp = () => {
               <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
               <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
             </svg>
-            <span className="text-gray-700 font-medium">Sign up with Google</span>
+            <span className="text-foreground font-medium">Sign up with Google</span>
           </button>
 
           <div className="relative mb-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-border"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or sign up with email</span>
+              <span className="px-2 bg-card text-muted-foreground">Or sign up with email</span>
             </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+              <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
                 {error}
               </div>
             )}
@@ -146,14 +145,14 @@ const SignUp = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent pr-12"
+                  className="w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent pr-12"
                   placeholder="Enter your password"
                   disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   disabled={isLoading}
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -170,14 +169,14 @@ const SignUp = () => {
                   type={showConfirmPassword ? 'text' : 'password'}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent pr-12"
+                  className="w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent pr-12"
                   placeholder="Confirm your password"
                   disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   disabled={isLoading}
                 >
                   {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -188,7 +187,7 @@ const SignUp = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-medical-blue hover:bg-medical-blue-dark text-white py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>
@@ -202,9 +201,9 @@ const SignUp = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               Already have an account?{' '}
-              <Link to="/login" className="text-medical-blue hover:text-medical-blue-dark font-medium">
+              <Link to="/login" className="text-primary hover:text-primary/80 font-medium">
                 Log in
               </Link>
             </p>
