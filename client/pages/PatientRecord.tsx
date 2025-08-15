@@ -5,9 +5,72 @@ import DeleteDialog from '../components/DeleteDialog';
 
 const PatientRecord = () => {
   const navigate = useNavigate();
+  const [deleteDialog, setDeleteDialog] = useState({ isOpen: false, recordId: '', patientName: '' });
+  const [patientRecords, setPatientRecords] = useState(() => {
+    // Load records from localStorage or use default data
+    const savedRecords = localStorage.getItem('patientRecords');
+    return savedRecords ? JSON.parse(savedRecords) : [
+      { id: '01.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D' },
+      { id: '02.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
+      { id: '03.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D' },
+      { id: '04.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
+      { id: '05.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
+      { id: '06.)', name: 'Jason Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D' },
+      { id: '07.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
+      { id: '08.)', name: 'Jude Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D' },
+      { id: '09.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
+      { id: '10.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '9:10 AM', file: 'D' },
+      { id: '11.)', name: 'James Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D' },
+      { id: '12.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
+      { id: '13.)', name: 'Jude Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D' },
+      { id: '14.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
+      { id: '15.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
+      { id: '16.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
+      { id: '17.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
+      { id: '18.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
+      { id: '19.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
+      { id: '20.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
+    ];
+  });
+
+  // Check for new uploads and append them
+  useEffect(() => {
+    const newUpload = sessionStorage.getItem('newPatientRecord');
+    if (newUpload) {
+      const uploadData = JSON.parse(newUpload);
+      const newRecord = {
+        id: `${patientRecords.length + 1}.)`,
+        name: uploadData.patientName,
+        bodyPart: uploadData.studyDescription || 'Study',
+        date: 'Today',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        file: 'D'
+      };
+
+      const updatedRecords = [newRecord, ...patientRecords];
+      setPatientRecords(updatedRecords);
+      localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+      sessionStorage.removeItem('newPatientRecord');
+    }
+  }, []);
 
   const handleFileFolder = (patientId: string) => {
     navigate(`/file-folder/${patientId}`);
+  };
+
+  const handleDeleteClick = (recordId: string, patientName: string) => {
+    setDeleteDialog({ isOpen: true, recordId, patientName });
+  };
+
+  const handleDeleteConfirm = () => {
+    const updatedRecords = patientRecords.filter(record => record.id !== deleteDialog.recordId);
+    setPatientRecords(updatedRecords);
+    localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    setDeleteDialog({ isOpen: false, recordId: '', patientName: '' });
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialog({ isOpen: false, recordId: '', patientName: '' });
   };
 
   // Extended patient data for the Patient Record page
