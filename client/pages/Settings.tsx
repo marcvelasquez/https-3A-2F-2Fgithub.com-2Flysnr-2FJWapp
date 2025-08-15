@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Palette, Save, Camera, Upload } from 'lucide-react';
 
 const Settings = () => {
