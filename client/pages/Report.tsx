@@ -78,7 +78,7 @@ const Report = () => {
         </div>
 
         {/* Main Content */}
-        <div className="flex gap-6 h-96">
+        <div className={`flex gap-6 h-96 ${showMetadata ? 'pr-80' : ''} transition-all duration-300`}>
           {/* Left Sidebar - MRI Slices */}
           <div className="w-32 space-y-2 overflow-y-auto max-h-96">
             {Array.from({ length: totalSlices }, (_, i) => i + 1).map((slice) => (
@@ -136,7 +136,7 @@ const Report = () => {
               <button className="bg-black/20 hover:bg-black/40 text-white p-2 rounded transition-colors">
                 <ZoomIn className="w-4 h-4" />
               </button>
-              <button 
+              <button
                 onClick={handleReset}
                 className="bg-black/20 hover:bg-black/40 text-white p-2 rounded transition-colors"
               >
@@ -146,6 +146,147 @@ const Report = () => {
             </div>
           </div>
         </div>
+
+        {/* Metadata Panel - Sliding from right */}
+        {showMetadata && (
+          <div className="fixed right-0 top-0 h-full w-80 bg-card border-l border-border shadow-xl z-50 animate-in slide-in-from-right duration-300">
+            <div className="flex items-center justify-between p-4 border-b border-border">
+              <h3 className="text-lg font-semibold text-foreground">Study Metadata</h3>
+              <button
+                onClick={() => setShowMetadata(false)}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-4 space-y-4 overflow-y-auto h-full pb-20">
+              {/* Study Information */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-foreground">Study Information</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Study ID:</span>
+                    <span className="text-foreground font-mono">{studyId}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Patient:</span>
+                    <span className="text-foreground">{studyData?.patientName || 'N/A'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Study Date:</span>
+                    <span className="text-foreground">October 25, 2023</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Modality:</span>
+                    <span className="text-foreground">MRI</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Body Part:</span>
+                    <span className="text-foreground">Knee</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Technical Parameters */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-foreground">Technical Parameters</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Slice Thickness:</span>
+                    <span className="text-foreground">3.0 mm</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">TR:</span>
+                    <span className="text-foreground">2500 ms</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">TE:</span>
+                    <span className="text-foreground">85 ms</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Field Strength:</span>
+                    <span className="text-foreground">1.5 Tesla</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Matrix:</span>
+                    <span className="text-foreground">512 x 512</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Current Slice Info */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-foreground">Current Slice ({currentSlice})</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Position:</span>
+                    <span className="text-foreground">{currentSlice} of {totalSlices}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Location:</span>
+                    <span className="text-foreground">{-15 + (currentSlice * 3)} mm</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Window Level:</span>
+                    <span className="text-foreground">350</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Window Width:</span>
+                    <span className="text-foreground">1500</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* AI Analysis */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-foreground">AI Analysis</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <div className="flex justify-between items-center">
+                      <span className="text-red-700 font-medium">ACL Tear</span>
+                      <span className="text-red-600 font-bold">72%</span>
+                    </div>
+                    <p className="text-red-600 text-xs mt-1">High probability detected</p>
+                  </div>
+                  <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                    <div className="flex justify-between items-center">
+                      <span className="text-orange-700 font-medium">Meniscus Tear</span>
+                      <span className="text-orange-600 font-bold">64%</span>
+                    </div>
+                    <p className="text-orange-600 text-xs mt-1">Moderate probability</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Equipment Info */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-foreground">Equipment</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Manufacturer:</span>
+                    <span className="text-foreground">Siemens</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Model:</span>
+                    <span className="text-foreground">MAGNETOM Aera</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Software:</span>
+                    <span className="text-foreground">syngo MR E11</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Overlay when metadata is open */}
+        {showMetadata && (
+          <div
+            className="fixed inset-0 bg-black/20 z-40"
+            onClick={() => setShowMetadata(false)}
+          />
+        )}
 
         {/* Study Information */}
         {studyData && (
