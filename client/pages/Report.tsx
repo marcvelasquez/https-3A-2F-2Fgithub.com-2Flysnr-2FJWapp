@@ -35,7 +35,7 @@ const Report = () => {
   };
 
   return (
-    <div className="h-screen bg-background flex flex-col">
+    <div className="bg-background flex flex-col min-h-full">
       {/* Header */}
       <div className="bg-card border-b border-border p-4 flex items-center justify-between">
         <div className="flex items-center space-x-4">

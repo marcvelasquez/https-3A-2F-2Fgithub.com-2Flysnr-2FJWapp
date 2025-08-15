@@ -59,7 +59,7 @@ const App = () => (
             } />
             <Route path="/report/:studyId" element={
               <ProtectedRoute>
-                <Report />
+                <Layout><Report /></Layout>
               </ProtectedRoute>
             } />
             <Route path="/upload-study" element={
