@@ -48,17 +48,6 @@ export default function Layout({ children }: LayoutProps) {
           </div>
         </div>
 
-        {/* User Profile */}
-        <div className="px-6 pb-6">
-          <div className="flex items-center space-x-3 text-white">
-            <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-              <User className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="font-medium">{user?.name || 'User'}</div>
-            </div>
-          </div>
-        </div>
 
         {/* Navigation */}
         <nav className="flex-1 px-4">
