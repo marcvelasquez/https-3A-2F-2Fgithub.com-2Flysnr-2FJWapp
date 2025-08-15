@@ -3,6 +3,12 @@ import { Search, X, MoreVertical, Calendar, Clock, FileText, FolderOpen } from '
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
+  const handleFileFolder = (patientId: string) => {
+    navigate(`/file-folder/${patientId}`);
+  };
+
   // Sample data for the dashboard
   const stats = [
     { value: '12', label: 'Total Scans This Week', bgColor: 'bg-blue-500' },
