@@ -39,7 +39,7 @@ const Report = () => {
       {/* Header */}
       <div className="bg-card border-b border-border p-4 flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <button 
+          <button
             onClick={() => navigate(-1)}
             className="text-muted-foreground hover:text-foreground"
           >
@@ -47,9 +47,17 @@ const Report = () => {
           </button>
           <h1 className="text-xl font-semibold text-foreground">JointWise - Report</h1>
         </div>
-        <div className="text-sm text-muted-foreground">
-          Metadata
-        </div>
+        <button
+          onClick={() => setShowMetadata(!showMetadata)}
+          className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+            showMetadata
+              ? 'bg-medical-blue text-white'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+          }`}
+        >
+          <Info className="w-4 h-4" />
+          <span className="text-sm font-medium">Metadata</span>
+        </button>
       </div>
 
       {/* Diagnosis Cards */}
