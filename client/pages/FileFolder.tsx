@@ -51,11 +51,15 @@ const FileFolder = () => {
       {/* Navigation Bar */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
-          <button className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors">
+          <button
+            onClick={() => navigate('/patient-record')}
+            className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors"
+          >
             <ChevronLeft className="w-5 h-5" />
+            <span className="text-sm">Back to Patient Record</span>
           </button>
           <div className="bg-card border border-border rounded-lg px-4 py-2">
-            <span className="text-sm text-foreground">Patient Name: Jane Doe</span>
+            <span className="text-sm text-foreground">Patient ID: {patientId || 'Unknown'}</span>
           </div>
         </div>
         <button className="flex items-center justify-center w-10 h-10 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors">
