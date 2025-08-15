@@ -111,7 +111,10 @@ const Images = () => {
           <ImageIcon className="w-16 h-16 text-muted-foreground mb-4" />
           <h3 className="text-lg font-medium text-foreground mb-2">No images found</h3>
           <p className="text-sm text-muted-foreground mb-4">Upload medical images to get started</p>
-          <button className="bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg font-medium transition-colors">
+          <button
+            onClick={() => console.log('Upload images clicked')}
+            className="bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg font-medium transition-colors"
+          >
             Upload Images
           </button>
         </div>

@@ -97,7 +97,10 @@ const FileFolder = () => {
           <Folder className="w-16 h-16 text-muted-foreground mb-4" />
           <h3 className="text-lg font-medium text-foreground mb-2">No folders found</h3>
           <p className="text-sm text-muted-foreground mb-4">Create a new folder to get started</p>
-          <button className="bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg font-medium transition-colors">
+          <button
+            onClick={() => console.log('Create folder clicked')}
+            className="bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg font-medium transition-colors"
+          >
             Create Folder
           </button>
         </div>
