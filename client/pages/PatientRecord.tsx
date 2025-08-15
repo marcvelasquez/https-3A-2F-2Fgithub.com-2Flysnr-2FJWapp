@@ -1,5 +1,6 @@
 import React from 'react';
-import { Search, X, FileText, Plus } from 'lucide-react';
+import { Search, X, FileText, Plus, FolderOpen } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const PatientRecord = () => {
   // Extended patient data for the Patient Record page
