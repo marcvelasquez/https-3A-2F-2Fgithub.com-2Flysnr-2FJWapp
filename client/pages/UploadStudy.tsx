@@ -119,8 +119,8 @@ const UploadStudy = () => {
             <div
               className={`
                 relative border-2 border-dashed rounded-lg p-12 text-center transition-colors
-                ${isDragOver 
-                  ? 'border-medical-blue bg-medical-blue/5' 
+                ${isDragOver
+                  ? 'border-medical-blue bg-medical-blue/5'
                   : 'border-border hover:border-medical-blue/50'
                 }
               `}
@@ -136,19 +136,36 @@ const UploadStudy = () => {
                   Click to upload or drag and drop
                 </h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  DICOM files (.dcm, .dicom) or archives (.zip, .rar, .7z)
+                  Images (.jpg, .png, .jpeg), DICOM files (.dcm, .dicom) or archives (.zip, .rar, .7z)
                 </p>
-                <button className="bg-medical-blue hover:bg-medical-blue-dark text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                <button type="button" className="bg-medical-blue hover:bg-medical-blue-dark text-white px-6 py-2 rounded-lg font-medium transition-colors">
                   Choose Files
                 </button>
               </div>
               <input
                 type="file"
                 multiple
-                accept=".dcm,.dicom,.zip,.rar,.7z"
+                accept=".jpg,.jpeg,.png,.dcm,.dicom,.zip,.rar,.7z,image/*"
+                onChange={handleFileSelect}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
             </div>
+
+            {/* Show uploaded files */}
+            {uploadedFiles.length > 0 && (
+              <div className="mt-4 p-4 bg-muted/50 rounded-lg">
+                <h4 className="text-sm font-medium text-foreground mb-2">Selected Files:</h4>
+                <div className="space-y-2">
+                  {uploadedFiles.map((file, index) => (
+                    <div key={index} className="flex items-center space-x-2 text-sm">
+                      <Check className="w-4 h-4 text-green-500" />
+                      <span className="text-foreground">{file.name}</span>
+                      <span className="text-muted-foreground">({(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Upload Button */}
