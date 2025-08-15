@@ -7,6 +7,7 @@ const Settings = () => {
     name: 'Dr. Smith',
     email: 'dr.smith@joinwise.com'
   });
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [appearanceData, setAppearanceData] = useState({
     font: 'Inter (Default)',
     theme: 'Light'
