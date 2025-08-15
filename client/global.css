@@ -15,8 +15,8 @@
     --font-family: Inter, system-ui, -apple-system, sans-serif;
     --base-font-size: 16px;
 
-    /* Updated blue theme colors matching provided palette */
-    --background: 0 0% 100%;
+    /* Enhanced light theme colors with more color */
+    --background: 227 100% 99%; /* Very light blue tint */
     --foreground: 222 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -28,10 +28,10 @@
     --primary: 210 79% 51%; /* #1E88E5 */
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 227 100% 98%; /* #E3F2FD */
+    --secondary: 227 100% 96%; /* Slightly more blue tint */
     --secondary-foreground: 222 84% 4.9%;
 
-    --muted: 227 100% 98%; /* #E3F2FD */
+    --muted: 227 100% 95%; /* Light blue background */
     --muted-foreground: 215 16% 46.9%;
 
     --accent: 199 98% 48%; /* #29B6F6 */
@@ -40,8 +40,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
+    --border: 220 20% 85%; /* Slightly more visible borders */
+    --input: 0 0% 100%; /* White input backgrounds */
     --ring: 210 79% 51%;
 
     --radius: 0.5rem;
@@ -66,6 +66,10 @@
     --success: 142 76% 36%;
     --warning: 38 92% 50%;
     --info: 199 98% 48%; /* #29B6F6 */
+
+    /* Auth page specific colors */
+    --auth-bg: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    --auth-card: rgba(255, 255, 255, 0.95);
   }
 
   /* Dark theme with updated blue palette */
