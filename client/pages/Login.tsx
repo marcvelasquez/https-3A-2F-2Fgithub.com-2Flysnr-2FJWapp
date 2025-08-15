@@ -38,6 +38,12 @@ const Login = () => {
     setIsLoading(false);
   };
 
+  const handleGoogleLogin = () => {
+    // Simulate Google login
+    console.log('Google login clicked');
+    // In real implementation, this would integrate with Google OAuth
+  };
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
