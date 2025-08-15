@@ -45,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4"
+    <div className="min-h-screen flex items-center justify-center p-4" 
          style={{ background: 'linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%)' }}>
       <div className="w-full max-w-md">
         {/* Logo/Brand */}
@@ -88,29 +88,30 @@ const Login = () => {
               <span className="px-2 bg-white text-gray-500">Or continue with email</span>
             </div>
           </div>
+
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                 {error}
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
                 placeholder="Enter your email"
                 disabled={isLoading}
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -118,14 +119,14 @@ const Login = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent pr-12"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent pr-12"
                   placeholder="Enter your password"
                   disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   disabled={isLoading}
                 >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -141,17 +142,25 @@ const Login = () => {
               {isLoading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Signing in...</span>
+                  <span>Logging in...</span>
                 </>
               ) : (
-                <span>Sign In</span>
+                <span>Log In</span>
               )}
             </button>
           </form>
 
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{' '}
+              <Link to="/signup" className="text-medical-blue hover:text-medical-blue-dark font-medium">
+                Sign up
+              </Link>
+            </p>
+          </div>
 
-          <div className="mt-4 p-3 bg-muted/50 rounded-lg">
-            <p className="text-xs text-muted-foreground text-center">
+          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+            <p className="text-xs text-blue-700 text-center">
               <strong>Demo Account:</strong><br />
               Email: demo@jointwise.com<br />
               Password: demo123
