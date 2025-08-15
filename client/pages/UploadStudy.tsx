@@ -23,7 +23,49 @@ const UploadStudy = () => {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
-    // Handle file drop logic here
+    const files = Array.from(e.dataTransfer.files);
+    handleFiles(files);
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      handleFiles(files);
+    }
+  };
+
+  const handleFiles = (files: File[]) => {
+    const validFiles = files.filter(file =>
+      file.type.startsWith('image/') ||
+      file.name.toLowerCase().endsWith('.dcm') ||
+      file.name.toLowerCase().endsWith('.dicom') ||
+      ['application/zip', 'application/x-rar-compressed', 'application/x-7z-compressed'].includes(file.type)
+    );
+    setUploadedFiles(validFiles);
+  };
+
+  const handleUpload = async () => {
+    if (!patientName || uploadedFiles.length === 0) {
+      alert('Please enter patient name and select files to upload');
+      return;
+    }
+
+    setIsUploading(true);
+
+    // Simulate upload process
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Navigate to report page with uploaded file data
+    const fileData = {
+      patientName,
+      studyDescription,
+      files: uploadedFiles.map(f => ({ name: f.name, type: f.type, size: f.size }))
+    };
+
+    // Store file data in sessionStorage for the report page
+    sessionStorage.setItem('uploadedStudy', JSON.stringify(fileData));
+
+    navigate(`/report/${Date.now()}`);
   };
 
   return (
