@@ -169,9 +169,13 @@ const UploadStudy = () => {
           </div>
 
           {/* Upload Button */}
-          <button className="w-full bg-medical-blue hover:bg-medical-blue-dark text-white py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2">
+          <button
+            onClick={handleUpload}
+            disabled={isUploading || uploadedFiles.length === 0}
+            className="w-full bg-medical-blue hover:bg-medical-blue-dark text-white py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             <Upload className="w-5 h-5" />
-            <span>Upload Study</span>
+            <span>{isUploading ? 'Uploading...' : 'Upload Study'}</span>
           </button>
         </div>
 
