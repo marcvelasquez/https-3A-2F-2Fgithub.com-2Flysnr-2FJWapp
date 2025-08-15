@@ -13,7 +13,7 @@ const DICOMViewer = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-full bg-background min-h-full">
       {/* Main DICOM Viewer Area */}
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
