@@ -17,10 +17,10 @@ const Dashboard = () => {
   ];
 
   const patientData = [
-    { id: '02.1', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', status: 'details' },
-    { id: '03.1', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 19, 2025', time: '4:45 PM', status: 'details' },
-    { id: '04.1', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 18, 2025', time: '11:22 AM', status: 'details' },
-    { id: '05.1', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 16, 2025', time: '9:10 AM', status: 'details' },
+    { id: '02)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', status: 'details' },
+    { id: '03)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 19, 2025', time: '4:45 PM', status: 'details' },
+    { id: '04)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 18, 2025', time: '11:22 AM', status: 'details' },
+    { id: '05)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 16, 2025', time: '9:10 AM', status: 'details' },
   ];
 
   const radiologistActivity = [
