@@ -71,7 +71,7 @@ const Report = () => {
         {/* Main Content */}
         <div className="flex gap-6 h-96">
           {/* Left Sidebar - MRI Slices */}
-          <div className="w-32 space-y-2">
+          <div className="w-32 space-y-2 overflow-y-auto max-h-96">
             {Array.from({ length: totalSlices }, (_, i) => i + 1).map((slice) => (
               <button
                 key={slice}
