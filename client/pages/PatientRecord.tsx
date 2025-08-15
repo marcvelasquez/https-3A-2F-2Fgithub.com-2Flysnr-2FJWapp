@@ -73,29 +73,6 @@ const PatientRecord = () => {
     setDeleteDialog({ isOpen: false, recordId: '', patientName: '' });
   };
 
-  // Extended patient data for the Patient Record page
-  const patientRecords = [
-    { id: '01.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D' },
-    { id: '02.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
-    { id: '03.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D' },
-    { id: '04.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
-    { id: '05.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
-    { id: '06.)', name: 'Jason Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D' },
-    { id: '07.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
-    { id: '08.)', name: 'Jude Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D' },
-    { id: '09.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
-    { id: '10.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '9:10 AM', file: 'D' },
-    { id: '11.)', name: 'James Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D' },
-    { id: '12.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
-    { id: '13.)', name: 'Jude Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D' },
-    { id: '14.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
-    { id: '15.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
-    { id: '16.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
-    { id: '17.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
-    { id: '18.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
-    { id: '19.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
-    { id: '20.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
-  ];
 
   return (
     <div className="p-6 bg-background min-h-full">
