@@ -58,11 +58,11 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         medical: {
-          blue: "hsl(var(--medical-blue))",
-          "blue-dark": "hsl(var(--medical-blue-dark))",
-          "blue-light": "hsl(var(--medical-blue-light))",
-          gray: "hsl(var(--medical-gray))",
-          "gray-light": "hsl(var(--medical-gray-light))",
+          blue: "hsl(var(--medical-blue))", /* #1E88E5 */
+          "blue-dark": "hsl(var(--medical-blue-dark))", /* #1565C0 */
+          "blue-light": "hsl(var(--medical-blue-light))", /* #90CAF9 */
+          gray: "hsl(var(--medical-gray))", /* #90A4AE */
+          "gray-light": "hsl(var(--medical-gray-light))", /* #E3F2FD */
           "gray-lighter": "hsl(var(--medical-gray-lighter))",
         },
         success: "hsl(var(--success))",
