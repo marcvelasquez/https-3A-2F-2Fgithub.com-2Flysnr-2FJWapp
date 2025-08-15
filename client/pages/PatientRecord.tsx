@@ -86,9 +86,13 @@ const PatientRecord = () => {
                   <td className="py-3 px-4 text-foreground">{record.date}</td>
                   <td className="py-3 px-4 text-foreground">{record.time}</td>
                   <td className="py-3 px-4">
-                    <div className="w-6 h-6 bg-medical-blue text-white rounded flex items-center justify-center text-sm font-medium">
-                      {record.file}
-                    </div>
+                    <button
+                      onClick={() => handleFileFolder(record.id)}
+                      className="w-8 h-8 bg-medical-blue hover:bg-medical-blue-dark text-white rounded flex items-center justify-center transition-colors"
+                      title="Open File Folder"
+                    >
+                      <FolderOpen className="w-4 h-4" />
+                    </button>
                   </td>
                 </tr>
               ))}
