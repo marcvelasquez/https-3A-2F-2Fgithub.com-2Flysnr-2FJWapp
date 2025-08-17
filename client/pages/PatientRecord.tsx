@@ -430,6 +430,11 @@ const PatientRecord = () => {
       filtered = filtered.filter(record => record.bodyPart === bodyPartFilter);
     }
 
+    // Apply status filter
+    if (statusFilter) {
+      filtered = filtered.filter(record => record.status === statusFilter);
+    }
+
     // Apply date sorting
     if (dateSort !== 'none') {
       filtered = [...filtered].sort((a, b) => {
