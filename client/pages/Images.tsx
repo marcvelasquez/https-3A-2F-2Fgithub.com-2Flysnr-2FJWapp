@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, ChevronLeft, Plus, Image as ImageIcon, Edit } from 'lucide-react';
+import { Search, X, ChevronLeft, Plus, Image as ImageIcon } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const Images = () => {
