@@ -766,10 +766,10 @@ const Report = () => {
                 <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
                   <Edit className="w-5 h-5 text-yellow-600" />
                 </div>
-                <h3 className="text-lg font-semibold text-foreground">Status Still Pending</h3>
+                <h3 className="text-lg font-semibold text-foreground">Status Needs Attention</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-6">
-                This study's status is still "Pending". Do you want to update the status before leaving, or continue without updating?
+                This study's status needs to be updated. Do you want to update the status before leaving, or continue without updating?
               </p>
               <div className="flex space-x-3 justify-end">
                 <button
