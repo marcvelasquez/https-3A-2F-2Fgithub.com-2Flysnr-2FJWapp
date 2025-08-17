@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const UploadStudy = () => {
   const [patientName, setPatientName] = useState('John Doe');
   const [studyDescription, setStudyDescription] = useState('');
+  const [bodyPart, setBodyPart] = useState('');
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
