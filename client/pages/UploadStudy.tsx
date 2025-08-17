@@ -46,8 +46,8 @@ const UploadStudy = () => {
   };
 
   const handleUpload = async () => {
-    if (!patientName || uploadedFiles.length === 0) {
-      alert('Please enter patient name and select files to upload');
+    if (!patientName || !bodyPart || uploadedFiles.length === 0) {
+      alert('Please enter patient name, select body part, and choose files to upload');
       return;
     }
 
@@ -60,6 +60,7 @@ const UploadStudy = () => {
     const fileData = {
       patientName,
       studyDescription,
+      bodyPart,
       files: uploadedFiles.map(f => ({ name: f.name, type: f.type, size: f.size }))
     };
 
