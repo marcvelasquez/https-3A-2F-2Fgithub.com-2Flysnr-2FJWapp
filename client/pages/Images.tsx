@@ -11,13 +11,23 @@ const Images = () => {
   const [currentPatient, setCurrentPatient] = useState<any>(null);
 
   useEffect(() => {
-    // Get patient name from localStorage
+    // Get patient data from localStorage
     const savedRecords = localStorage.getItem('patientRecords');
     if (savedRecords) {
       const records = JSON.parse(savedRecords);
       const patient = records.find((record: any) => record.id === patientId);
       if (patient) {
         setPatientName(patient.name);
+        setCurrentPatient(patient);
+
+        // Automatically check status and show popup if needed
+        const status = patient.status || 'Pending';
+        if (status === 'Pending' || status === 'In Progress') {
+          // Show warning after 2 seconds to ensure page is loaded
+          setTimeout(() => {
+            setShowStatusWarning(true);
+          }, 2000);
+        }
       }
     }
   }, [patientId]);
