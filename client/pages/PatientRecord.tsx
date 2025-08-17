@@ -439,17 +439,6 @@ const PatientRecord = () => {
 
   const filteredRecords = getFilteredAndSortedRecords();
 
-  // Debug logging
-  console.log('PatientRecord Debug:', {
-    totalRecords: patientRecords.length,
-    filteredRecords: filteredRecords.length,
-    searchTerm,
-    bodyPartFilter,
-    dateSort,
-    currentPage,
-    recordsPerPage
-  });
-
   // Pagination logic
   const totalPages = Math.ceil(filteredRecords.length / recordsPerPage);
   const startIndex = (currentPage - 1) * recordsPerPage;
