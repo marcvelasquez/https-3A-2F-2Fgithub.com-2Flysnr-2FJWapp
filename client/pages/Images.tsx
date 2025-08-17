@@ -7,6 +7,8 @@ const Images = () => {
   const navigate = useNavigate();
   const [patientName, setPatientName] = useState('Unknown Patient');
   const [searchTerm, setSearchTerm] = useState('');
+  const [showNavigationWarning, setShowNavigationWarning] = useState(false);
+  const [pendingNavigation, setPendingNavigation] = useState<{patientName: string, status: string} | null>(null);
 
   useEffect(() => {
     // Get patient name from localStorage
