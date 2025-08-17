@@ -16,6 +16,7 @@ const PatientRecord = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [dateSort, setDateSort] = useState<'asc' | 'desc' | 'none'>('none');
   const [bodyPartFilter, setBodyPartFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
