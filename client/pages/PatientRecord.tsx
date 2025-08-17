@@ -136,6 +136,11 @@ const PatientRecord = () => {
     setBulkDeleteDialog({ isOpen: false, count: 0 });
   };
 
+  const handleEditPatient = (recordId: string) => {
+    console.log('Edit patient:', recordId);
+    // TODO: Open edit form for patient
+  };
+
   const handleAddPatient = () => {
     // Example of adding a new patient - this would normally open a form
     const newPatient = {
@@ -218,6 +223,7 @@ const PatientRecord = () => {
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Body Part</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Date</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Time</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Edit</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">File</th>
               </tr>
             </thead>
@@ -239,6 +245,15 @@ const PatientRecord = () => {
                   <td className="py-3 px-4 text-foreground">{record.bodyPart}</td>
                   <td className="py-3 px-4 text-foreground">{record.date}</td>
                   <td className="py-3 px-4 text-foreground">{record.time}</td>
+                  <td className="py-3 px-4">
+                    <button
+                      onClick={() => handleEditPatient(record.id)}
+                      className="w-8 h-8 bg-orange-500 hover:bg-orange-600 text-white rounded flex items-center justify-center transition-colors"
+                      title="Edit Patient"
+                    >
+                      <Edit className="w-4 h-4" />
+                    </button>
+                  </td>
                   <td className="py-3 px-4">
                     <button
                       onClick={() => handleFileFolder(record.id)}
