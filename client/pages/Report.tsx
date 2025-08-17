@@ -9,12 +9,19 @@ const Report = () => {
   const [currentSlice, setCurrentSlice] = useState(4);
   const [totalSlices] = useState(7);
   const [showMetadata, setShowMetadata] = useState(false);
-  
+  const [currentPatient, setCurrentPatient] = useState<any>(null);
+
   useEffect(() => {
     // Get uploaded study data from sessionStorage
     const uploadedStudy = sessionStorage.getItem('uploadedStudy');
     if (uploadedStudy) {
       setStudyData(JSON.parse(uploadedStudy));
+    }
+
+    // Get current patient context
+    const patientContext = sessionStorage.getItem('currentPatient');
+    if (patientContext) {
+      setCurrentPatient(JSON.parse(patientContext));
     }
   }, []);
 
@@ -118,10 +125,10 @@ const Report = () => {
             {/* Main Content Display */}
             <div className="text-center text-white">
               <h2 className="text-4xl font-bold mb-4">MRI Slice {currentSlice}</h2>
-              {studyData && (
+              {(currentPatient || studyData) && (
                 <div className="text-sm opacity-80">
-                  Patient: {studyData.patientName}
-                  {studyData.studyDescription && (
+                  Patient: {currentPatient?.name || studyData?.patientName || 'Unknown Patient'}
+                  {studyData?.studyDescription && (
                     <div className="mt-1">{studyData.studyDescription}</div>
                   )}
                 </div>
@@ -170,7 +177,7 @@ const Report = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Patient:</span>
-                    <span className="text-foreground">{studyData?.patientName || 'N/A'}</span>
+                    <span className="text-foreground">{currentPatient?.name || studyData?.patientName || 'N/A'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Study Date:</span>
@@ -295,7 +302,7 @@ const Report = () => {
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <span className="text-muted-foreground">Patient Name:</span>
-                <span className="ml-2 text-foreground font-medium">{studyData.patientName}</span>
+                <span className="ml-2 text-foreground font-medium">{currentPatient?.name || studyData.patientName}</span>
               </div>
               <div>
                 <span className="text-muted-foreground">Study ID:</span>
