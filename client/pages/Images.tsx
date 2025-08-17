@@ -23,6 +23,27 @@ const Images = () => {
   }, [patientId]);
 
   const handleBackToFolders = () => {
+    // Check current patient status before navigating back
+    const savedRecords = localStorage.getItem('patientRecords');
+    if (savedRecords) {
+      const records = JSON.parse(savedRecords);
+      const patient = records.find((record: any) => record.id === patientId);
+      if (patient) {
+        const status = patient.status || 'Pending';
+
+        // Check if status is Pending or In Progress
+        if (status === 'Pending' || status === 'In Progress') {
+          setPendingNavigation({
+            patientName: patient.name,
+            status: status
+          });
+          setShowNavigationWarning(true);
+          return;
+        }
+      }
+    }
+
+    // Status is Complete/Follow Up or no patient, proceed
     navigate(`/file-folder/${patientId}`);
   };
 
