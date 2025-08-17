@@ -175,6 +175,17 @@ const Dashboard = () => {
                   <td className="py-3 px-4 text-foreground">{patient.date}</td>
                   <td className="py-3 px-4 text-foreground">{patient.time}</td>
                   <td className="py-3 px-4">
+                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                      patient.status === 'Complete' ? 'bg-green-100 text-green-800' :
+                      patient.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                      patient.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                      patient.status === 'Follow Up' ? 'bg-purple-100 text-purple-800' :
+                      'bg-gray-100 text-gray-800'
+                    }`}>
+                      {patient.status || 'Pending'}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4">
                     <button
                       onClick={() => handleFileFolder(patient.originalId || patient.id)}
                       className="w-8 h-8 bg-medical-blue hover:bg-medical-blue-dark text-white rounded flex items-center justify-center transition-colors"
