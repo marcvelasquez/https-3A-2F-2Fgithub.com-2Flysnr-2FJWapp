@@ -744,6 +744,22 @@ const PatientRecord = () => {
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
+                  Status
+                </label>
+                <select
+                  value={editFormData.status}
+                  onChange={(e) => setEditFormData({ ...editFormData, status: e.target.value })}
+                  className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Complete">Complete</option>
+                  <option value="Follow Up">Follow Up</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Remarks
                 </label>
                 <textarea
