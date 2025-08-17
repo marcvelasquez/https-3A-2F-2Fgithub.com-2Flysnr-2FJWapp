@@ -175,7 +175,53 @@ const PatientRecord = () => {
 
     setPatientRecords(updatedRecords);
     localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+
+    // Update metadata for each edited record
+    const editedRecords = updatedRecords.filter(record => selectedRecords.includes(record.id));
+    editedRecords.forEach(record => {
+      // Create or update metadata for this patient
+      const metadataKey = `metadata_${record.id}`;
+      const existingMetadata = localStorage.getItem(metadataKey);
+
+      const metadata = existingMetadata ? JSON.parse(existingMetadata) : {
+        // Default metadata structure
+        studyInfo: {
+          studyId: record.id,
+          patientName: record.name,
+          studyDate: record.date,
+          modality: 'MRI',
+          bodyPart: record.bodyPart
+        },
+        technicalParams: {
+          sliceThickness: '3.0 mm',
+          tr: '2500 ms',
+          te: '85 ms',
+          fieldStrength: '1.5 Tesla',
+          matrix: '512 x 512'
+        },
+        equipment: {
+          manufacturer: 'Siemens',
+          model: 'MAGNETOM Aera',
+          software: 'syngo MR E11'
+        },
+        remarks: record.remarks || ''
+      };
+
+      // Update metadata with new values
+      metadata.studyInfo.patientName = record.name;
+      metadata.studyInfo.bodyPart = record.bodyPart;
+      metadata.remarks = record.remarks || '';
+      metadata.lastModified = new Date().toISOString();
+
+      // Save updated metadata
+      localStorage.setItem(metadataKey, JSON.stringify(metadata));
+    });
+
+    // Dispatch event to sync with Dashboard and other components
     window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+    window.dispatchEvent(new CustomEvent('metadataUpdated', {
+      detail: { updatedRecords: editedRecords }
+    }));
 
     setEditDialog({ isOpen: false, records: [] });
     setSelectedRecords([]);
