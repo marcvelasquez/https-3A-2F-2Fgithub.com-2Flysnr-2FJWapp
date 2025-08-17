@@ -12,17 +12,24 @@ const Dashboard = () => {
       const savedRecords = localStorage.getItem('patientRecords');
       if (savedRecords) {
         const records = JSON.parse(savedRecords);
-        // Show only the first 5 records for dashboard display
-        setPatientData(records.slice(0, 5));
+        // Take first 5 records and renumber them sequentially for dashboard display (01-05)
+        const recentRecords = records.slice(0, 5).map((record: any, index: number) => ({
+          ...record,
+          id: `${(index + 1).toString().padStart(2, '0')}.)`
+        }));
+        setPatientData(recentRecords);
       } else {
         // Default data if no records exist - ensure proper sequential numbering
         const defaultData = [
-          { id: '', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
-          { id: '', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 19, 2025', time: '4:45 PM', file: 'D' },
-          { id: '', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 18, 2025', time: '11:22 AM', file: 'D' },
-          { id: '', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 16, 2025', time: '9:10 AM', file: 'D' },
-          { id: '', name: 'Sarah Smith', bodyPart: 'Right Ankle', date: 'April 15, 2025', time: '3:30 PM', file: 'D' },
-        ].map((record, index) => ({ ...record, id: `${(index + 1).toString().padStart(2, '0')}.)`}));
+          { name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
+          { name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 19, 2025', time: '4:45 PM', file: 'D' },
+          { name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 18, 2025', time: '11:22 AM', file: 'D' },
+          { name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 16, 2025', time: '9:10 AM', file: 'D' },
+          { name: 'Sarah Smith', bodyPart: 'Right Ankle', date: 'April 15, 2025', time: '3:30 PM', file: 'D' },
+        ].map((record, index) => ({
+          ...record,
+          id: `${(index + 1).toString().padStart(2, '0')}.)`
+        }));
 
         setPatientData(defaultData);
       }
