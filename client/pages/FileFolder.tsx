@@ -155,6 +155,45 @@ const FileFolder = () => {
 
   const filteredFolders = getFilteredFolders();
 
+  const handleNavigateAnyway = () => {
+    setShowNavigationWarning(false);
+    setPendingNavigation(null);
+    navigate('/patient-record');
+  };
+
+  const handleUpdateStatusFirst = () => {
+    setShowNavigationWarning(false);
+    setPendingNavigation(null);
+    // Navigate to patient record where they can edit status
+    navigate('/patient-record');
+  };
+
+  const handleRemindLater = () => {
+    if (pendingNavigation) {
+      // Update status to Pending
+      const savedRecords = localStorage.getItem('patientRecords');
+      if (savedRecords) {
+        const records = JSON.parse(savedRecords);
+        const updatedRecords = records.map((record: any) => {
+          if (record.id === patientId) {
+            return { ...record, status: 'Pending' };
+          }
+          return record;
+        });
+        localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+
+        // Dispatch events to sync across all pages
+        window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+        window.dispatchEvent(new CustomEvent('metadataUpdated', {
+          detail: { updatedRecords: [{ id: patientId, status: 'Pending' }] }
+        }));
+      }
+    }
+    setShowNavigationWarning(false);
+    setPendingNavigation(null);
+    navigate('/patient-record');
+  };
+
   return (
     <div className="p-6 bg-background min-h-full">
       {/* Header */}
