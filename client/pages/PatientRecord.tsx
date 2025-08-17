@@ -641,6 +641,103 @@ const PatientRecord = () => {
           </div>
         </div>
       )}
+
+      {/* New Patient Dialog */}
+      {newPatientDialog.isOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-card p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold text-foreground mb-4">
+              Add New Patient
+            </h3>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Patient Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={newPatientData.name}
+                  onChange={(e) => setNewPatientData({ ...newPatientData, name: e.target.value })}
+                  className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                  placeholder="Enter patient name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Body Part <span className="text-red-500">*</span>
+                </label>
+                <select
+                  value={newPatientData.bodyPart}
+                  onChange={(e) => setNewPatientData({ ...newPatientData, bodyPart: e.target.value })}
+                  className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                >
+                  <option value="">Select body part</option>
+                  <option value="Head">Head</option>
+                  <option value="Brain">Brain</option>
+                  <option value="Neck">Neck</option>
+                  <option value="Cervical Spine">Cervical Spine</option>
+                  <option value="Thoracic Spine">Thoracic Spine</option>
+                  <option value="Lumbar Spine">Lumbar Spine</option>
+                  <option value="Chest">Chest</option>
+                  <option value="Heart">Heart</option>
+                  <option value="Abdomen">Abdomen</option>
+                  <option value="Pelvis">Pelvis</option>
+                  <option value="Right Shoulder">Right Shoulder</option>
+                  <option value="Left Shoulder">Left Shoulder</option>
+                  <option value="Right Arm">Right Arm</option>
+                  <option value="Left Arm">Left Arm</option>
+                  <option value="Right Elbow">Right Elbow</option>
+                  <option value="Left Elbow">Left Elbow</option>
+                  <option value="Right Wrist">Right Wrist</option>
+                  <option value="Left Wrist">Left Wrist</option>
+                  <option value="Right Hand">Right Hand</option>
+                  <option value="Left Hand">Left Hand</option>
+                  <option value="Right Hip">Right Hip</option>
+                  <option value="Left Hip">Left Hip</option>
+                  <option value="Right Knee">Right Knee</option>
+                  <option value="Left Knee">Left Knee</option>
+                  <option value="Bilateral Knees">Bilateral Knees</option>
+                  <option value="Right Ankle">Right Ankle</option>
+                  <option value="Left Ankle">Left Ankle</option>
+                  <option value="Right Foot">Right Foot</option>
+                  <option value="Left Foot">Left Foot</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Remarks (Optional)
+                </label>
+                <textarea
+                  value={newPatientData.remarks}
+                  onChange={(e) => setNewPatientData({ ...newPatientData, remarks: e.target.value })}
+                  rows={3}
+                  className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent resize-none"
+                  placeholder="Enter remarks or notes (optional)"
+                />
+              </div>
+            </div>
+
+            <div className="flex space-x-3 justify-end mt-6">
+              <button
+                onClick={handleNewPatientCancel}
+                className="px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleNewPatientSave}
+                className="px-4 py-2 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors"
+              >
+                Add Patient
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
