@@ -20,8 +20,6 @@ const PatientRecord = () => {
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
-  const [showNavigationWarning, setShowNavigationWarning] = useState(false);
-  const [pendingNavigation, setPendingNavigation] = useState<{action: string, patientId?: string, patientName?: string, status?: string} | null>(null);
 
   // Function to reassign all patient IDs sequentially starting from 01
   const reassignPatientIds = (records: any[]) => {
