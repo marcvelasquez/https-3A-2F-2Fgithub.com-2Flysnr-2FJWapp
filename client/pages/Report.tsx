@@ -251,18 +251,21 @@ const Report = () => {
         <div className="flex items-center space-x-4">
           <button
             onClick={() => {
-              // Try to go back in history, fallback to images page
-              if (window.history.length > 1) {
-                navigate(-1);
-              } else {
-                // Fallback navigation based on current patient context
+              try {
+                // First try to get patient context
                 const patientContext = sessionStorage.getItem('currentPatient');
                 if (patientContext) {
                   const patient = JSON.parse(patientContext);
+                  // Navigate back to images page for this patient
                   navigate(`/file-folder/${patient.id}/images`);
                 } else {
-                  navigate('/patient-record');
+                  // No patient context, try browser back
+                  navigate(-1);
                 }
+              } catch (error) {
+                console.error('Navigation error:', error);
+                // Final fallback to patient record
+                navigate('/patient-record');
               }
             }}
             className="text-muted-foreground hover:text-foreground"
