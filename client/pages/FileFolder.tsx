@@ -201,6 +201,11 @@ const FileFolder = () => {
             {/* Folder Name */}
             <div className="text-center">
               <div className="text-sm font-medium text-foreground mb-1">{folder.name}</div>
+              {folder.fileCount && (
+                <div className="text-xs text-muted-foreground">
+                  {folder.fileCount} file{folder.fileCount !== 1 ? 's' : ''}
+                </div>
+              )}
             </div>
           </div>
         ))}
