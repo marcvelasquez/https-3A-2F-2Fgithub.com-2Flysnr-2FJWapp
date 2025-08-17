@@ -9,7 +9,7 @@ const PatientRecord = () => {
   const [selectedRecords, setSelectedRecords] = useState<string[]>([]);
   const [bulkDeleteDialog, setBulkDeleteDialog] = useState({ isOpen: false, count: 0 });
   const [editDialog, setEditDialog] = useState({ isOpen: false, records: [] as any[] });
-  const [editFormData, setEditFormData] = useState({ name: '', bodyPart: '', remarks: '' });
+  const [editFormData, setEditFormData] = useState({ name: '', bodyPart: '', remarks: '', status: 'Pending' });
   const [deleteConfirmDialog, setDeleteConfirmDialog] = useState({ isOpen: false, message: '', onConfirm: () => {} });
   const [newPatientDialog, setNewPatientDialog] = useState({ isOpen: false });
   const [newPatientData, setNewPatientData] = useState({ name: '', bodyPart: '', remarks: '', status: 'Pending' });
