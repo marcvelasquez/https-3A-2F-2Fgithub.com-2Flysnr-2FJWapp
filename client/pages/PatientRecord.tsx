@@ -257,6 +257,7 @@ const PatientRecord = () => {
           name: editFormData.name,
           bodyPart: editFormData.bodyPart,
           remarks: editFormData.remarks,
+          status: editFormData.status,
           date: record.date, // Keep original date
           time: record.time   // Keep original time
         };
