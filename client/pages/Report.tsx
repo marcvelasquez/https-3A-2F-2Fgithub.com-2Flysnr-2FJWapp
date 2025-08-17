@@ -10,6 +10,7 @@ const Report = () => {
   const [totalSlices] = useState(7);
   const [showMetadata, setShowMetadata] = useState(false);
   const [currentPatient, setCurrentPatient] = useState<any>(null);
+  const [metadata, setMetadata] = useState<any>(null);
 
   useEffect(() => {
     // Get uploaded study data from sessionStorage
@@ -21,9 +22,50 @@ const Report = () => {
     // Get current patient context
     const patientContext = sessionStorage.getItem('currentPatient');
     if (patientContext) {
-      setCurrentPatient(JSON.parse(patientContext));
+      const patient = JSON.parse(patientContext);
+      setCurrentPatient(patient);
+
+      // Load metadata for this patient
+      const metadataKey = `metadata_${patient.id || studyId}`;
+      const savedMetadata = localStorage.getItem(metadataKey);
+      if (savedMetadata) {
+        setMetadata(JSON.parse(savedMetadata));
+      }
     }
-  }, []);
+
+    // Listen for metadata updates
+    const handleMetadataUpdate = (event: any) => {
+      if (event.detail?.updatedRecords) {
+        const currentPatientId = currentPatient?.id || studyId;
+        const wasUpdated = event.detail.updatedRecords.some((record: any) => record.id === currentPatientId);
+
+        if (wasUpdated) {
+          // Reload metadata for current patient
+          const metadataKey = `metadata_${currentPatientId}`;
+          const savedMetadata = localStorage.getItem(metadataKey);
+          if (savedMetadata) {
+            setMetadata(JSON.parse(savedMetadata));
+          }
+
+          // Also update current patient data
+          const savedRecords = localStorage.getItem('patientRecords');
+          if (savedRecords) {
+            const records = JSON.parse(savedRecords);
+            const updatedPatient = records.find((record: any) => record.id === currentPatientId);
+            if (updatedPatient) {
+              setCurrentPatient(updatedPatient);
+            }
+          }
+        }
+      }
+    };
+
+    window.addEventListener('metadataUpdated', handleMetadataUpdate);
+
+    return () => {
+      window.removeEventListener('metadataUpdated', handleMetadataUpdate);
+    };
+  }, [studyId, currentPatient?.id]);
 
   const handlePreviousSlice = () => {
     setCurrentSlice(prev => Math.max(1, prev - 1));
