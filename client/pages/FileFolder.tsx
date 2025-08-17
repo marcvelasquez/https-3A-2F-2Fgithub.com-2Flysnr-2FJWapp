@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, ChevronLeft, Plus, Folder, FileText, Edit } from 'lucide-react';
+import { Search, X, ChevronLeft, Plus, Folder, FileText } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const FileFolder = () => {
