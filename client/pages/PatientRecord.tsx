@@ -51,6 +51,40 @@ const PatientRecord = () => {
       { id: '19.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D', remarks: 'Baseline study' },
       { id: '20.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Progress monitoring' },
     ];
+
+    // Initialize metadata for default records if not already present
+    if (!savedRecords) {
+      records.forEach(record => {
+        const metadataKey = `metadata_${record.id}`;
+        if (!localStorage.getItem(metadataKey)) {
+          const metadata = {
+            studyInfo: {
+              studyId: record.id,
+              patientName: record.name,
+              studyDate: record.date,
+              modality: 'MRI',
+              bodyPart: record.bodyPart
+            },
+            technicalParams: {
+              sliceThickness: '3.0 mm',
+              tr: '2500 ms',
+              te: '85 ms',
+              fieldStrength: '1.5 Tesla',
+              matrix: '512 x 512'
+            },
+            equipment: {
+              manufacturer: 'Siemens',
+              model: 'MAGNETOM Aera',
+              software: 'syngo MR E11'
+            },
+            remarks: record.remarks || '',
+            created: new Date().toISOString()
+          };
+          localStorage.setItem(metadataKey, JSON.stringify(metadata));
+        }
+      });
+    }
+
     // Ensure all records have proper sequential numbering
     return reassignPatientIds(records);
   });
