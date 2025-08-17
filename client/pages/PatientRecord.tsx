@@ -387,7 +387,7 @@ const PatientRecord = () => {
 
   const handleNewPatientCancel = () => {
     setNewPatientDialog({ isOpen: false });
-    setNewPatientData({ name: '', bodyPart: '', remarks: '' });
+    setNewPatientData({ name: '', bodyPart: '', remarks: '', status: 'Pending' });
   };
 
   // Search and filter functions
