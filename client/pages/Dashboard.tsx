@@ -172,7 +172,7 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {patientData.map((patient) => (
+              {filteredPatientData.map((patient) => (
                 <tr key={patient.originalId || patient.id} className="border-b border-border hover:bg-muted/50">
                   <td className="py-3 px-4 text-foreground">{patient.displayId || patient.id}</td>
                   <td className="py-3 px-4 text-foreground">{patient.name}</td>
