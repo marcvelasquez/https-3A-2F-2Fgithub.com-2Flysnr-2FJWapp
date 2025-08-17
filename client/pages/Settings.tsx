@@ -96,13 +96,19 @@ const Settings = () => {
 
     // Dispatch custom event to notify other components
     window.dispatchEvent(new CustomEvent('themeChanged', {
-      detail: { theme: appearanceData.theme }
+      detail: {
+        theme: appearanceData.theme,
+        font: appearanceData.font,
+        fontSize: appearanceData.fontSize
+      }
     }));
 
-    // Force a small delay to ensure the theme is applied
+    // Force multiple re-applications to ensure theme takes effect
     setTimeout(() => {
       applyAppearanceSettings();
-    }, 100);
+      // Force a page refresh for immediate effect
+      window.location.reload();
+    }, 200);
 
     console.log('Appearance settings saved and applied:', appearanceData);
   };
