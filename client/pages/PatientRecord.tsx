@@ -116,6 +116,10 @@ const PatientRecord = () => {
   };
 
   const handleDeleteConfirm = () => {
+    // Remove metadata for the deleted record
+    const metadataKey = `metadata_${deleteDialog.recordId}`;
+    localStorage.removeItem(metadataKey);
+
     const filteredRecords = patientRecords.filter(record => record.id !== deleteDialog.recordId);
     const updatedRecords = reassignPatientIds(filteredRecords);
     setPatientRecords(updatedRecords);
@@ -155,6 +159,12 @@ const PatientRecord = () => {
       isOpen: true,
       message: `Are you sure you want to delete ${selectedRecords.length} selected record${selectedRecords.length > 1 ? 's' : ''}? This action cannot be undone.`,
       onConfirm: () => {
+        // Remove metadata for all deleted records
+        selectedRecords.forEach(recordId => {
+          const metadataKey = `metadata_${recordId}`;
+          localStorage.removeItem(metadataKey);
+        });
+
         const filteredRecords = patientRecords.filter(record => !selectedRecords.includes(record.id));
         const updatedRecords = reassignPatientIds(filteredRecords);
         setPatientRecords(updatedRecords);
