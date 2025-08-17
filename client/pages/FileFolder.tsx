@@ -259,6 +259,23 @@ const FileFolder = () => {
           </button>
         </div>
       )}
+
+      {/* No Search Results Message */}
+      {filteredFolders.length === 0 && patientFolders.length > 0 && searchTerm && (
+        <div className="flex flex-col items-center justify-center py-16">
+          <Search className="w-16 h-16 text-muted-foreground mb-4" />
+          <h3 className="text-lg font-medium text-foreground mb-2">No folders found</h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            No folders match your search for "{searchTerm}"
+          </p>
+          <button
+            onClick={handleClearSearch}
+            className="bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg font-medium transition-colors"
+          >
+            Clear Search
+          </button>
+        </div>
+      )}
     </div>
   );
 };
