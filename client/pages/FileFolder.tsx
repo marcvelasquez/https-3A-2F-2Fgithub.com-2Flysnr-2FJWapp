@@ -53,8 +53,17 @@ const FileFolder = () => {
     if (savedRecords) {
       const records = JSON.parse(savedRecords);
       const patient = records.find((record: any) => record.id === patientId);
-      // Check if patient was recently added (today)
-      return patient && patient.date === 'Today' && patient.name === 'New Patient';
+
+      // Check if patient was recently added (within last 5 minutes) or has isNewlyAdded flag
+      const isRecentlyAdded = patient && patient.isNewlyAdded &&
+        patient.addedTimestamp &&
+        (Date.now() - patient.addedTimestamp) < (5 * 60 * 1000); // 5 minutes
+
+      // Also check for any patient added today that hasn't had files uploaded yet
+      const isTodayWithNoFiles = patient && patient.date === 'Today' &&
+        !localStorage.getItem(`folderFiles_${patientId}`);
+
+      return isRecentlyAdded || isTodayWithNoFiles;
     }
     return false;
   };
