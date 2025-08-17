@@ -155,40 +155,43 @@ const PatientRecord = () => {
         <h1 className="text-2xl font-semibold text-foreground">Patient Record</h1>
       </div>
 
-      {/* Search Bar */}
+      {/* Search Bar with New Button */}
       <div className="relative mb-6">
-        <div className="flex items-center bg-card border border-border rounded-lg px-4 py-3">
-          <Search className="w-5 h-5 text-muted-foreground mr-3" />
-          <input
-            type="text"
-            placeholder="Search"
-            className="flex-1 bg-transparent border-none outline-none text-foreground placeholder-muted-foreground"
-          />
-          <X
-            onClick={() => console.log('Clear search')}
-            className="w-5 h-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
-          />
+        <div className="flex items-center space-x-4">
+          <div className="flex-1 flex items-center bg-card border border-border rounded-lg px-4 py-3">
+            <Search className="w-5 h-5 text-muted-foreground mr-3" />
+            <input
+              type="text"
+              placeholder="Search"
+              className="flex-1 bg-transparent border-none outline-none text-foreground placeholder-muted-foreground"
+            />
+            <X
+              onClick={() => console.log('Clear search')}
+              className="w-5 h-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+            />
+          </div>
+          <button
+            onClick={handleAddPatient}
+            className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
+          >
+            <Plus className="w-4 h-4" />
+            <span>New</span>
+          </button>
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex space-x-3 mb-6">
-        <button
-          onClick={handleAddPatient}
-          className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add Patient</span>
-        </button>
-        <button
-          onClick={handleBulkDelete}
-          disabled={selectedRecords.length === 0}
-          className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <Minus className="w-4 h-4" />
-          <span>Remove ({selectedRecords.length})</span>
-        </button>
-      </div>
+      {/* Delete Option (shows when checkboxes are selected) */}
+      {selectedRecords.length > 0 && (
+        <div className="mb-6">
+          <button
+            onClick={handleBulkDelete}
+            className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
+          >
+            <Minus className="w-4 h-4" />
+            <span>Delete Selected ({selectedRecords.length})</span>
+          </button>
+        </div>
+      )}
 
       {/* Patient Records Table */}
       <div className="medical-card p-6">
