@@ -250,7 +250,21 @@ const Report = () => {
       <div className="bg-card border-b border-border p-4 flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => {
+              // Try to go back in history, fallback to images page
+              if (window.history.length > 1) {
+                navigate(-1);
+              } else {
+                // Fallback navigation based on current patient context
+                const patientContext = sessionStorage.getItem('currentPatient');
+                if (patientContext) {
+                  const patient = JSON.parse(patientContext);
+                  navigate(`/file-folder/${patient.id}/images`);
+                } else {
+                  navigate('/patient-record');
+                }
+              }
+            }}
             className="text-muted-foreground hover:text-foreground"
           >
             <ChevronLeft className="w-5 h-5" />
