@@ -213,6 +213,12 @@ const PatientRecord = () => {
       });
       setPatientRecords(updatedRecords);
       localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+
+      // Dispatch events to sync across all pages
+      window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+      window.dispatchEvent(new CustomEvent('metadataUpdated', {
+        detail: { updatedRecords: [{ id: pendingNavigation.patientId, status: 'Pending' }] }
+      }));
     }
     setShowStatusWarning(false);
     setPendingNavigation(null);
