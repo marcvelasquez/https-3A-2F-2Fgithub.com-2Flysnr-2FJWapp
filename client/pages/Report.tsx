@@ -134,7 +134,7 @@ const Report = () => {
 
   const handleCancelEdit = () => {
     setIsEditingMetadata(false);
-    setEditMetadataForm({ description: '', remarks: '' });
+    setEditMetadataForm({ description: '', remarks: '', status: 'Pending' });
   };
 
   return (
