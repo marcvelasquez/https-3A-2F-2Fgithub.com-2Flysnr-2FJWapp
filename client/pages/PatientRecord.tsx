@@ -8,6 +8,19 @@ const PatientRecord = () => {
   const [deleteDialog, setDeleteDialog] = useState({ isOpen: false, recordId: '', patientName: '' });
   const [selectedRecords, setSelectedRecords] = useState<string[]>([]);
   const [bulkDeleteDialog, setBulkDeleteDialog] = useState({ isOpen: false, count: 0 });
+
+  // Shared function to generate next patient ID
+  const getNextPatientId = (records: any[]) => {
+    const existingNumbers = records.map(record => {
+      const match = record.id.match(/^(\d+)\.\)$/);
+      return match ? parseInt(match[1], 10) : 0;
+    });
+
+    const maxNumber = existingNumbers.length > 0 ? Math.max(...existingNumbers) : 0;
+    const nextNumber = maxNumber + 1;
+    return `${nextNumber.toString().padStart(2, '0')}.)`;
+  };
+
   const [patientRecords, setPatientRecords] = useState(() => {
     // Load records from localStorage or use default data
     const savedRecords = localStorage.getItem('patientRecords');
@@ -41,7 +54,7 @@ const PatientRecord = () => {
     if (newUpload) {
       const uploadData = JSON.parse(newUpload);
       const newRecord = {
-        id: `${patientRecords.length + 1}.)`,
+        id: getNextPatientId(patientRecords),
         name: uploadData.patientName,
         bodyPart: uploadData.studyDescription || 'Study',
         date: 'Today',
@@ -112,21 +125,9 @@ const PatientRecord = () => {
   };
 
   const handleAddPatient = () => {
-    // Generate next patient ID in sequence starting from 01
-    const getNextPatientId = () => {
-      const existingNumbers = patientRecords.map(record => {
-        const match = record.id.match(/^(\d+)\.\)$/);
-        return match ? parseInt(match[1], 10) : 0;
-      });
-
-      const maxNumber = existingNumbers.length > 0 ? Math.max(...existingNumbers) : 0;
-      const nextNumber = maxNumber + 1;
-      return `${nextNumber.toString().padStart(2, '0')}.)`;
-    };
-
     // Example of adding a new patient - this would normally open a form
     const newPatient = {
-      id: getNextPatientId(),
+      id: getNextPatientId(patientRecords),
       name: 'New Patient',
       bodyPart: 'To be determined',
       date: 'Today',
