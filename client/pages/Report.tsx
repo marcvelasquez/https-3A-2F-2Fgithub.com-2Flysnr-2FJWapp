@@ -81,6 +81,18 @@ const Report = () => {
       }
     };
 
+    // Check if status needs attention on page load
+    const checkStatusWarning = () => {
+      const currentStatus = metadata?.status || currentPatient?.status;
+      if (!currentStatus || currentStatus === 'Pending') {
+        // Show warning after 3 seconds if status is still pending
+        setTimeout(() => {
+          setShowStatusWarning(true);
+        }, 3000);
+      }
+    };
+
+    checkStatusWarning();
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
