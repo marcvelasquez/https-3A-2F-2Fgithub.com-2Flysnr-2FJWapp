@@ -92,7 +92,8 @@ const Report = () => {
   const handleEditMetadata = () => {
     setEditMetadataForm({
       description: metadata?.description || studyData?.studyDescription || '',
-      remarks: metadata?.remarks || currentPatient?.remarks || ''
+      remarks: metadata?.remarks || currentPatient?.remarks || '',
+      status: metadata?.status || currentPatient?.status || 'Pending'
     });
     setIsEditingMetadata(true);
   };
