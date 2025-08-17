@@ -15,14 +15,16 @@ const Dashboard = () => {
         // Show only the first 5 records for dashboard display
         setPatientData(records.slice(0, 5));
       } else {
-        // Default data if no records exist
-        setPatientData([
-          { id: '01.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
-          { id: '02.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 19, 2025', time: '4:45 PM', file: 'D' },
-          { id: '03.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 18, 2025', time: '11:22 AM', file: 'D' },
-          { id: '04.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 16, 2025', time: '9:10 AM', file: 'D' },
-          { id: '05.)', name: 'Sarah Smith', bodyPart: 'Right Ankle', date: 'April 15, 2025', time: '3:30 PM', file: 'D' },
-        ]);
+        // Default data if no records exist - ensure proper sequential numbering
+        const defaultData = [
+          { id: '', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
+          { id: '', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 19, 2025', time: '4:45 PM', file: 'D' },
+          { id: '', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 18, 2025', time: '11:22 AM', file: 'D' },
+          { id: '', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 16, 2025', time: '9:10 AM', file: 'D' },
+          { id: '', name: 'Sarah Smith', bodyPart: 'Right Ankle', date: 'April 15, 2025', time: '3:30 PM', file: 'D' },
+        ].map((record, index) => ({ ...record, id: `${(index + 1).toString().padStart(2, '0')}.)`}));
+
+        setPatientData(defaultData);
       }
     };
 
