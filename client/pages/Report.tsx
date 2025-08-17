@@ -495,7 +495,7 @@ const Report = () => {
               <div className="col-span-2">
                 <span className="text-muted-foreground">Files:</span>
                 <div className="ml-2 mt-1 space-y-1">
-                  {studyData.files?.map((file: any, index: number) => (
+                  {studyData?.files?.map((file: any, index: number) => (
                     <div key={index} className="text-foreground text-xs">
                       {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
                     </div>
