@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, FileText, Plus, FolderOpen, Trash2 } from 'lucide-react';
+import { Search, X, FileText, Plus, FolderOpen, Trash2, Minus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DeleteDialog from '../components/DeleteDialog';
 
 const PatientRecord = () => {
   const navigate = useNavigate();
   const [deleteDialog, setDeleteDialog] = useState({ isOpen: false, recordId: '', patientName: '' });
+  const [selectedRecords, setSelectedRecords] = useState<string[]>([]);
+  const [bulkDeleteDialog, setBulkDeleteDialog] = useState({ isOpen: false, count: 0 });
   const [patientRecords, setPatientRecords] = useState(() => {
     // Load records from localStorage or use default data
     const savedRecords = localStorage.getItem('patientRecords');
@@ -73,6 +75,57 @@ const PatientRecord = () => {
     setDeleteDialog({ isOpen: false, recordId: '', patientName: '' });
   };
 
+  const handleSelectRecord = (recordId: string) => {
+    setSelectedRecords(prev =>
+      prev.includes(recordId)
+        ? prev.filter(id => id !== recordId)
+        : [...prev, recordId]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectedRecords.length === patientRecords.length) {
+      setSelectedRecords([]);
+    } else {
+      setSelectedRecords(patientRecords.map(record => record.id));
+    }
+  };
+
+  const handleBulkDelete = () => {
+    if (selectedRecords.length === 0) {
+      alert('Please select records to delete');
+      return;
+    }
+    setBulkDeleteDialog({ isOpen: true, count: selectedRecords.length });
+  };
+
+  const handleBulkDeleteConfirm = () => {
+    const updatedRecords = patientRecords.filter(record => !selectedRecords.includes(record.id));
+    setPatientRecords(updatedRecords);
+    localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    setSelectedRecords([]);
+    setBulkDeleteDialog({ isOpen: false, count: 0 });
+  };
+
+  const handleBulkDeleteCancel = () => {
+    setBulkDeleteDialog({ isOpen: false, count: 0 });
+  };
+
+  const handleAddPatient = () => {
+    // Example of adding a new patient - this would normally open a form
+    const newPatient = {
+      id: `${patientRecords.length + 1}.)`,
+      name: 'New Patient',
+      bodyPart: 'To be determined',
+      date: 'Today',
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      file: 'D'
+    };
+    const updatedRecords = [newPatient, ...patientRecords];
+    setPatientRecords(updatedRecords);
+    localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+  };
+
 
   return (
     <div className="p-6 bg-background min-h-full">
@@ -100,16 +153,19 @@ const PatientRecord = () => {
       {/* Action Buttons */}
       <div className="flex space-x-3 mb-6">
         <button
-          onClick={() => console.log('Add Patient clicked')}
-          className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl"
+          onClick={handleAddPatient}
+          className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
         >
-          Add Patient
+          <Plus className="w-4 h-4" />
+          <span>Add Patient</span>
         </button>
         <button
-          onClick={() => console.log('Import Data clicked')}
-          className="bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl"
+          onClick={handleBulkDelete}
+          disabled={selectedRecords.length === 0}
+          className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Import Data
+          <Minus className="w-4 h-4" />
+          <span>Remove ({selectedRecords.length})</span>
         </button>
       </div>
 
@@ -119,6 +175,14 @@ const PatientRecord = () => {
           <table className="w-full">
             <thead>
               <tr className="border-b border-border">
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground w-12">
+                  <input
+                    type="checkbox"
+                    checked={selectedRecords.length === patientRecords.length && patientRecords.length > 0}
+                    onChange={handleSelectAll}
+                    className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
+                  />
+                </th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">No.</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Patient Name</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Body Part</th>
@@ -130,7 +194,17 @@ const PatientRecord = () => {
             </thead>
             <tbody>
               {patientRecords.map((record, index) => (
-                <tr key={record.id} className="border-b border-border hover:bg-muted/50 transition-colors">
+                <tr key={record.id} className={`border-b border-border hover:bg-muted/50 transition-colors ${
+                  selectedRecords.includes(record.id) ? 'bg-medical-blue/10' : ''
+                }`}>
+                  <td className="py-3 px-4">
+                    <input
+                      type="checkbox"
+                      checked={selectedRecords.includes(record.id)}
+                      onChange={() => handleSelectRecord(record.id)}
+                      className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
+                    />
+                  </td>
                   <td className="py-3 px-4 text-foreground">{record.id}</td>
                   <td className="py-3 px-4 text-foreground">{record.name}</td>
                   <td className="py-3 px-4 text-foreground">{record.bodyPart}</td>
