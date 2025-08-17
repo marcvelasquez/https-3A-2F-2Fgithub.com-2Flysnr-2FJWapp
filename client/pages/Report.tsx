@@ -17,6 +17,7 @@ const Report = () => {
     remarks: '',
     status: 'Pending'
   });
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   useEffect(() => {
     // Get uploaded study data from sessionStorage
@@ -68,8 +69,20 @@ const Report = () => {
 
     window.addEventListener('metadataUpdated', handleMetadataUpdate);
 
+    // Add beforeunload handler to warn about unsaved changes
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges && isEditingMetadata) {
+        e.preventDefault();
+        e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+        return 'You have unsaved changes. Are you sure you want to leave?';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
     return () => {
       window.removeEventListener('metadataUpdated', handleMetadataUpdate);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [studyId, currentPatient?.id]);
 
@@ -96,6 +109,7 @@ const Report = () => {
       status: metadata?.status || currentPatient?.status || 'Pending'
     });
     setIsEditingMetadata(true);
+    setHasUnsavedChanges(false);
   };
 
   const handleSaveMetadata = () => {
@@ -113,6 +127,7 @@ const Report = () => {
     localStorage.setItem(metadataKey, JSON.stringify(updatedMetadata));
     setMetadata(updatedMetadata);
     setIsEditingMetadata(false);
+    setHasUnsavedChanges(false);
 
     // Also update patient records if needed
     const savedRecords = localStorage.getItem('patientRecords');
@@ -133,8 +148,15 @@ const Report = () => {
   };
 
   const handleCancelEdit = () => {
+    if (hasUnsavedChanges) {
+      const confirmCancel = window.confirm('You have unsaved changes. Are you sure you want to cancel?');
+      if (!confirmCancel) {
+        return;
+      }
+    }
     setIsEditingMetadata(false);
     setEditMetadataForm({ description: '', remarks: '', status: 'Pending' });
+    setHasUnsavedChanges(false);
   };
 
   return (
@@ -301,7 +323,10 @@ const Report = () => {
                     {isEditingMetadata ? (
                       <select
                         value={editMetadataForm.status}
-                        onChange={(e) => setEditMetadataForm({ ...editMetadataForm, status: e.target.value })}
+                        onChange={(e) => {
+                          setEditMetadataForm({ ...editMetadataForm, status: e.target.value });
+                          setHasUnsavedChanges(true);
+                        }}
                         className="w-full px-2 py-1 text-xs bg-background border border-border rounded text-foreground focus:outline-none focus:ring-1 focus:ring-medical-blue"
                       >
                         <option value="Pending">Pending</option>
@@ -326,7 +351,10 @@ const Report = () => {
                     {isEditingMetadata ? (
                       <textarea
                         value={editMetadataForm.description}
-                        onChange={(e) => setEditMetadataForm({ ...editMetadataForm, description: e.target.value })}
+                        onChange={(e) => {
+                          setEditMetadataForm({ ...editMetadataForm, description: e.target.value });
+                          setHasUnsavedChanges(true);
+                        }}
                         className="w-full px-2 py-1 text-xs bg-background border border-border rounded text-foreground focus:outline-none focus:ring-1 focus:ring-medical-blue resize-none"
                         rows={2}
                         placeholder="Enter study description..."
@@ -436,7 +464,10 @@ const Report = () => {
                 {isEditingMetadata ? (
                   <textarea
                     value={editMetadataForm.remarks}
-                    onChange={(e) => setEditMetadataForm({ ...editMetadataForm, remarks: e.target.value })}
+                    onChange={(e) => {
+                      setEditMetadataForm({ ...editMetadataForm, remarks: e.target.value });
+                      setHasUnsavedChanges(true);
+                    }}
                     className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue resize-none"
                     rows={3}
                     placeholder="Enter remarks or notes..."
