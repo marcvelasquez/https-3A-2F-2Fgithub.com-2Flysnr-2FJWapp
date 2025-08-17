@@ -97,11 +97,11 @@ const PatientRecord = () => {
       const newRecord = {
         id: getNextPatientId(patientRecords),
         name: uploadData.patientName,
-        bodyPart: uploadData.studyDescription || 'Study',
+        bodyPart: uploadData.bodyPart || uploadData.studyDescription || 'Study',
         date: 'Today',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         file: 'D',
-        remarks: uploadData.remarks || 'Uploaded study'
+        remarks: uploadData.studyDescription || uploadData.remarks || 'Uploaded study'
       };
 
       const updatedRecords = reassignPatientIds([newRecord, ...patientRecords]);
