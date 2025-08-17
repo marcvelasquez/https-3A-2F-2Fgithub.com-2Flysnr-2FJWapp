@@ -43,7 +43,37 @@ const FileFolder = () => {
     const files = event.target.files;
     if (files && files.length > 0) {
       console.log('Selected files:', Array.from(files).map(f => f.name));
-      // TODO: Handle file upload logic
+
+      // Store files for this patient
+      const fileList = Array.from(files).map(f => ({
+        name: f.name,
+        size: f.size,
+        type: f.type,
+        uploadedAt: new Date().toISOString()
+      }));
+      localStorage.setItem(`folderFiles_${patientId}`, JSON.stringify(fileList));
+
+      // Clear the newly added flag since files have been uploaded
+      const savedRecords = localStorage.getItem('patientRecords');
+      if (savedRecords) {
+        const records = JSON.parse(savedRecords);
+        const updatedRecords = records.map((record: any) => {
+          if (record.id === patientId && record.isNewlyAdded) {
+            return { ...record, isNewlyAdded: false };
+          }
+          return record;
+        });
+        localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+
+        // Update the patient name display to show actual name instead of "New Patient"
+        const patient = updatedRecords.find((record: any) => record.id === patientId);
+        if (patient) {
+          setPatientName(patient.name);
+        }
+      }
+
+      // Refresh the page to show the uploaded files
+      window.location.reload();
     }
   };
 
