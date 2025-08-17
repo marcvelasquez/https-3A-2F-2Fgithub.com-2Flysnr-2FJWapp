@@ -250,7 +250,10 @@ const Report = () => {
       <div className="bg-card border-b border-border p-4 flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <button
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              alert('Back button clicked!'); // Immediate feedback
               console.log('Back button clicked!'); // Debug log
               try {
                 // First try to get patient context
@@ -273,7 +276,8 @@ const Report = () => {
                 navigate('/patient-record', { replace: false });
               }
             }}
-            className="text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground cursor-pointer"
+            style={{ pointerEvents: 'auto', zIndex: 10 }}
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
