@@ -343,6 +343,7 @@ const PatientRecord = () => {
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       file: 'D',
       remarks: newPatientData.remarks || 'Newly added patient',
+      status: newPatientData.status,
       isNewlyAdded: true,
       addedTimestamp: Date.now()
     };
