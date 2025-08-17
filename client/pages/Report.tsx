@@ -474,6 +474,14 @@ const Report = () => {
                 <span className="text-muted-foreground">Study Time:</span>
                 <span className="ml-2 text-foreground font-medium">{currentPatient?.time || 'N/A'}</span>
               </div>
+              <div className="col-span-2">
+                <span className="text-muted-foreground">Study Description:</span>
+                <span className="ml-2 text-foreground font-medium">{metadata?.description || studyData?.studyDescription || 'No description available'}</span>
+              </div>
+              <div className="col-span-2">
+                <span className="text-muted-foreground">Remarks:</span>
+                <span className="ml-2 text-foreground font-medium">{metadata?.remarks || currentPatient?.remarks || 'No remarks available'}</span>
+              </div>
               <div>
                 <span className="text-muted-foreground">Study ID:</span>
                 <span className="ml-2 text-foreground font-medium">{studyId}</span>
