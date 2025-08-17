@@ -57,6 +57,45 @@ const Images = () => {
     navigate(`/report/${imageId}`);
   };
 
+  const handleNavigateAnyway = () => {
+    setShowNavigationWarning(false);
+    setPendingNavigation(null);
+    navigate(`/file-folder/${patientId}`);
+  };
+
+  const handleUpdateStatusFirst = () => {
+    setShowNavigationWarning(false);
+    setPendingNavigation(null);
+    // Navigate to file folder where they can access patient record to edit status
+    navigate(`/file-folder/${patientId}`);
+  };
+
+  const handleRemindLater = () => {
+    if (pendingNavigation) {
+      // Update status to Pending
+      const savedRecords = localStorage.getItem('patientRecords');
+      if (savedRecords) {
+        const records = JSON.parse(savedRecords);
+        const updatedRecords = records.map((record: any) => {
+          if (record.id === patientId) {
+            return { ...record, status: 'Pending' };
+          }
+          return record;
+        });
+        localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+
+        // Dispatch events to sync across all pages
+        window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+        window.dispatchEvent(new CustomEvent('metadataUpdated', {
+          detail: { updatedRecords: [{ id: patientId, status: 'Pending' }] }
+        }));
+      }
+    }
+    setShowNavigationWarning(false);
+    setPendingNavigation(null);
+    navigate(`/file-folder/${patientId}`);
+  };
+
   // Medical images data - replaced with actual image filenames
   const medicalImages = [
     { id: 'IMG-001', name: 'MRI_KNEE_001.dcm' },
