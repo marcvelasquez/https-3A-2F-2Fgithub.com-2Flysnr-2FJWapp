@@ -554,7 +554,7 @@ const PatientRecord = () => {
               </tr>
             </thead>
             <tbody>
-              {patientRecords.map((record, index) => (
+              {filteredRecords.map((record, index) => (
                 <tr key={record.id} className={`border-b border-border hover:bg-muted/50 transition-colors ${
                   selectedRecords.includes(record.id) ? 'bg-medical-blue/10' : ''
                 }`}>
