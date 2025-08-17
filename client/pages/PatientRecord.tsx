@@ -30,26 +30,26 @@ const PatientRecord = () => {
     // Load records from localStorage or use default data
     const savedRecords = localStorage.getItem('patientRecords');
     const records = savedRecords ? JSON.parse(savedRecords) : [
-      { id: '01.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D' },
-      { id: '02.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
-      { id: '03.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D' },
-      { id: '04.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
-      { id: '05.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
-      { id: '06.)', name: 'Jason Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D' },
-      { id: '07.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
-      { id: '08.)', name: 'Jude Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D' },
-      { id: '09.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
-      { id: '10.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '9:10 AM', file: 'D' },
-      { id: '11.)', name: 'James Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D' },
-      { id: '12.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
-      { id: '13.)', name: 'Jude Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D' },
-      { id: '14.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
-      { id: '15.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
-      { id: '16.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
-      { id: '17.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
-      { id: '18.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
-      { id: '19.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
-      { id: '20.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
+      { id: '01.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D', remarks: 'Initial scan' },
+      { id: '02.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D', remarks: 'Follow-up examination' },
+      { id: '03.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D', remarks: 'Comparative study' },
+      { id: '04.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Post-surgery assessment' },
+      { id: '05.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D', remarks: 'Routine check-up' },
+      { id: '06.)', name: 'Jason Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D', remarks: 'Sports injury evaluation' },
+      { id: '07.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D', remarks: 'Pain assessment' },
+      { id: '08.)', name: 'Jude Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D', remarks: 'Arthritis monitoring' },
+      { id: '09.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Recovery progress' },
+      { id: '10.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '9:10 AM', file: 'D', remarks: 'Annual screening' },
+      { id: '11.)', name: 'James Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D', remarks: 'Injury diagnosis' },
+      { id: '12.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D', remarks: 'Treatment planning' },
+      { id: '13.)', name: 'Jude Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D', remarks: 'Joint stability test' },
+      { id: '14.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Mobility assessment' },
+      { id: '15.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D', remarks: 'Preventive care' },
+      { id: '16.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Surgical planning' },
+      { id: '17.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D', remarks: 'Consultation' },
+      { id: '18.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Second opinion' },
+      { id: '19.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D', remarks: 'Baseline study' },
+      { id: '20.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Progress monitoring' },
     ];
     // Ensure all records have proper sequential numbering
     return reassignPatientIds(records);
@@ -194,7 +194,8 @@ const PatientRecord = () => {
       bodyPart: 'To be determined',
       date: 'Today',
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      file: 'D'
+      file: 'D',
+      remarks: 'Newly added patient'
     };
     const updatedRecords = reassignPatientIds([newPatient, ...patientRecords]);
     setPatientRecords(updatedRecords);
