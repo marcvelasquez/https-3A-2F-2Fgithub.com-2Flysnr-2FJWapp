@@ -24,6 +24,11 @@ const Images = () => {
   };
 
   const handleImageClick = (imageId: string) => {
+    // Store patient context for the report page
+    sessionStorage.setItem('currentPatient', JSON.stringify({
+      id: patientId,
+      name: patientName
+    }));
     // Navigate to report page when image is clicked
     navigate(`/report/${imageId}`);
   };
