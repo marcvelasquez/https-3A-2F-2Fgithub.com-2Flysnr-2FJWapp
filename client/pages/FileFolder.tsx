@@ -168,13 +168,15 @@ const FileFolder = () => {
             <span className="text-sm text-foreground">Patient: {patientName}</span>
           </div>
         </div>
-        <button
-          onClick={handleAddFile}
-          className="flex items-center justify-center w-10 h-10 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors"
-          title="Add Files"
-        >
-          <Plus className="w-5 h-5" />
-        </button>
+        {!isNewPatient() && (
+          <button
+            onClick={handleAddFile}
+            className="flex items-center justify-center w-10 h-10 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors"
+            title="Add Files"
+          >
+            <Plus className="w-5 h-5" />
+          </button>
+        )}
         <input
           ref={fileInputRef}
           type="file"
