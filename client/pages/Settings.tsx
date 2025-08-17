@@ -23,19 +23,19 @@ const Settings = () => {
     { id: 'appearance' as const, label: 'Appearance', icon: Palette },
   ];
 
-  // Apply appearance settings on mount
+  // Apply appearance settings on mount and when appearance data changes
   useEffect(() => {
     applyAppearanceSettings();
-  }, []);
+  }, [appearanceData]);
 
   const applyAppearanceSettings = () => {
     const root = document.documentElement;
 
-    // Apply theme
+    // Apply theme to html element (root) instead of body
     if (appearanceData.theme === 'Dark') {
-      document.body.classList.add('dark');
+      root.classList.add('dark');
     } else {
-      document.body.classList.remove('dark');
+      root.classList.remove('dark');
     }
 
     // Apply font
