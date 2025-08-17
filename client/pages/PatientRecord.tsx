@@ -594,7 +594,9 @@ const PatientRecord = () => {
         {/* Table Footer/Pagination could go here if needed */}
         <div className="mt-4 flex items-center justify-between">
           <div className="text-sm text-muted-foreground">
-            Showing {patientRecords.length} records
+            Showing {filteredRecords.length} of {patientRecords.length} records
+            {searchTerm && <span> (filtered by: "{searchTerm}")</span>}
+            {bodyPartFilter && <span> (filtered by: {bodyPartFilter})</span>}
           </div>
           <div className="flex space-x-2">
             <button
