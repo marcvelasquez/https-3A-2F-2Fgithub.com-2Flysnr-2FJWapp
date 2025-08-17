@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
   const navigate = useNavigate();
   const [patientData, setPatientData] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Load patient data from localStorage (same source as Patient Record page)
   useEffect(() => {
