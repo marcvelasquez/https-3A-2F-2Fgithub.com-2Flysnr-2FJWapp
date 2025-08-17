@@ -254,6 +254,15 @@ const Report = () => {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
+
+              // Check if status is still Pending before leaving
+              const currentStatus = metadata?.status || currentPatient?.status;
+              if (currentStatus === 'Pending') {
+                setShowNavigationWarning(true);
+                return;
+              }
+
+              // Status is not Pending, proceed with navigation
               try {
                 // First try to get patient context
                 const patientContext = sessionStorage.getItem('currentPatient');
