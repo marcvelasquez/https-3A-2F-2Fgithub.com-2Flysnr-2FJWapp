@@ -347,29 +347,17 @@ const Report = () => {
           </button>
           <h1 className="text-xl font-semibold text-foreground">Report</h1>
         </div>
-        <div className="flex items-center space-x-2">
-          {/* Temporary test for navigation popup */}
-          <button
-            onClick={() => {
-              console.log('Testing navigation popup');
-              setShowNavigationWarning(true);
-            }}
-            className="px-2 py-1 text-xs bg-green-500 text-white rounded"
-          >
-            Test Nav
-          </button>
-          <button
-            onClick={() => setShowMetadata(!showMetadata)}
-            className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
-              showMetadata
-                ? 'bg-medical-blue text-white'
-                : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-            }`}
-          >
-            <Info className="w-4 h-4" />
-            <span className="text-sm font-medium">Metadata</span>
-          </button>
-        </div>
+        <button
+          onClick={() => setShowMetadata(!showMetadata)}
+          className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+            showMetadata
+              ? 'bg-medical-blue text-white'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+          }`}
+        >
+          <Info className="w-4 h-4" />
+          <span className="text-sm font-medium">Metadata</span>
+        </button>
       </div>
 
       {/* Diagnosis Cards */}
