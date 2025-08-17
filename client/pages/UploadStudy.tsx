@@ -62,6 +62,7 @@ const UploadStudy = () => {
       patientName,
       studyDescription,
       bodyPart,
+      status,
       files: uploadedFiles.map(f => ({ name: f.name, type: f.type, size: f.size }))
     };
 
