@@ -132,6 +132,27 @@ const FileFolder = () => {
 
   const patientFolders = getPatientFolders();
 
+  // Search functions
+  const handleSearch = (searchValue: string) => {
+    setSearchTerm(searchValue);
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
+  };
+
+  // Filter folders based on search term
+  const getFilteredFolders = () => {
+    if (!searchTerm) return patientFolders;
+
+    return patientFolders.filter(folder =>
+      folder.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      folder.id.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
+  const filteredFolders = getFilteredFolders();
+
   return (
     <div className="p-6 bg-background min-h-full">
       {/* Header */}
