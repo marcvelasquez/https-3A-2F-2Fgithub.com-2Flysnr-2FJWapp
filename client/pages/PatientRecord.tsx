@@ -246,6 +246,34 @@ const PatientRecord = () => {
     const updatedRecords = reassignPatientIds([newPatient, ...patientRecords]);
     setPatientRecords(updatedRecords);
     localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+
+    // Initialize metadata for new patient
+    const metadataKey = `metadata_${newPatient.id}`;
+    const metadata = {
+      studyInfo: {
+        studyId: newPatient.id,
+        patientName: newPatient.name,
+        studyDate: newPatient.date,
+        modality: 'MRI',
+        bodyPart: newPatient.bodyPart
+      },
+      technicalParams: {
+        sliceThickness: '3.0 mm',
+        tr: '2500 ms',
+        te: '85 ms',
+        fieldStrength: '1.5 Tesla',
+        matrix: '512 x 512'
+      },
+      equipment: {
+        manufacturer: 'Siemens',
+        model: 'MAGNETOM Aera',
+        software: 'syngo MR E11'
+      },
+      remarks: newPatient.remarks || '',
+      created: new Date().toISOString()
+    };
+    localStorage.setItem(metadataKey, JSON.stringify(metadata));
+
     // Dispatch event to sync with Dashboard
     window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
   };
