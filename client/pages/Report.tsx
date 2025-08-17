@@ -82,28 +82,7 @@ const Report = () => {
       }
     };
 
-    // Check if status needs attention on page load
-    const checkStatusWarning = () => {
-      const currentStatus = metadata?.status || currentPatient?.status;
-      console.log('Checking status warning:', { currentStatus, metadata, currentPatient }); // Debug
-
-      // Show warning if status is 'Pending' or 'In Progress'
-      if (currentStatus === 'Pending' || currentStatus === 'In Progress') {
-        console.log('Status needs attention, setting timeout for popup'); // Debug
-        // Show warning after 3 seconds if status needs attention
-        setTimeout(() => {
-          console.log('Showing status warning popup'); // Debug
-          setShowStatusWarning(true);
-        }, 3000);
-      } else {
-        console.log('Status is okay, no popup needed:', currentStatus); // Debug
-      }
-    };
-
-    // Call check with a slight delay to ensure data is loaded
-    setTimeout(() => {
-      checkStatusWarning();
-    }, 500);
+    // Automatic status warnings removed - only back button will trigger warnings
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
