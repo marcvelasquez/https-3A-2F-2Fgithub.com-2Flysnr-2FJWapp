@@ -153,86 +153,8 @@ const PatientRecord = () => {
     }
   }, []);
 
-  const checkStatusBeforeNavigation = (action: string, patientId?: string, navigationCallback?: () => void) => {
-    if (patientId) {
-      // Find the patient record to check status
-      const patientRecord = patientRecords.find(record => record.id === patientId);
-      if (patientRecord) {
-        const status = patientRecord.status || 'Pending';
-
-        // Check if status is Pending or In Progress
-        if (status === 'Pending' || status === 'In Progress') {
-          // Store navigation info and show popup
-          setPendingNavigation({
-            action: action,
-            patientId: patientId,
-            patientName: patientRecord.name,
-            status: status
-          });
-          setShowNavigationWarning(true);
-          return false; // Don't proceed with navigation
-        }
-      }
-    }
-
-    // Status is Complete/Follow Up or no patient specified, proceed
-    if (navigationCallback) {
-      navigationCallback();
-    }
-    return true;
-  };
-
   const handleFileFolder = (patientId: string) => {
     navigate(`/file-folder/${patientId}`);
-  };
-
-  const handleNavigateAnyway = () => {
-    if (pendingNavigation) {
-      if (pendingNavigation.action === 'fileFolder' && pendingNavigation.patientId) {
-        navigate(`/file-folder/${pendingNavigation.patientId}`);
-      }
-      // Add other navigation actions here as needed
-    }
-    setShowNavigationWarning(false);
-    setPendingNavigation(null);
-  };
-
-  const handleUpdateStatusFirst = () => {
-    if (pendingNavigation && pendingNavigation.patientId) {
-      // Find and update the patient record to edit it
-      const recordsToEdit = patientRecords.filter(record => record.id === pendingNavigation.patientId);
-      setEditDialog({ isOpen: true, records: recordsToEdit });
-      setEditFormData({
-        name: pendingNavigation.patientName || '',
-        bodyPart: recordsToEdit[0]?.bodyPart || '',
-        remarks: recordsToEdit[0]?.remarks || '',
-        status: pendingNavigation.status || 'Pending'
-      });
-    }
-    setShowNavigationWarning(false);
-    setPendingNavigation(null);
-  };
-
-  const handleRemindLater = () => {
-    if (pendingNavigation && pendingNavigation.patientId) {
-      // Update status to Pending
-      const updatedRecords = patientRecords.map(record => {
-        if (record.id === pendingNavigation.patientId) {
-          return { ...record, status: 'Pending' };
-        }
-        return record;
-      });
-      setPatientRecords(updatedRecords);
-      localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
-
-      // Dispatch events to sync across all pages
-      window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
-      window.dispatchEvent(new CustomEvent('metadataUpdated', {
-        detail: { updatedRecords: [{ id: pendingNavigation.patientId, status: 'Pending' }] }
-      }));
-    }
-    setShowNavigationWarning(false);
-    setPendingNavigation(null);
   };
 
   const handleDeleteClick = (recordId: string, patientName: string) => {
