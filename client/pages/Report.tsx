@@ -471,39 +471,25 @@ const Report = () => {
             <h3 className="text-lg font-semibold text-foreground mb-3">Study Information</h3>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-muted-foreground">Patient Name:</span>
-                <span className="ml-2 text-foreground font-medium">{metadata?.studyInfo?.patientName || currentPatient?.name || studyData?.patientName || 'N/A'}</span>
-              </div>
-              <div>
-                <span className="text-muted-foreground">Body Part:</span>
-                <span className="ml-2 text-foreground font-medium">{metadata?.studyInfo?.bodyPart || currentPatient?.bodyPart || 'N/A'}</span>
-              </div>
-              <div>
-                <span className="text-muted-foreground">Study Date:</span>
-                <span className="ml-2 text-foreground font-medium">{metadata?.studyInfo?.studyDate || currentPatient?.date || 'N/A'}</span>
+                <span className="text-muted-foreground">Study ID:</span>
+                <span className="ml-2 text-foreground font-medium">{studyId}</span>
               </div>
               <div>
                 <span className="text-muted-foreground">Study Time:</span>
                 <span className="ml-2 text-foreground font-medium">{currentPatient?.time || 'N/A'}</span>
               </div>
-              <div className="col-span-2">
-                <span className="text-muted-foreground">Study Description:</span>
-                <span className="ml-2 text-foreground font-medium">{metadata?.description || studyData?.studyDescription || 'No description available'}</span>
-              </div>
-              <div className="col-span-2">
-                <span className="text-muted-foreground">Remarks:</span>
-                <span className="ml-2 text-foreground font-medium">{metadata?.remarks || currentPatient?.remarks || 'No remarks available'}</span>
-              </div>
               <div>
-                <span className="text-muted-foreground">Study ID:</span>
-                <span className="ml-2 text-foreground font-medium">{studyId}</span>
+                <span className="text-muted-foreground">Status:</span>
+                <span className={`ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                  (metadata?.status || currentPatient?.status) === 'Complete' ? 'bg-green-100 text-green-800' :
+                  (metadata?.status || currentPatient?.status) === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                  (metadata?.status || currentPatient?.status) === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                  (metadata?.status || currentPatient?.status) === 'Follow Up' ? 'bg-purple-100 text-purple-800' :
+                  'bg-gray-100 text-gray-800'
+                }`}>
+                  {metadata?.status || currentPatient?.status || 'Pending'}
+                </span>
               </div>
-              {studyData?.studyDescription && (
-                <div className="col-span-2">
-                  <span className="text-muted-foreground">Description:</span>
-                  <span className="ml-2 text-foreground font-medium">{studyData.studyDescription}</span>
-                </div>
-              )}
               <div className="col-span-2">
                 <span className="text-muted-foreground">Files:</span>
                 <div className="ml-2 mt-1 space-y-1">
