@@ -402,21 +402,45 @@ const Report = () => {
               </div>
 
               {/* Remarks */}
-              {(metadata?.remarks || currentPatient?.remarks) && (
-                <div className="space-y-3">
-                  <h4 className="font-medium text-foreground">Remarks</h4>
+              <div className="space-y-3">
+                <h4 className="font-medium text-foreground">Remarks</h4>
+                {isEditingMetadata ? (
+                  <textarea
+                    value={editMetadataForm.remarks}
+                    onChange={(e) => setEditMetadataForm({ ...editMetadataForm, remarks: e.target.value })}
+                    className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue resize-none"
+                    rows={3}
+                    placeholder="Enter remarks or notes..."
+                  />
+                ) : (
                   <div className="p-3 bg-muted/50 border border-border rounded-lg">
                     <p className="text-sm text-foreground">
                       {metadata?.remarks || currentPatient?.remarks || 'No remarks available'}
                     </p>
                   </div>
-                  {metadata?.lastModified && (
-                    <p className="text-xs text-muted-foreground">
-                      Last updated: {new Date(metadata.lastModified).toLocaleString()}
-                    </p>
-                  )}
-                </div>
-              )}
+                )}
+                {metadata?.lastModified && (
+                  <p className="text-xs text-muted-foreground">
+                    Last updated: {new Date(metadata.lastModified).toLocaleString()}
+                  </p>
+                )}
+                {isEditingMetadata && (
+                  <div className="flex space-x-2 justify-end">
+                    <button
+                      onClick={handleCancelEdit}
+                      className="px-3 py-1 text-xs border border-border rounded text-muted-foreground hover:bg-muted transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleSaveMetadata}
+                      className="px-3 py-1 text-xs bg-medical-blue text-white rounded hover:bg-medical-blue-dark transition-colors"
+                    >
+                      Save
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
