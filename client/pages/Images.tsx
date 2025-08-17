@@ -6,6 +6,7 @@ const Images = () => {
   const { folderId, patientId } = useParams();
   const navigate = useNavigate();
   const [patientName, setPatientName] = useState('Unknown Patient');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     // Get patient name from localStorage
