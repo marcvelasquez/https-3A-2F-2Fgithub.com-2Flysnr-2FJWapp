@@ -236,7 +236,34 @@ const Report = () => {
   };
 
   const handleNavigateAnyway = () => {
+    // First, mark status as Pending before leaving
+    const currentPatientId = currentPatient?.id || studyId;
+    const metadataKey = `metadata_${currentPatientId}`;
+
+    const updatedMetadata = {
+      ...metadata,
+      status: 'Pending',
+      lastModified: new Date().toISOString()
+    };
+
+    localStorage.setItem(metadataKey, JSON.stringify(updatedMetadata));
+    setMetadata(updatedMetadata);
+
+    // Also update patient records
+    const savedRecords = localStorage.getItem('patientRecords');
+    if (savedRecords) {
+      const records = JSON.parse(savedRecords);
+      const updatedRecords = records.map((record: any) => {
+        if (record.id === currentPatientId) {
+          return { ...record, status: 'Pending' };
+        }
+        return record;
+      });
+      localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    }
+
     setShowNavigationWarning(false);
+
     // Proceed with navigation
     try {
       const patientContext = sessionStorage.getItem('currentPatient');
@@ -252,8 +279,19 @@ const Report = () => {
     }
   };
 
-  const handleUpdateStatusFirst = () => {
+  const handleUpdateStatus = () => {
     setShowNavigationWarning(false);
+
+    // Scroll to the Study Information section where status can be edited
+    const studyInfoElement = document.querySelector('.study-information-section');
+    if (studyInfoElement) {
+      studyInfoElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      // Fallback: scroll to bottom of page where Study Information usually is
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    // Start editing the status in the Study Information section
     handleStatusEdit();
   };
 
@@ -790,10 +828,10 @@ const Report = () => {
                   Leave Anyway
                 </button>
                 <button
-                  onClick={handleUpdateStatusFirst}
+                  onClick={handleUpdateStatus}
                   className="px-4 py-2 text-sm bg-medical-blue text-white rounded-lg hover:bg-medical-blue-dark transition-colors"
                 >
-                  Update Status First
+                  Update Status
                 </button>
               </div>
             </div>
