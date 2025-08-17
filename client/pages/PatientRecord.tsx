@@ -188,15 +188,15 @@ const PatientRecord = () => {
   };
 
   const handleSelectAll = () => {
-    const visibleRecordIds = filteredRecords.map(record => record.id);
-    const allVisibleSelected = visibleRecordIds.every(id => selectedRecords.includes(id));
+    const currentPageRecordIds = currentPageRecords.map(record => record.id);
+    const allCurrentPageSelected = currentPageRecordIds.every(id => selectedRecords.includes(id));
 
-    if (allVisibleSelected) {
-      // Deselect all visible records
-      setSelectedRecords(prev => prev.filter(id => !visibleRecordIds.includes(id)));
+    if (allCurrentPageSelected) {
+      // Deselect all records on current page
+      setSelectedRecords(prev => prev.filter(id => !currentPageRecordIds.includes(id)));
     } else {
-      // Select all visible records
-      setSelectedRecords(prev => [...new Set([...prev, ...visibleRecordIds])]);
+      // Select all records on current page
+      setSelectedRecords(prev => [...new Set([...prev, ...currentPageRecordIds])]);
     }
   };
 
