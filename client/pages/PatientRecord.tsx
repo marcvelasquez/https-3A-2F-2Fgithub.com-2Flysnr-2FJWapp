@@ -11,6 +11,8 @@ const PatientRecord = () => {
   const [editDialog, setEditDialog] = useState({ isOpen: false, records: [] as any[] });
   const [editFormData, setEditFormData] = useState({ name: '', bodyPart: '', remarks: '' });
   const [deleteConfirmDialog, setDeleteConfirmDialog] = useState({ isOpen: false, message: '', onConfirm: () => {} });
+  const [newPatientDialog, setNewPatientDialog] = useState({ isOpen: false });
+  const [newPatientData, setNewPatientData] = useState({ name: '', bodyPart: '', remarks: '' });
 
   // Function to reassign all patient IDs sequentially starting from 01
   const reassignPatientIds = (records: any[]) => {
