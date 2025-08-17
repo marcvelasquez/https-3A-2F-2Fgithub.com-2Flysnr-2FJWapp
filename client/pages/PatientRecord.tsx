@@ -795,6 +795,120 @@ const PatientRecord = () => {
           </div>
         </div>
       )}
+
+      {/* Filter Dialog */}
+      {filterDialogOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-card p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold text-foreground mb-4">Filter Options</h3>
+
+            <div className="space-y-6">
+              {/* Date Sort Section */}
+              <div>
+                <h4 className="text-sm font-medium text-foreground mb-3">Date Sorting</h4>
+                <div className="space-y-2">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="dateSort"
+                      checked={dateSort === 'none'}
+                      onChange={() => handleDateSort('none')}
+                      className="text-medical-blue focus:ring-medical-blue"
+                    />
+                    <span className="text-sm text-foreground">No Sort</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="dateSort"
+                      checked={dateSort === 'desc'}
+                      onChange={() => handleDateSort('desc')}
+                      className="text-medical-blue focus:ring-medical-blue"
+                    />
+                    <span className="text-sm text-foreground">Newest First</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="dateSort"
+                      checked={dateSort === 'asc'}
+                      onChange={() => handleDateSort('asc')}
+                      className="text-medical-blue focus:ring-medical-blue"
+                    />
+                    <span className="text-sm text-foreground">Oldest First</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Body Part Filter Section */}
+              <div>
+                <h4 className="text-sm font-medium text-foreground mb-3">Body Part</h4>
+                <div className="space-y-2">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="bodyPart"
+                      checked={bodyPartFilter === ''}
+                      onChange={() => handleBodyPartFilter('')}
+                      className="text-medical-blue focus:ring-medical-blue"
+                    />
+                    <span className="text-sm text-foreground">All</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="bodyPart"
+                      checked={bodyPartFilter === 'Left Knee'}
+                      onChange={() => handleBodyPartFilter('Left Knee')}
+                      className="text-medical-blue focus:ring-medical-blue"
+                    />
+                    <span className="text-sm text-foreground">Left Knee</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="bodyPart"
+                      checked={bodyPartFilter === 'Right Knee'}
+                      onChange={() => handleBodyPartFilter('Right Knee')}
+                      className="text-medical-blue focus:ring-medical-blue"
+                    />
+                    <span className="text-sm text-foreground">Right Knee</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="bodyPart"
+                      checked={bodyPartFilter === 'Bilateral Knees'}
+                      onChange={() => handleBodyPartFilter('Bilateral Knees')}
+                      className="text-medical-blue focus:ring-medical-blue"
+                    />
+                    <span className="text-sm text-foreground">Bilateral Knees</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex space-x-3 justify-end mt-6">
+              <button
+                onClick={() => {
+                  setSearchTerm('');
+                  setBodyPartFilter('');
+                  setDateSort('none');
+                }}
+                className="px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted transition-colors"
+              >
+                Clear All
+              </button>
+              <button
+                onClick={() => setFilterDialogOpen(false)}
+                className="px-4 py-2 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors"
+              >
+                Apply Filters
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
