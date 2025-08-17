@@ -37,8 +37,20 @@ const FileFolder = () => {
     }
   };
 
-  // Patient folder data
-  const patientFolders = [
+  // Check if patient is new (no folders yet)
+  const isNewPatient = () => {
+    const savedRecords = localStorage.getItem('patientRecords');
+    if (savedRecords) {
+      const records = JSON.parse(savedRecords);
+      const patient = records.find((record: any) => record.id === patientId);
+      // Check if patient was recently added (today)
+      return patient && patient.date === 'Today' && patient.name === 'New Patient';
+    }
+    return false;
+  };
+
+  // Patient folder data - empty for new patients, sample data for existing patients
+  const patientFolders = isNewPatient() ? [] : [
     { id: 'K123456789', name: 'K123456789' },
     { id: 'K123456789-2', name: 'K123456789' },
     { id: 'K123456789-3', name: 'K123456789' },
