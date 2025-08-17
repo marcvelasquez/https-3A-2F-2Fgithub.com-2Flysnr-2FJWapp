@@ -238,7 +238,7 @@ const FileFolder = () => {
       </div>
 
       {/* Empty State Message (if no folders) */}
-      {patientFolders.length === 0 && (
+      {filteredFolders.length === 0 && patientFolders.length === 0 && (
         <div className="flex flex-col items-center justify-center py-16">
           <Folder className="w-16 h-16 text-muted-foreground mb-4" />
           <h3 className="text-lg font-medium text-foreground mb-2">
