@@ -535,11 +535,11 @@ const Report = () => {
                       </select>
                     ) : (
                       <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                        (metadata?.status || currentPatient?.status) === 'Complete' ? 'bg-green-100 text-green-800' :
-                        (metadata?.status || currentPatient?.status) === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                        (metadata?.status || currentPatient?.status) === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                        (metadata?.status || currentPatient?.status) === 'Follow Up' ? 'bg-purple-100 text-purple-800' :
-                        'bg-gray-100 text-gray-800'
+                        (metadata?.status || currentPatient?.status || 'Pending') === 'Complete' ? 'bg-green-100 text-green-800' :
+                        (metadata?.status || currentPatient?.status || 'Pending') === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                        (metadata?.status || currentPatient?.status || 'Pending') === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                        (metadata?.status || currentPatient?.status || 'Pending') === 'Follow Up' ? 'bg-purple-100 text-purple-800' :
+                        'bg-yellow-100 text-yellow-800'
                       }`}>
                         {metadata?.status || currentPatient?.status || 'Pending'}
                       </span>
