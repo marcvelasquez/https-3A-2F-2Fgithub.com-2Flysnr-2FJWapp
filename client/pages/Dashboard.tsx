@@ -68,6 +68,28 @@ const Dashboard = () => {
     navigate(`/file-folder/${patientId}`);
   };
 
+  // Search functions
+  const handleSearch = (searchValue: string) => {
+    setSearchTerm(searchValue);
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
+  };
+
+  // Filter patient data based on search term
+  const getFilteredPatientData = () => {
+    if (!searchTerm) return patientData;
+
+    return patientData.filter(patient =>
+      patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      patient.bodyPart.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      patient.date.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
+
+  const filteredPatientData = getFilteredPatientData();
+
   // Dashboard stats that update with real data
   const getTotalPatients = () => {
     const savedRecords = localStorage.getItem('patientRecords');
