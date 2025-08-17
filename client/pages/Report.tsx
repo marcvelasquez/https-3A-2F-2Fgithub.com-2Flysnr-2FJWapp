@@ -580,17 +580,51 @@ const Report = () => {
                 <span className="text-muted-foreground">Study Time:</span>
                 <span className="ml-2 text-foreground font-medium">{currentPatient?.time || 'N/A'}</span>
               </div>
-              <div>
-                <span className="text-muted-foreground">Status:</span>
-                <span className={`ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                  (metadata?.status || currentPatient?.status) === 'Complete' ? 'bg-green-100 text-green-800' :
-                  (metadata?.status || currentPatient?.status) === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                  (metadata?.status || currentPatient?.status) === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                  (metadata?.status || currentPatient?.status) === 'Follow Up' ? 'bg-purple-100 text-purple-800' :
-                  'bg-gray-100 text-gray-800'
-                }`}>
-                  {metadata?.status || currentPatient?.status || 'Pending'}
-                </span>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <span className="text-muted-foreground">Status:</span>
+                  {isEditingStatus ? (
+                    <div className="ml-2 flex items-center space-x-2">
+                      <select
+                        value={tempStatus}
+                        onChange={(e) => setTempStatus(e.target.value)}
+                        className="px-2 py-1 text-xs bg-background border border-border rounded text-foreground focus:outline-none focus:ring-1 focus:ring-medical-blue"
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Complete">Complete</option>
+                        <option value="Follow Up">Follow Up</option>
+                      </select>
+                      <button
+                        onClick={handleStatusSave}
+                        className="px-2 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={handleStatusCancel}
+                        className="px-2 py-1 text-xs bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <span
+                      onClick={handleStatusEdit}
+                      className={`ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium cursor-pointer hover:ring-2 hover:ring-medical-blue transition-all ${
+                        (metadata?.status || currentPatient?.status) === 'Complete' ? 'bg-green-100 text-green-800' :
+                        (metadata?.status || currentPatient?.status) === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                        (metadata?.status || currentPatient?.status) === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                        (metadata?.status || currentPatient?.status) === 'Follow Up' ? 'bg-purple-100 text-purple-800' :
+                        'bg-gray-100 text-gray-800'
+                      }`}
+                      title="Click to edit status"
+                    >
+                      {metadata?.status || currentPatient?.status || 'Pending'}
+                      <Edit className="w-3 h-3 ml-1 opacity-60" />
+                    </span>
+                  )}
+                </div>
               </div>
               <div className="col-span-2">
                 <span className="text-muted-foreground">Files:</span>
