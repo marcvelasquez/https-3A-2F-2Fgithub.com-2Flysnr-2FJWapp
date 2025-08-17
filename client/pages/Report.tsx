@@ -242,23 +242,23 @@ const Report = () => {
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Slice Thickness:</span>
-                    <span className="text-foreground">3.0 mm</span>
+                    <span className="text-foreground">{metadata?.technicalParams?.sliceThickness || '3.0 mm'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">TR:</span>
-                    <span className="text-foreground">2500 ms</span>
+                    <span className="text-foreground">{metadata?.technicalParams?.tr || '2500 ms'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">TE:</span>
-                    <span className="text-foreground">85 ms</span>
+                    <span className="text-foreground">{metadata?.technicalParams?.te || '85 ms'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Field Strength:</span>
-                    <span className="text-foreground">1.5 Tesla</span>
+                    <span className="text-foreground">{metadata?.technicalParams?.fieldStrength || '1.5 Tesla'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Matrix:</span>
-                    <span className="text-foreground">512 x 512</span>
+                    <span className="text-foreground">{metadata?.technicalParams?.matrix || '512 x 512'}</span>
                   </div>
                 </div>
               </div>
@@ -313,15 +313,15 @@ const Report = () => {
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Manufacturer:</span>
-                    <span className="text-foreground">Siemens</span>
+                    <span className="text-foreground">{metadata?.equipment?.manufacturer || 'Siemens'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Model:</span>
-                    <span className="text-foreground">MAGNETOM Aera</span>
+                    <span className="text-foreground">{metadata?.equipment?.model || 'MAGNETOM Aera'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Software:</span>
-                    <span className="text-foreground">syngo MR E11</span>
+                    <span className="text-foreground">{metadata?.equipment?.software || 'syngo MR E11'}</span>
                   </div>
                 </div>
               </div>
