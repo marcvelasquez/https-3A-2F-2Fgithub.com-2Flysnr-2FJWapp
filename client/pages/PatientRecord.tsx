@@ -155,8 +155,39 @@ const PatientRecord = () => {
     }
   }, []);
 
+  const checkStatusBeforeNavigation = (action: string, patientId?: string, navigationCallback?: () => void) => {
+    if (patientId) {
+      // Find the patient record to check status
+      const patientRecord = patientRecords.find(record => record.id === patientId);
+      if (patientRecord) {
+        const status = patientRecord.status || 'Pending';
+
+        // Check if status is Pending or In Progress
+        if (status === 'Pending' || status === 'In Progress') {
+          // Store navigation info and show popup
+          setPendingNavigation({
+            action: action,
+            patientId: patientId,
+            patientName: patientRecord.name,
+            status: status
+          });
+          setShowNavigationWarning(true);
+          return false; // Don't proceed with navigation
+        }
+      }
+    }
+
+    // Status is Complete/Follow Up or no patient specified, proceed
+    if (navigationCallback) {
+      navigationCallback();
+    }
+    return true;
+  };
+
   const handleFileFolder = (patientId: string) => {
-    navigate(`/file-folder/${patientId}`);
+    checkStatusBeforeNavigation('fileFolder', patientId, () => {
+      navigate(`/file-folder/${patientId}`);
+    });
   };
 
 
