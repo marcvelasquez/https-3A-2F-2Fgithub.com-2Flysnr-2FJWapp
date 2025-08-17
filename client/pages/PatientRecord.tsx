@@ -575,7 +575,7 @@ const PatientRecord = () => {
                       className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
                     />
                   </td>
-                  <td className="py-3 px-4 text-foreground">{record.id}</td>
+                  <td className="py-3 px-4 text-foreground">{(startIndex + index + 1).toString().padStart(2, '0')}.)</td>
                   <td className="py-3 px-4 text-foreground">{record.name}</td>
                   <td className="py-3 px-4 text-foreground">{record.bodyPart}</td>
                   <td className="py-3 px-4 text-foreground">{record.date}</td>
