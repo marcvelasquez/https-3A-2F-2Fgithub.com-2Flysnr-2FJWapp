@@ -50,9 +50,13 @@ const Dashboard = () => {
     // Also listen for custom events (when localStorage is updated from same tab)
     window.addEventListener('patientRecordsUpdated', handleStorageChange);
 
+    // Listen for metadata updates as well
+    window.addEventListener('metadataUpdated', handleStorageChange);
+
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('patientRecordsUpdated', handleStorageChange);
+      window.removeEventListener('metadataUpdated', handleStorageChange);
     };
   }, []);
 
