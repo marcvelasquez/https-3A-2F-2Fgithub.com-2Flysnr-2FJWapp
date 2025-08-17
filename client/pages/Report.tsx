@@ -18,6 +18,9 @@ const Report = () => {
     status: 'Pending'
   });
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [isEditingStatus, setIsEditingStatus] = useState(false);
+  const [tempStatus, setTempStatus] = useState('');
+  const [showStatusWarning, setShowStatusWarning] = useState(false);
 
   useEffect(() => {
     // Get uploaded study data from sessionStorage
