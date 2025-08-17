@@ -11,6 +11,11 @@ const Report = () => {
   const [showMetadata, setShowMetadata] = useState(false);
   const [currentPatient, setCurrentPatient] = useState<any>(null);
   const [metadata, setMetadata] = useState<any>(null);
+  const [isEditingMetadata, setIsEditingMetadata] = useState(false);
+  const [editMetadataForm, setEditMetadataForm] = useState({
+    description: '',
+    remarks: ''
+  });
 
   useEffect(() => {
     // Get uploaded study data from sessionStorage
