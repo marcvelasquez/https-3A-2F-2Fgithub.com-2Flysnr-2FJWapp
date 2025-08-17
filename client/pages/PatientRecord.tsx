@@ -12,7 +12,7 @@ const PatientRecord = () => {
   const [editFormData, setEditFormData] = useState({ name: '', bodyPart: '', remarks: '' });
   const [deleteConfirmDialog, setDeleteConfirmDialog] = useState({ isOpen: false, message: '', onConfirm: () => {} });
   const [newPatientDialog, setNewPatientDialog] = useState({ isOpen: false });
-  const [newPatientData, setNewPatientData] = useState({ name: '', bodyPart: '', remarks: '' });
+  const [newPatientData, setNewPatientData] = useState({ name: '', bodyPart: '', remarks: '', status: 'Pending' });
   const [searchTerm, setSearchTerm] = useState('');
   const [dateSort, setDateSort] = useState<'asc' | 'desc' | 'none'>('none');
   const [bodyPartFilter, setBodyPartFilter] = useState('');
