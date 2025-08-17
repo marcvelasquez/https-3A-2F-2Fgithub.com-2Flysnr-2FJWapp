@@ -355,27 +355,93 @@ const PatientRecord = () => {
         recordId={deleteDialog.recordId}
       />
 
-      {/* Bulk Delete Dialog */}
-      {bulkDeleteDialog.isOpen && (
+      {/* Edit Form Dialog */}
+      {editDialog.isOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-card p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Delete Selected Records</h3>
-            <p className="text-muted-foreground mb-6">
-              Are you sure you want to delete {bulkDeleteDialog.count} selected record{bulkDeleteDialog.count > 1 ? 's' : ''}?
-              This action cannot be undone.
-            </p>
-            <div className="flex space-x-3 justify-end">
+            <h3 className="text-lg font-semibold text-foreground mb-4">
+              Edit {editDialog.records.length > 1 ? `${editDialog.records.length} Records` : 'Record'}
+            </h3>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Patient Name
+                </label>
+                <input
+                  type="text"
+                  value={editFormData.name}
+                  onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })}
+                  className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                  placeholder="Enter patient name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Study Description
+                </label>
+                <input
+                  type="text"
+                  value={editFormData.bodyPart}
+                  onChange={(e) => setEditFormData({ ...editFormData, bodyPart: e.target.value })}
+                  className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                  placeholder="Enter study description"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Remarks
+                </label>
+                <textarea
+                  value={editFormData.remarks}
+                  onChange={(e) => setEditFormData({ ...editFormData, remarks: e.target.value })}
+                  rows={3}
+                  className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent resize-none"
+                  placeholder="Enter remarks or notes"
+                />
+              </div>
+            </div>
+
+            <div className="flex space-x-3 justify-end mt-6">
               <button
-                onClick={handleBulkDeleteCancel}
+                onClick={handleEditCancel}
                 className="px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted transition-colors"
               >
                 Cancel
               </button>
               <button
-                onClick={handleBulkDeleteConfirm}
+                onClick={handleEditSave}
+                className="px-4 py-2 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors"
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Dialog */}
+      {deleteConfirmDialog.isOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-card p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold text-foreground mb-4">Confirm Delete</h3>
+            <p className="text-muted-foreground mb-6">
+              {deleteConfirmDialog.message}
+            </p>
+            <div className="flex space-x-3 justify-end">
+              <button
+                onClick={handleDeleteConfirmCancel}
+                className="px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={deleteConfirmDialog.onConfirm}
                 className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
               >
-                Delete {bulkDeleteDialog.count} Record{bulkDeleteDialog.count > 1 ? 's' : ''}
+                Delete
               </button>
             </div>
           </div>
