@@ -174,6 +174,45 @@ const Report = () => {
     setHasUnsavedChanges(false);
   };
 
+  const handleStatusEdit = () => {
+    setTempStatus(metadata?.status || currentPatient?.status || 'Pending');
+    setIsEditingStatus(true);
+    setShowStatusWarning(false);
+  };
+
+  const handleStatusSave = () => {
+    const currentPatientId = currentPatient?.id || studyId;
+    const metadataKey = `metadata_${currentPatientId}`;
+
+    const updatedMetadata = {
+      ...metadata,
+      status: tempStatus,
+      lastModified: new Date().toISOString()
+    };
+
+    localStorage.setItem(metadataKey, JSON.stringify(updatedMetadata));
+    setMetadata(updatedMetadata);
+    setIsEditingStatus(false);
+
+    // Also update patient records
+    const savedRecords = localStorage.getItem('patientRecords');
+    if (savedRecords) {
+      const records = JSON.parse(savedRecords);
+      const updatedRecords = records.map((record: any) => {
+        if (record.id === currentPatientId) {
+          return { ...record, status: tempStatus };
+        }
+        return record;
+      });
+      localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    }
+  };
+
+  const handleStatusCancel = () => {
+    setIsEditingStatus(false);
+    setTempStatus('');
+  };
+
   return (
     <div className="bg-background flex flex-col min-h-full">
       {/* Header */}
