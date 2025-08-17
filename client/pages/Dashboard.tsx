@@ -90,16 +90,10 @@ const Dashboard = () => {
 
   const filteredPatientData = getFilteredPatientData();
 
-  // Dashboard stats that update with real data
-  const getTotalPatients = () => {
-    const savedRecords = localStorage.getItem('patientRecords');
-    return savedRecords ? JSON.parse(savedRecords).length : 0;
-  };
-
   const stats = [
-    { value: getTotalPatients().toString(), label: 'Total Patient Records', bgColor: 'bg-gradient-to-br from-blue-500 to-blue-600' },
-    { value: Math.floor(getTotalPatients() * 0.75).toString(), label: 'Completed Studies', bgColor: 'bg-gradient-to-br from-green-500 to-green-600' },
-    { value: 'Knee Joint', label: 'Most Common Study Area', bgColor: 'bg-gradient-to-br from-purple-500 to-purple-600' },
+    { value: '24', label: 'Total Patients', bgColor: 'bg-gradient-to-br from-blue-500 to-blue-600' },
+    { value: '18', label: 'Completed Studies', bgColor: 'bg-gradient-to-br from-green-500 to-green-600' },
+    { value: '6', label: 'Pending Reviews', bgColor: 'bg-gradient-to-br from-orange-500 to-orange-600' },
   ];
 
   // Patient data now loaded from localStorage in useEffect
