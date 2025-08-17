@@ -161,13 +161,21 @@ const FileFolder = () => {
       {patientFolders.length === 0 && (
         <div className="flex flex-col items-center justify-center py-16">
           <Folder className="w-16 h-16 text-muted-foreground mb-4" />
-          <h3 className="text-lg font-medium text-foreground mb-2">No folders found</h3>
-          <p className="text-sm text-muted-foreground mb-4">Create a new folder to get started</p>
+          <h3 className="text-lg font-medium text-foreground mb-2">
+            {isNewPatient() ? 'New Patient - No Files Yet' : 'No folders found'}
+          </h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            {isNewPatient()
+              ? 'Click the + button above to upload files for this new patient'
+              : 'Upload files or create a new folder to get started'
+            }
+          </p>
           <button
-            onClick={() => console.log('Create folder clicked')}
-            className="bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg font-medium transition-colors"
+            onClick={handleAddFile}
+            className="bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
           >
-            Create Folder
+            <Plus className="w-4 h-4" />
+            <span>{isNewPatient() ? 'Upload Files' : 'Add Files'}</span>
           </button>
         </div>
       )}
