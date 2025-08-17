@@ -292,11 +292,13 @@ const PatientRecord = () => {
       localStorage.setItem(metadataKey, JSON.stringify(metadata));
     });
 
-    // Dispatch event to sync with Dashboard and other components
-    window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
-    window.dispatchEvent(new CustomEvent('metadataUpdated', {
-      detail: { updatedRecords: editedRecords }
-    }));
+    // Dispatch events to sync with Dashboard and other components
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+      window.dispatchEvent(new CustomEvent('metadataUpdated', {
+        detail: { updatedRecords: editedRecords }
+      }));
+    }, 50);
 
     setEditDialog({ isOpen: false, records: [] });
     setSelectedRecords([]);
