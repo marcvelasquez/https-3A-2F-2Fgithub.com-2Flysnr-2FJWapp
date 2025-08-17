@@ -140,15 +140,15 @@ const Dashboard = () => {
             </thead>
             <tbody>
               {patientData.map((patient) => (
-                <tr key={patient.id} className="border-b border-border hover:bg-muted/50">
-                  <td className="py-3 px-4 text-foreground">{patient.id}</td>
+                <tr key={patient.originalId || patient.id} className="border-b border-border hover:bg-muted/50">
+                  <td className="py-3 px-4 text-foreground">{patient.displayId || patient.id}</td>
                   <td className="py-3 px-4 text-foreground">{patient.name}</td>
                   <td className="py-3 px-4 text-foreground">{patient.bodyPart}</td>
                   <td className="py-3 px-4 text-foreground">{patient.date}</td>
                   <td className="py-3 px-4 text-foreground">{patient.time}</td>
                   <td className="py-3 px-4">
                     <button
-                      onClick={() => handleFileFolder(patient.id)}
+                      onClick={() => handleFileFolder(patient.originalId || patient.id)}
                       className="w-8 h-8 bg-medical-blue hover:bg-medical-blue-dark text-white rounded flex items-center justify-center transition-colors"
                       title="Open File Folder"
                     >
