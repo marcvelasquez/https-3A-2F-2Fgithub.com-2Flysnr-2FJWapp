@@ -63,9 +63,11 @@ const PatientRecord = () => {
       };
 
       const updatedRecords = [newRecord, ...patientRecords];
-      setPatientRecords(updatedRecords);
-      localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
-      sessionStorage.removeItem('newPatientRecord');
+    setPatientRecords(updatedRecords);
+    localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    // Dispatch event to sync with Dashboard
+    window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+    sessionStorage.removeItem('newPatientRecord');
     }
   }, []);
 
@@ -81,6 +83,8 @@ const PatientRecord = () => {
     const updatedRecords = patientRecords.filter(record => record.id !== deleteDialog.recordId);
     setPatientRecords(updatedRecords);
     localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    // Dispatch event to sync with Dashboard
+    window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
     setDeleteDialog({ isOpen: false, recordId: '', patientName: '' });
   };
 
@@ -116,6 +120,8 @@ const PatientRecord = () => {
     const updatedRecords = patientRecords.filter(record => !selectedRecords.includes(record.id));
     setPatientRecords(updatedRecords);
     localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    // Dispatch event to sync with Dashboard
+    window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
     setSelectedRecords([]);
     setBulkDeleteDialog({ isOpen: false, count: 0 });
   };
@@ -137,6 +143,8 @@ const PatientRecord = () => {
     const updatedRecords = [newPatient, ...patientRecords];
     setPatientRecords(updatedRecords);
     localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    // Dispatch event to sync with Dashboard
+    window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
   };
 
 
