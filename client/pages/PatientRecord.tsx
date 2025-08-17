@@ -1037,45 +1037,6 @@ const PatientRecord = () => {
         </div>
       )}
 
-      {/* Navigation Warning Popup */}
-      {showNavigationWarning && pendingNavigation && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-          <div className="bg-card border border-border rounded-lg p-6 max-w-md mx-4 shadow-xl">
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
-                <Edit className="w-5 h-5 text-yellow-600" />
-              </div>
-              <h3 className="text-lg font-semibold text-foreground">Status Needs Attention</h3>
-            </div>
-            <p className="text-sm text-muted-foreground mb-2">
-              <strong>{pendingNavigation.patientName}</strong> has status: <strong>{pendingNavigation.status}</strong>
-            </p>
-            <p className="text-sm text-muted-foreground mb-6">
-              Do you want to update the status before proceeding, or continue without updating?
-            </p>
-            <div className="flex space-x-3 justify-end">
-              <button
-                onClick={handleRemindLater}
-                className="px-4 py-2 text-sm border border-border rounded-lg text-muted-foreground hover:bg-muted transition-colors"
-              >
-                Remind Later
-              </button>
-              <button
-                onClick={handleNavigateAnyway}
-                className="px-4 py-2 text-sm border border-border rounded-lg text-muted-foreground hover:bg-muted transition-colors"
-              >
-                Continue Anyway
-              </button>
-              <button
-                onClick={handleUpdateStatusFirst}
-                className="px-4 py-2 text-sm bg-medical-blue text-white rounded-lg hover:bg-medical-blue-dark transition-colors"
-              >
-                Update Status
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
