@@ -236,9 +236,16 @@ const PatientRecord = () => {
         </div>
       </div>
 
-      {/* Delete Option (shows when checkboxes are selected) */}
+      {/* Edit and Delete Options (shows when checkboxes are selected) */}
       {selectedRecords.length > 0 && (
-        <div className="mb-6">
+        <div className="mb-6 flex space-x-3">
+          <button
+            onClick={handleBulkEdit}
+            className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
+          >
+            <Edit className="w-4 h-4" />
+            <span>Edit Selected ({selectedRecords.length})</span>
+          </button>
           <button
             onClick={handleBulkDelete}
             className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
@@ -268,7 +275,6 @@ const PatientRecord = () => {
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Body Part</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Date</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Time</th>
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Edit</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">File</th>
               </tr>
             </thead>
@@ -290,15 +296,6 @@ const PatientRecord = () => {
                   <td className="py-3 px-4 text-foreground">{record.bodyPart}</td>
                   <td className="py-3 px-4 text-foreground">{record.date}</td>
                   <td className="py-3 px-4 text-foreground">{record.time}</td>
-                  <td className="py-3 px-4">
-                    <button
-                      onClick={() => handleEditPatient(record.id)}
-                      className="w-8 h-8 bg-orange-500 hover:bg-orange-600 text-white rounded flex items-center justify-center transition-colors"
-                      title="Edit Patient"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </button>
-                  </td>
                   <td className="py-3 px-4">
                     <button
                       onClick={() => handleFileFolder(record.id)}
