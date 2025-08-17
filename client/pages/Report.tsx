@@ -198,6 +198,12 @@ const Report = () => {
       });
       localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
     }
+
+    // Dispatch events to sync across all pages
+    window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+    window.dispatchEvent(new CustomEvent('metadataUpdated', {
+      detail: { updatedRecords: [{ id: currentPatientId, status: tempStatus }] }
+    }));
   };
 
   const handleStatusCancel = () => {
@@ -232,6 +238,12 @@ const Report = () => {
       localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
     }
 
+    // Dispatch events to sync across all pages
+    window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+    window.dispatchEvent(new CustomEvent('metadataUpdated', {
+      detail: { updatedRecords: [{ id: currentPatientId, status: 'Pending' }] }
+    }));
+
     setShowStatusWarning(false);
   };
 
@@ -261,6 +273,12 @@ const Report = () => {
       });
       localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
     }
+
+    // Dispatch events to sync across all pages
+    window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+    window.dispatchEvent(new CustomEvent('metadataUpdated', {
+      detail: { updatedRecords: [{ id: currentPatientId, status: 'Pending' }] }
+    }));
 
     setShowNavigationWarning(false);
 
