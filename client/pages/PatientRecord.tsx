@@ -178,6 +178,46 @@ const PatientRecord = () => {
     navigate(`/file-folder/${patientId}`);
   };
 
+  const handleNavigateAnyway = () => {
+    if (pendingNavigation) {
+      navigate(`/file-folder/${pendingNavigation.patientId}`);
+    }
+    setShowStatusWarning(false);
+    setPendingNavigation(null);
+  };
+
+  const handleUpdateStatusFirst = () => {
+    if (pendingNavigation) {
+      // Find and update the patient record to edit it
+      const recordsToEdit = patientRecords.filter(record => record.id === pendingNavigation.patientId);
+      setEditDialog({ isOpen: true, records: recordsToEdit });
+      setEditFormData({
+        name: pendingNavigation.patientName,
+        bodyPart: recordsToEdit[0]?.bodyPart || '',
+        remarks: recordsToEdit[0]?.remarks || '',
+        status: pendingNavigation.status
+      });
+    }
+    setShowStatusWarning(false);
+    setPendingNavigation(null);
+  };
+
+  const handleRemindLater = () => {
+    if (pendingNavigation) {
+      // Update status to Pending
+      const updatedRecords = patientRecords.map(record => {
+        if (record.id === pendingNavigation.patientId) {
+          return { ...record, status: 'Pending' };
+        }
+        return record;
+      });
+      setPatientRecords(updatedRecords);
+      localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    }
+    setShowStatusWarning(false);
+    setPendingNavigation(null);
+  };
+
   const handleDeleteClick = (recordId: string, patientName: string) => {
     setDeleteDialog({ isOpen: true, recordId, patientName });
   };
