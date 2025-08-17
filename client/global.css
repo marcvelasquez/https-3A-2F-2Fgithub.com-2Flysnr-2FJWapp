@@ -130,10 +130,7 @@
     font-size: var(--base-font-size);
   }
 
-  /* Add dark class to html by default for medical app */
-  html {
-    @apply dark;
-  }
+  /* Theme class will be applied dynamically by Settings component */
 
   /* Medical app specific utility classes */
   .medical-sidebar {
