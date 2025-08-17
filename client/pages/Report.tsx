@@ -106,6 +106,7 @@ const Report = () => {
       ...metadata,
       description: editMetadataForm.description,
       remarks: editMetadataForm.remarks,
+      status: editMetadataForm.status,
       lastModified: new Date().toISOString()
     };
 
