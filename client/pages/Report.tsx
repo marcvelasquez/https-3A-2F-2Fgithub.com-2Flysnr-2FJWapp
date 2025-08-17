@@ -355,13 +355,25 @@ const Report = () => {
         )}
 
         {/* Study Information */}
-        {studyData && (
+        {(studyData || metadata || currentPatient) && (
           <div className="mt-6 medical-card p-4">
             <h3 className="text-lg font-semibold text-foreground mb-3">Study Information</h3>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <span className="text-muted-foreground">Patient Name:</span>
-                <span className="ml-2 text-foreground font-medium">{currentPatient?.name || studyData.patientName}</span>
+                <span className="ml-2 text-foreground font-medium">{metadata?.studyInfo?.patientName || currentPatient?.name || studyData?.patientName || 'N/A'}</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground">Body Part:</span>
+                <span className="ml-2 text-foreground font-medium">{metadata?.studyInfo?.bodyPart || currentPatient?.bodyPart || 'N/A'}</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground">Study Date:</span>
+                <span className="ml-2 text-foreground font-medium">{metadata?.studyInfo?.studyDate || currentPatient?.date || 'N/A'}</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground">Study Time:</span>
+                <span className="ml-2 text-foreground font-medium">{currentPatient?.time || 'N/A'}</span>
               </div>
               <div>
                 <span className="text-muted-foreground">Study ID:</span>
