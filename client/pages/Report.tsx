@@ -325,6 +325,23 @@ const Report = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Remarks */}
+              {(metadata?.remarks || currentPatient?.remarks) && (
+                <div className="space-y-3">
+                  <h4 className="font-medium text-foreground">Remarks</h4>
+                  <div className="p-3 bg-muted/50 border border-border rounded-lg">
+                    <p className="text-sm text-foreground">
+                      {metadata?.remarks || currentPatient?.remarks || 'No remarks available'}
+                    </p>
+                  </div>
+                  {metadata?.lastModified && (
+                    <p className="text-xs text-muted-foreground">
+                      Last updated: {new Date(metadata.lastModified).toLocaleString()}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
