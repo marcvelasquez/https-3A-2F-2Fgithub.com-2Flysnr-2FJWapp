@@ -156,6 +156,25 @@ const PatientRecord = () => {
   }, []);
 
   const handleFileFolder = (patientId: string) => {
+    // Find the patient record to check status
+    const patientRecord = patientRecords.find(record => record.id === patientId);
+    if (patientRecord) {
+      const status = patientRecord.status;
+
+      // Check if status is Pending or In Progress
+      if (status === 'Pending' || status === 'In Progress') {
+        // Store navigation info and show popup
+        setPendingNavigation({
+          patientId: patientId,
+          patientName: patientRecord.name,
+          status: status
+        });
+        setShowStatusWarning(true);
+        return;
+      }
+    }
+
+    // Status is Complete or Follow Up, proceed with navigation
     navigate(`/file-folder/${patientId}`);
   };
 
