@@ -381,6 +381,67 @@ const PatientRecord = () => {
     setNewPatientData({ name: '', bodyPart: '', remarks: '' });
   };
 
+  // Search and filter functions
+  const handleSearch = (searchValue: string) => {
+    setSearchTerm(searchValue);
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
+  };
+
+  const handleDateSort = (sortType: 'asc' | 'desc' | 'none') => {
+    setDateSort(sortType);
+  };
+
+  const handleBodyPartFilter = (bodyPart: string) => {
+    setBodyPartFilter(bodyPart);
+  };
+
+  // Convert date string to Date object for sorting
+  const parseDate = (dateStr: string) => {
+    if (dateStr === 'Today') return new Date();
+    if (dateStr === 'Yesterday') {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      return yesterday;
+    }
+    return new Date(dateStr);
+  };
+
+  // Filter and sort patient records
+  const getFilteredAndSortedRecords = () => {
+    let filtered = patientRecords;
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter(record =>
+        record.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        record.bodyPart.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        record.remarks?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        record.id.includes(searchTerm)
+      );
+    }
+
+    // Apply body part filter
+    if (bodyPartFilter) {
+      filtered = filtered.filter(record => record.bodyPart === bodyPartFilter);
+    }
+
+    // Apply date sorting
+    if (dateSort !== 'none') {
+      filtered = [...filtered].sort((a, b) => {
+        const dateA = parseDate(a.date);
+        const dateB = parseDate(b.date);
+        return dateSort === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+      });
+    }
+
+    return filtered;
+  };
+
+  const filteredRecords = getFilteredAndSortedRecords();
+
 
   return (
     <div className="p-6 bg-background min-h-full">
