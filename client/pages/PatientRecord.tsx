@@ -549,7 +549,7 @@ const PatientRecord = () => {
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground w-12">
                   <input
                     type="checkbox"
-                    checked={filteredRecords.length > 0 && filteredRecords.every(record => selectedRecords.includes(record.id))}
+                    checked={currentPageRecords.length > 0 && currentPageRecords.every(record => selectedRecords.includes(record.id))}
                     onChange={handleSelectAll}
                     className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
                   />
