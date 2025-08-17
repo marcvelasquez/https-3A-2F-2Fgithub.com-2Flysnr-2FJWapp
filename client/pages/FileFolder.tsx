@@ -15,7 +15,17 @@ const FileFolder = () => {
       const records = JSON.parse(savedRecords);
       const patient = records.find((record: any) => record.id === patientId);
       if (patient) {
-        setPatientName(patient.name);
+        // Check if this is a newly added patient (within last 5 minutes)
+        const isRecentlyAdded = patient.isNewlyAdded &&
+          patient.addedTimestamp &&
+          (Date.now() - patient.addedTimestamp) < (5 * 60 * 1000); // 5 minutes
+
+        // For newly added patients, show "New Patient" until they upload files
+        if (isRecentlyAdded) {
+          setPatientName('New Patient');
+        } else {
+          setPatientName(patient.name);
+        }
       }
     }
   }, [patientId]);
