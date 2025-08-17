@@ -261,7 +261,16 @@ const Report = () => {
             <div className="p-4 space-y-4 overflow-y-auto h-full pb-20">
               {/* Study Information */}
               <div className="space-y-3">
-                <h4 className="font-medium text-foreground">Study Information</h4>
+                <div className="flex items-center justify-between">
+                  <h4 className="font-medium text-foreground">Study Information</h4>
+                  <button
+                    onClick={isEditingMetadata ? handleSaveMetadata : handleEditMetadata}
+                    className="text-medical-blue hover:text-medical-blue-dark transition-colors"
+                    title={isEditingMetadata ? "Save changes" : "Edit metadata"}
+                  >
+                    {isEditingMetadata ? <Save className="w-4 h-4" /> : <Edit className="w-4 h-4" />}
+                  </button>
+                </div>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Study ID:</span>
