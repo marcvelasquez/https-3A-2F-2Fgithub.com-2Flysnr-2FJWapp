@@ -621,36 +621,62 @@ const PatientRecord = () => {
         </div>
         
         {/* Table Footer/Pagination could go here if needed */}
-        <div className="mt-4 flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">
+        {/* Pagination Controls */}
+        {filteredRecords.length > 0 && (
+          <div className="mt-4 flex items-center justify-between">
+            <div className="text-sm text-muted-foreground">
+              Showing {startIndex + 1}-{Math.min(endIndex, filteredRecords.length)} of {filteredRecords.length} records
+            </div>
+
+            {totalPages > 1 && (
+              <div className="flex space-x-2">
+                <button
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 border border-border rounded text-sm text-muted-foreground hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+
+                {/* Page Numbers */}
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                  let pageNum;
+                  if (totalPages <= 5) {
+                    pageNum = i + 1;
+                  } else if (currentPage <= 3) {
+                    pageNum = i + 1;
+                  } else if (currentPage >= totalPages - 2) {
+                    pageNum = totalPages - 4 + i;
+                  } else {
+                    pageNum = currentPage - 2 + i;
+                  }
+
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => handlePageChange(pageNum)}
+                      className={`px-3 py-1 rounded text-sm transition-colors ${
+                        currentPage === pageNum
+                          ? 'bg-medical-blue text-white hover:bg-medical-blue-dark'
+                          : 'border border-border text-muted-foreground hover:bg-muted'
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+
+                <button
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 border border-border rounded text-sm text-muted-foreground hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </div>
-          <div className="flex space-x-2">
-            <button
-              onClick={() => console.log('Previous page')}
-              className="px-3 py-1 border border-border rounded text-sm text-muted-foreground hover:bg-muted transition-colors"
-            >
-              Previous
-            </button>
-            <button
-              onClick={() => console.log('Page 1')}
-              className="px-3 py-1 bg-medical-blue text-white rounded text-sm hover:bg-medical-blue-dark transition-colors"
-            >
-              1
-            </button>
-            <button
-              onClick={() => console.log('Page 2')}
-              className="px-3 py-1 border border-border rounded text-sm text-muted-foreground hover:bg-muted transition-colors"
-            >
-              2
-            </button>
-            <button
-              onClick={() => console.log('Next page')}
-              className="px-3 py-1 border border-border rounded text-sm text-muted-foreground hover:bg-muted transition-colors"
-            >
-              Next
-            </button>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Delete Dialog */}
