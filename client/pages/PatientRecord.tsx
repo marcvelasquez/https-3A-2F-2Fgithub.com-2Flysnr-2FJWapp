@@ -243,7 +243,8 @@ const PatientRecord = () => {
     setEditFormData({
       name: firstRecord.name,
       bodyPart: firstRecord.bodyPart,
-      remarks: firstRecord.remarks || ''
+      remarks: firstRecord.remarks || '',
+      status: firstRecord.status || 'Pending'
     });
     setEditDialog({ isOpen: true, records: recordsToEdit });
   };
