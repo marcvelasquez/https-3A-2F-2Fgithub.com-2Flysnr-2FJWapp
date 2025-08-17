@@ -637,6 +637,7 @@ const PatientRecord = () => {
           <div className="mt-4 flex items-center justify-between">
             <div className="text-sm text-muted-foreground">
               Showing {startIndex + 1}-{Math.min(endIndex, filteredRecords.length)} of {filteredRecords.length} records
+              (Page {currentPage} of {totalPages})
             </div>
 
             {totalPages > 1 && (
