@@ -323,7 +323,7 @@ const PatientRecord = () => {
 
   const handleEditCancel = () => {
     setEditDialog({ isOpen: false, records: [] });
-    setEditFormData({ name: '', bodyPart: '', remarks: '' });
+    setEditFormData({ name: '', bodyPart: '', remarks: '', status: 'Pending' });
   };
 
   const handleAddPatient = () => {
