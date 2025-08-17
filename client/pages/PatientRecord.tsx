@@ -66,15 +66,44 @@ const PatientRecord = () => {
         bodyPart: uploadData.studyDescription || 'Study',
         date: 'Today',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        file: 'D'
+        file: 'D',
+        remarks: uploadData.remarks || 'Uploaded study'
       };
 
       const updatedRecords = reassignPatientIds([newRecord, ...patientRecords]);
-    setPatientRecords(updatedRecords);
-    localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
-    // Dispatch event to sync with Dashboard
-    window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
-    sessionStorage.removeItem('newPatientRecord');
+      setPatientRecords(updatedRecords);
+      localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+
+      // Initialize metadata for uploaded patient
+      const metadataKey = `metadata_${newRecord.id}`;
+      const metadata = {
+        studyInfo: {
+          studyId: newRecord.id,
+          patientName: newRecord.name,
+          studyDate: newRecord.date,
+          modality: 'MRI',
+          bodyPart: newRecord.bodyPart
+        },
+        technicalParams: {
+          sliceThickness: '3.0 mm',
+          tr: '2500 ms',
+          te: '85 ms',
+          fieldStrength: '1.5 Tesla',
+          matrix: '512 x 512'
+        },
+        equipment: {
+          manufacturer: 'Siemens',
+          model: 'MAGNETOM Aera',
+          software: 'syngo MR E11'
+        },
+        remarks: newRecord.remarks || '',
+        created: new Date().toISOString()
+      };
+      localStorage.setItem(metadataKey, JSON.stringify(metadata));
+
+      // Dispatch event to sync with Dashboard
+      window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+      sessionStorage.removeItem('newPatientRecord');
     }
   }, []);
 
