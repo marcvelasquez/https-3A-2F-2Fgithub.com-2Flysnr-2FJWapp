@@ -85,9 +85,9 @@ const Report = () => {
     // Check if status needs attention on page load
     const checkStatusWarning = () => {
       const currentStatus = metadata?.status || currentPatient?.status;
-      // Only show warning if status is specifically 'Pending' (not 'In Progress' or other statuses)
-      if (currentStatus === 'Pending') {
-        // Show warning after 3 seconds if status is still pending
+      // Show warning if status is 'Pending' or 'In Progress'
+      if (currentStatus === 'Pending' || currentStatus === 'In Progress') {
+        // Show warning after 3 seconds if status needs attention
         setTimeout(() => {
           setShowStatusWarning(true);
         }, 3000);
@@ -277,14 +277,14 @@ const Report = () => {
               e.preventDefault();
               e.stopPropagation();
 
-              // Check if status is still Pending before leaving
+              // Check if status is Pending or In Progress before leaving
               const currentStatus = metadata?.status || currentPatient?.status;
-              if (currentStatus === 'Pending') {
+              if (currentStatus === 'Pending' || currentStatus === 'In Progress') {
                 setShowNavigationWarning(true);
                 return;
               }
 
-              // Status is not Pending, proceed with navigation
+              // Status is Complete or Follow Up, proceed with navigation
               try {
                 // First try to get patient context
                 const patientContext = sessionStorage.getItem('currentPatient');
