@@ -16,6 +16,7 @@ const PatientRecord = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [dateSort, setDateSort] = useState<'asc' | 'desc' | 'none'>('none');
   const [bodyPartFilter, setBodyPartFilter] = useState('');
+  const [filterDialogOpen, setFilterDialogOpen] = useState(false);
 
   // Function to reassign all patient IDs sequentially starting from 01
   const reassignPatientIds = (records: any[]) => {
