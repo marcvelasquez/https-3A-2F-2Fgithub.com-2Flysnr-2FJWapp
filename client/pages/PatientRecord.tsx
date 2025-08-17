@@ -474,6 +474,12 @@ const PatientRecord = () => {
             />
           </div>
           <button
+            onClick={() => setFilterDialogOpen(true)}
+            className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
+          >
+            <span>Filter</span>
+          </button>
+          <button
             onClick={handleAddPatient}
             className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
           >
