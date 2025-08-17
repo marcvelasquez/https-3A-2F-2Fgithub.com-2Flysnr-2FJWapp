@@ -6,6 +6,7 @@ const FileFolder = () => {
   const navigate = useNavigate();
   const { patientId } = useParams();
   const [patientName, setPatientName] = useState('Unknown Patient');
+  const [searchTerm, setSearchTerm] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
