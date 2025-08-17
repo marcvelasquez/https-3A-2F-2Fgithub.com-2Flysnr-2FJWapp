@@ -1,9 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, X, MoreVertical, Calendar, Clock, FileText, FolderOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [patientData, setPatientData] = useState<any[]>([]);
+
+  // Load patient data from localStorage (same source as Patient Record page)
+  useEffect(() => {
+    const loadPatientData = () => {
+      const savedRecords = localStorage.getItem('patientRecords');
+      if (savedRecords) {
+        const records = JSON.parse(savedRecords);
+        // Show only the first 4 records for dashboard display
+        setPatientData(records.slice(0, 4));
+      } else {
+        // Default data if no records exist
+        setPatientData([
+          { id: '01.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
+          { id: '02.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 19, 2025', time: '4:45 PM', file: 'D' },
+          { id: '03.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 18, 2025', time: '11:22 AM', file: 'D' },
+          { id: '04.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 16, 2025', time: '9:10 AM', file: 'D' },
+        ]);
+      }
+    };
+
+    loadPatientData();
+
+    // Listen for localStorage changes to update dashboard when records are modified
+    const handleStorageChange = () => {
+      loadPatientData();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    // Also listen for custom events (when localStorage is updated from same tab)
+    window.addEventListener('patientRecordsUpdated', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('patientRecordsUpdated', handleStorageChange);
+    };
+  }, []);
 
   const handleFileFolder = (patientId: string) => {
     navigate(`/file-folder/${patientId}`);
@@ -16,12 +54,7 @@ const Dashboard = () => {
     { value: 'Meniscus Tear', label: 'Most Common Finding', bgColor: 'bg-gradient-to-br from-purple-500 to-purple-600' },
   ];
 
-  const patientData = [
-    { id: '02)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', status: 'details' },
-    { id: '03)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 19, 2025', time: '4:45 PM', status: 'details' },
-    { id: '04)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 18, 2025', time: '11:22 AM', status: 'details' },
-    { id: '05)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 16, 2025', time: '9:10 AM', status: 'details' },
-  ];
+  // Patient data now loaded from localStorage in useEffect
 
   const radiologistActivity = [
     { day: 'Monday', value: 85, reports: 34, color: '#3b82f6' },
