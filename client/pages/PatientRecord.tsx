@@ -112,9 +112,21 @@ const PatientRecord = () => {
   };
 
   const handleAddPatient = () => {
+    // Generate next patient ID in sequence starting from 01
+    const getNextPatientId = () => {
+      const existingNumbers = patientRecords.map(record => {
+        const match = record.id.match(/^(\d+)\.\)$/);
+        return match ? parseInt(match[1], 10) : 0;
+      });
+
+      const maxNumber = existingNumbers.length > 0 ? Math.max(...existingNumbers) : 0;
+      const nextNumber = maxNumber + 1;
+      return `${nextNumber.toString().padStart(2, '0')}.)`;
+    };
+
     // Example of adding a new patient - this would normally open a form
     const newPatient = {
-      id: `${patientRecords.length + 1}.)`,
+      id: getNextPatientId(),
       name: 'New Patient',
       bodyPart: 'To be determined',
       date: 'Today',
