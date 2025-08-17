@@ -292,6 +292,22 @@ const Report = () => {
                     <span className="text-muted-foreground">Body Part:</span>
                     <span className="text-foreground">{metadata?.studyInfo?.bodyPart || currentPatient?.bodyPart || 'Knee'}</span>
                   </div>
+                  <div className="space-y-1">
+                    <span className="text-muted-foreground text-xs">Study Description:</span>
+                    {isEditingMetadata ? (
+                      <textarea
+                        value={editMetadataForm.description}
+                        onChange={(e) => setEditMetadataForm({ ...editMetadataForm, description: e.target.value })}
+                        className="w-full px-2 py-1 text-xs bg-background border border-border rounded text-foreground focus:outline-none focus:ring-1 focus:ring-medical-blue resize-none"
+                        rows={2}
+                        placeholder="Enter study description..."
+                      />
+                    ) : (
+                      <p className="text-foreground text-xs">
+                        {metadata?.description || studyData?.studyDescription || 'No description available'}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
 
