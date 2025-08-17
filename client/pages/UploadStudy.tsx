@@ -122,37 +122,10 @@ const UploadStudy = () => {
               className="w-full px-4 py-3 bg-muted border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
               required
             >
-              <option value="">Select body part</option>
-              <option value="Head">Head</option>
-              <option value="Brain">Brain</option>
-              <option value="Neck">Neck</option>
-              <option value="Cervical Spine">Cervical Spine</option>
-              <option value="Thoracic Spine">Thoracic Spine</option>
-              <option value="Lumbar Spine">Lumbar Spine</option>
-              <option value="Chest">Chest</option>
-              <option value="Heart">Heart</option>
-              <option value="Abdomen">Abdomen</option>
-              <option value="Pelvis">Pelvis</option>
-              <option value="Right Shoulder">Right Shoulder</option>
-              <option value="Left Shoulder">Left Shoulder</option>
-              <option value="Right Arm">Right Arm</option>
-              <option value="Left Arm">Left Arm</option>
-              <option value="Right Elbow">Right Elbow</option>
-              <option value="Left Elbow">Left Elbow</option>
-              <option value="Right Wrist">Right Wrist</option>
-              <option value="Left Wrist">Left Wrist</option>
-              <option value="Right Hand">Right Hand</option>
-              <option value="Left Hand">Left Hand</option>
-              <option value="Right Hip">Right Hip</option>
-              <option value="Left Hip">Left Hip</option>
-              <option value="Right Knee">Right Knee</option>
+              <option value="">Select knee</option>
               <option value="Left Knee">Left Knee</option>
+              <option value="Right Knee">Right Knee</option>
               <option value="Bilateral Knees">Bilateral Knees</option>
-              <option value="Right Ankle">Right Ankle</option>
-              <option value="Left Ankle">Left Ankle</option>
-              <option value="Right Foot">Right Foot</option>
-              <option value="Left Foot">Left Foot</option>
-              <option value="Other">Other</option>
             </select>
           </div>
 
