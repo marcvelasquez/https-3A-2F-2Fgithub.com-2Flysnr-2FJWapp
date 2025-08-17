@@ -131,6 +131,24 @@ const UploadStudy = () => {
             </select>
           </div>
 
+          {/* Status Field */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Status <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="w-full px-4 py-3 bg-muted border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+              required
+            >
+              <option value="Pending">Pending</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Complete">Complete</option>
+              <option value="Follow Up">Follow Up</option>
+            </select>
+          </div>
+
           {/* Study Description Field */}
           <div className="mb-8">
             <label className="block text-sm font-medium text-foreground mb-2">
