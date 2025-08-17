@@ -84,7 +84,8 @@ const Report = () => {
     // Check if status needs attention on page load
     const checkStatusWarning = () => {
       const currentStatus = metadata?.status || currentPatient?.status;
-      if (!currentStatus || currentStatus === 'Pending') {
+      // Only show warning if status is specifically 'Pending' (not 'In Progress' or other statuses)
+      if (currentStatus === 'Pending') {
         // Show warning after 3 seconds if status is still pending
         setTimeout(() => {
           setShowStatusWarning(true);
@@ -211,6 +212,36 @@ const Report = () => {
   const handleStatusCancel = () => {
     setIsEditingStatus(false);
     setTempStatus('');
+  };
+
+  const handleRemindLater = () => {
+    // Set status to 'Pending' when remind later is clicked
+    const currentPatientId = currentPatient?.id || studyId;
+    const metadataKey = `metadata_${currentPatientId}`;
+
+    const updatedMetadata = {
+      ...metadata,
+      status: 'Pending',
+      lastModified: new Date().toISOString()
+    };
+
+    localStorage.setItem(metadataKey, JSON.stringify(updatedMetadata));
+    setMetadata(updatedMetadata);
+
+    // Also update patient records
+    const savedRecords = localStorage.getItem('patientRecords');
+    if (savedRecords) {
+      const records = JSON.parse(savedRecords);
+      const updatedRecords = records.map((record: any) => {
+        if (record.id === currentPatientId) {
+          return { ...record, status: 'Pending' };
+        }
+        return record;
+      });
+      localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    }
+
+    setShowStatusWarning(false);
   };
 
   return (
@@ -655,7 +686,7 @@ const Report = () => {
               </p>
               <div className="flex space-x-3 justify-end">
                 <button
-                  onClick={() => setShowStatusWarning(false)}
+                  onClick={handleRemindLater}
                   className="px-4 py-2 text-sm border border-border rounded-lg text-muted-foreground hover:bg-muted transition-colors"
                 >
                   Remind Later
