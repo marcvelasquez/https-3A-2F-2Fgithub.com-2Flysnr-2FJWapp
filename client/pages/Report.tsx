@@ -735,7 +735,7 @@ const Report = () => {
                 <h3 className="text-lg font-semibold text-foreground">Status Update Required</h3>
               </div>
               <p className="text-sm text-muted-foreground mb-6">
-                This study's status is currently set to "Pending". Please update the status to reflect the current progress of this case.
+                This study's status needs attention. Please update the status to reflect the current progress of this case.
               </p>
               <div className="flex space-x-3 justify-end">
                 <button
