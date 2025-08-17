@@ -138,7 +138,9 @@ const PatientRecord = () => {
       localStorage.setItem(metadataKey, JSON.stringify(metadata));
 
       // Dispatch event to sync with Dashboard
-      window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+      }, 50);
       sessionStorage.removeItem('newPatientRecord');
     }
   }, []);
@@ -161,7 +163,9 @@ const PatientRecord = () => {
     setPatientRecords(updatedRecords);
     localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
     // Dispatch event to sync with Dashboard
-    window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+    }, 50);
     setDeleteDialog({ isOpen: false, recordId: '', patientName: '' });
   };
 
@@ -363,7 +367,9 @@ const PatientRecord = () => {
     localStorage.setItem(metadataKey, JSON.stringify(metadata));
 
     // Dispatch event to sync with Dashboard
-    window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+    }, 50);
     setNewPatientDialog({ isOpen: false });
   };
 
