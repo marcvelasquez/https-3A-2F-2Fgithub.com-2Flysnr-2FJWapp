@@ -325,7 +325,9 @@ const PatientRecord = () => {
       date: 'Today',
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       file: 'D',
-      remarks: newPatientData.remarks || 'Newly added patient'
+      remarks: newPatientData.remarks || 'Newly added patient',
+      isNewlyAdded: true,
+      addedTimestamp: Date.now()
     };
     const updatedRecords = reassignPatientIds([newPatient, ...patientRecords]);
     setPatientRecords(updatedRecords);
