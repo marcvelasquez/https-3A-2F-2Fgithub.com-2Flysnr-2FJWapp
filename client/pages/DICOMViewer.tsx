@@ -21,6 +21,12 @@ const DICOMViewer = () => {
         {/* Top Bar */}
         <div className="bg-card border-b border-border p-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
             <h1 className="text-xl font-semibold text-foreground">DICOM Viewer</h1>
           </div>
           <div className="flex items-center space-x-4">
