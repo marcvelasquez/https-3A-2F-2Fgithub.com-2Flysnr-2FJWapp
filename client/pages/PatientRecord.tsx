@@ -8,6 +8,9 @@ const PatientRecord = () => {
   const [deleteDialog, setDeleteDialog] = useState({ isOpen: false, recordId: '', patientName: '' });
   const [selectedRecords, setSelectedRecords] = useState<string[]>([]);
   const [bulkDeleteDialog, setBulkDeleteDialog] = useState({ isOpen: false, count: 0 });
+  const [editDialog, setEditDialog] = useState({ isOpen: false, records: [] as any[] });
+  const [editFormData, setEditFormData] = useState({ name: '', bodyPart: '', remarks: '' });
+  const [deleteConfirmDialog, setDeleteConfirmDialog] = useState({ isOpen: false, message: '', onConfirm: () => {} });
 
   // Function to reassign all patient IDs sequentially starting from 01
   const reassignPatientIds = (records: any[]) => {
@@ -118,27 +121,69 @@ const PatientRecord = () => {
       alert('Please select records to delete');
       return;
     }
-    setBulkDeleteDialog({ isOpen: true, count: selectedRecords.length });
+
+    setDeleteConfirmDialog({
+      isOpen: true,
+      message: `Are you sure you want to delete ${selectedRecords.length} selected record${selectedRecords.length > 1 ? 's' : ''}? This action cannot be undone.`,
+      onConfirm: () => {
+        const filteredRecords = patientRecords.filter(record => !selectedRecords.includes(record.id));
+        const updatedRecords = reassignPatientIds(filteredRecords);
+        setPatientRecords(updatedRecords);
+        localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+        window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+        setSelectedRecords([]);
+        setDeleteConfirmDialog({ isOpen: false, message: '', onConfirm: () => {} });
+      }
+    });
   };
 
-  const handleBulkDeleteConfirm = () => {
-    const filteredRecords = patientRecords.filter(record => !selectedRecords.includes(record.id));
-    const updatedRecords = reassignPatientIds(filteredRecords);
+  const handleDeleteConfirmCancel = () => {
+    setDeleteConfirmDialog({ isOpen: false, message: '', onConfirm: () => {} });
+  };
+
+  const handleBulkEdit = () => {
+    if (selectedRecords.length === 0) {
+      alert('Please select records to edit');
+      return;
+    }
+
+    const recordsToEdit = patientRecords.filter(record => selectedRecords.includes(record.id));
+    // If editing multiple records, use the first record's data as default
+    const firstRecord = recordsToEdit[0];
+    setEditFormData({
+      name: firstRecord.name,
+      bodyPart: firstRecord.bodyPart,
+      remarks: firstRecord.remarks || ''
+    });
+    setEditDialog({ isOpen: true, records: recordsToEdit });
+  };
+
+  const handleEditSave = () => {
+    const updatedRecords = patientRecords.map(record => {
+      if (selectedRecords.includes(record.id)) {
+        return {
+          ...record,
+          name: editFormData.name,
+          bodyPart: editFormData.bodyPart,
+          remarks: editFormData.remarks,
+          date: record.date, // Keep original date
+          time: record.time   // Keep original time
+        };
+      }
+      return record;
+    });
+
     setPatientRecords(updatedRecords);
     localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
-    // Dispatch event to sync with Dashboard
     window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+
+    setEditDialog({ isOpen: false, records: [] });
     setSelectedRecords([]);
-    setBulkDeleteDialog({ isOpen: false, count: 0 });
   };
 
-  const handleBulkDeleteCancel = () => {
-    setBulkDeleteDialog({ isOpen: false, count: 0 });
-  };
-
-  const handleEditPatient = (recordId: string) => {
-    console.log('Edit patient:', recordId);
-    // TODO: Open edit form for patient
+  const handleEditCancel = () => {
+    setEditDialog({ isOpen: false, records: [] });
+    setEditFormData({ name: '', bodyPart: '', remarks: '' });
   };
 
   const handleAddPatient = () => {
