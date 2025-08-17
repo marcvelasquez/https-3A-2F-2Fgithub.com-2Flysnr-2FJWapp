@@ -509,40 +509,6 @@ const PatientRecord = () => {
         </div>
       )}
 
-      {/* Filter Controls */}
-      <div className="mb-4 flex space-x-4 items-center">
-        <div className="flex items-center space-x-2">
-          <label className="text-sm font-medium text-foreground">Date:</label>
-          <select
-            value={dateSort}
-            onChange={(e) => handleDateSort(e.target.value as 'asc' | 'desc' | 'none')}
-            className="px-3 py-1 bg-card border border-border rounded text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue"
-          >
-            <option value="none">No Sort</option>
-            <option value="desc">Newest First</option>
-            <option value="asc">Oldest First</option>
-          </select>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <label className="text-sm font-medium text-foreground">Body Part:</label>
-          <select
-            value={bodyPartFilter}
-            onChange={(e) => handleBodyPartFilter(e.target.value)}
-            className="px-3 py-1 bg-card border border-border rounded text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue"
-          >
-            <option value="">All</option>
-            <option value="Left Knee">Left Knee</option>
-            <option value="Right Knee">Right Knee</option>
-            <option value="Bilateral Knees">Bilateral Knees</option>
-          </select>
-        </div>
-
-        <div className="text-sm text-muted-foreground">
-          Showing {filteredRecords.length} of {patientRecords.length} records
-        </div>
-      </div>
-
       {/* Patient Records Table */}
       <div className="medical-card p-6">
         <div className="overflow-x-auto">
