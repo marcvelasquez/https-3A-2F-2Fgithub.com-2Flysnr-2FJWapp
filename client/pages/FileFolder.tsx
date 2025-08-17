@@ -26,16 +26,16 @@ const FileFolder = () => {
 
   // Patient folder data
   const patientFolders = [
-    { id: 'MRI-001', name: 'MRI Scan - Knee' },
-    { id: 'MRI-002', name: 'MRI Scan - Follow-up' },
-    { id: 'XRAY-001', name: 'X-Ray - Initial' },
-    { id: 'CT-001', name: 'CT Scan - Detailed' },
-    { id: 'MRI-003', name: 'MRI Scan - Post-treatment' },
-    { id: 'XRAY-002', name: 'X-Ray - Comparison' },
-    { id: 'MRI-004', name: 'MRI Scan - Bilateral' },
-    { id: 'DICOM-001', name: 'DICOM Study 1' },
-    { id: 'DICOM-002', name: 'DICOM Study 2' },
-    { id: 'ULTRASOUND-001', name: 'Ultrasound Scan' },
+    { id: 'K123456789', name: 'K123456789' },
+    { id: 'K123456789-2', name: 'K123456789' },
+    { id: 'K123456789-3', name: 'K123456789' },
+    { id: 'K123456789-4', name: 'K123456789' },
+    { id: 'K123456789-5', name: 'K123456789' },
+    { id: 'K123456789-6', name: 'K123456789' },
+    { id: 'K123456789-7', name: 'K123456789' },
+    { id: 'K123456789-8', name: 'K123456789' },
+    { id: 'K123456789-9', name: 'K123456789' },
+    { id: 'K123456789-10', name: 'K123456789' },
   ];
 
   return (
