@@ -42,7 +42,10 @@ const Dashboard = () => {
 
     // Listen for localStorage changes to update dashboard when records are modified
     const handleStorageChange = () => {
-      loadPatientData();
+      // Use setTimeout to ensure localStorage has been updated
+      setTimeout(() => {
+        loadPatientData();
+      }, 100);
     };
 
     window.addEventListener('storage', handleStorageChange);
