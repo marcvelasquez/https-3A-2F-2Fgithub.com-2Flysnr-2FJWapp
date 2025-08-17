@@ -325,7 +325,7 @@ const PatientRecord = () => {
   };
 
   const handleAddPatient = () => {
-    setNewPatientData({ name: '', bodyPart: '', remarks: '' });
+    setNewPatientData({ name: '', bodyPart: '', remarks: '', status: 'Pending' });
     setNewPatientDialog({ isOpen: true });
   };
 
