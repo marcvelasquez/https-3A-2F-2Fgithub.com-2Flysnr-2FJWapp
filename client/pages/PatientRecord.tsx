@@ -390,20 +390,9 @@ const PatientRecord = () => {
   };
 
   // Search and filter functions
-  const handleSearch = (searchValue: string) => {
-    setSearchTerm(searchValue);
-  };
-
   const handleClearSearch = () => {
     setSearchTerm('');
-  };
-
-  const handleDateSort = (sortType: 'asc' | 'desc' | 'none') => {
-    setDateSort(sortType);
-  };
-
-  const handleBodyPartFilter = (bodyPart: string) => {
-    setBodyPartFilter(bodyPart);
+    setCurrentPage(1);
   };
 
   // Convert date string to Date object for sorting
