@@ -8,6 +8,8 @@ const FileFolder = () => {
   const [patientName, setPatientName] = useState('Unknown Patient');
   const [searchTerm, setSearchTerm] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showNavigationWarning, setShowNavigationWarning] = useState(false);
+  const [pendingNavigation, setPendingNavigation] = useState<{patientName: string, status: string} | null>(null);
 
   useEffect(() => {
     // Get patient name from localStorage
