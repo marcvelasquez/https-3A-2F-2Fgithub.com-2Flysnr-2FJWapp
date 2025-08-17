@@ -185,10 +185,15 @@ const PatientRecord = () => {
   };
 
   const handleSelectAll = () => {
-    if (selectedRecords.length === patientRecords.length) {
-      setSelectedRecords([]);
+    const visibleRecordIds = filteredRecords.map(record => record.id);
+    const allVisibleSelected = visibleRecordIds.every(id => selectedRecords.includes(id));
+
+    if (allVisibleSelected) {
+      // Deselect all visible records
+      setSelectedRecords(prev => prev.filter(id => !visibleRecordIds.includes(id)));
     } else {
-      setSelectedRecords(patientRecords.map(record => record.id));
+      // Select all visible records
+      setSelectedRecords(prev => [...new Set([...prev, ...visibleRecordIds])]);
     }
   };
 
