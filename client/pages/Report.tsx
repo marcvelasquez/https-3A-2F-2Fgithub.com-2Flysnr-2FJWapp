@@ -267,12 +267,21 @@ const Report = () => {
               e.preventDefault();
               e.stopPropagation();
 
+              console.log('Back button clicked!');
+              console.log('Metadata:', metadata);
+              console.log('CurrentPatient:', currentPatient);
+
               // Check if status is Pending or In Progress before leaving
               const currentStatus = metadata?.status || currentPatient?.status;
+              console.log('Current status:', currentStatus);
+
               if (currentStatus === 'Pending' || currentStatus === 'In Progress') {
+                console.log('Status needs attention, showing popup!');
                 setShowNavigationWarning(true);
                 return;
               }
+
+              console.log('Status is okay, proceeding with navigation');
 
               // Status is Complete or Follow Up, proceed with navigation
               try {
