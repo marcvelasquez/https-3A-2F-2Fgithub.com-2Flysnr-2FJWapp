@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Search, X, ChevronLeft, Plus, Folder, FileText } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -6,6 +6,7 @@ const FileFolder = () => {
   const navigate = useNavigate();
   const { patientId } = useParams();
   const [patientName, setPatientName] = useState('Unknown Patient');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // Get patient name from localStorage
@@ -22,6 +23,18 @@ const FileFolder = () => {
   const handleFolderClick = (folderId: string) => {
     // Navigate to images page instead of report
     navigate(`/file-folder/${patientId}/images`);
+  };
+
+  const handleAddFile = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      console.log('Selected files:', Array.from(files).map(f => f.name));
+      // TODO: Handle file upload logic
+    }
   };
 
   // Patient folder data
@@ -76,12 +89,20 @@ const FileFolder = () => {
           </div>
         </div>
         <button
-          onClick={() => console.log('Add new folder clicked')}
+          onClick={handleAddFile}
           className="flex items-center justify-center w-10 h-10 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors"
-          title="Add New Folder"
+          title="Add Files"
         >
           <Plus className="w-5 h-5" />
         </button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          multiple
+          accept=".dcm,.dicom,.jpg,.jpeg,.png,.zip,.rar,.7z"
+          onChange={handleFileSelect}
+          className="hidden"
+        />
       </div>
 
       {/* Folder Grid */}
