@@ -450,6 +450,46 @@ const PatientRecord = () => {
 
   const filteredRecords = getFilteredAndSortedRecords();
 
+  // Pagination logic
+  const totalPages = Math.ceil(filteredRecords.length / recordsPerPage);
+  const startIndex = (currentPage - 1) * recordsPerPage;
+  const endIndex = startIndex + recordsPerPage;
+  const currentPageRecords = filteredRecords.slice(startIndex, endIndex);
+
+  // Pagination functions
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    setSelectedRecords([]); // Clear selections when changing pages
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      handlePageChange(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      handlePageChange(currentPage + 1);
+    }
+  };
+
+  // Reset to first page when filters change
+  const handleSearch = (searchValue: string) => {
+    setSearchTerm(searchValue);
+    setCurrentPage(1);
+  };
+
+  const handleDateSort = (sortType: 'asc' | 'desc' | 'none') => {
+    setDateSort(sortType);
+    setCurrentPage(1);
+  };
+
+  const handleBodyPartFilter = (bodyPart: string) => {
+    setBodyPartFilter(bodyPart);
+    setCurrentPage(1);
+  };
+
 
   return (
     <div className="p-6 bg-background min-h-full">
