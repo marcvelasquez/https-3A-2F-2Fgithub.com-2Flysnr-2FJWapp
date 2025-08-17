@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, FileText, Plus, FolderOpen, Trash2, Minus } from 'lucide-react';
+import { Search, X, FileText, Plus, FolderOpen, Trash2, Minus, Edit } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DeleteDialog from '../components/DeleteDialog';
 
@@ -9,22 +9,24 @@ const PatientRecord = () => {
   const [selectedRecords, setSelectedRecords] = useState<string[]>([]);
   const [bulkDeleteDialog, setBulkDeleteDialog] = useState({ isOpen: false, count: 0 });
 
-  // Shared function to generate next patient ID
-  const getNextPatientId = (records: any[]) => {
-    const existingNumbers = records.map(record => {
-      const match = record.id.match(/^(\d+)\.\)$/);
-      return match ? parseInt(match[1], 10) : 0;
-    });
+  // Function to reassign all patient IDs sequentially starting from 01
+  const reassignPatientIds = (records: any[]) => {
+    return records.map((record, index) => ({
+      ...record,
+      id: `${(index + 1).toString().padStart(2, '0')}.)`
+    }));
+  };
 
-    const maxNumber = existingNumbers.length > 0 ? Math.max(...existingNumbers) : 0;
-    const nextNumber = maxNumber + 1;
+  // Function to generate next patient ID (always sequential)
+  const getNextPatientId = (records: any[]) => {
+    const nextNumber = records.length + 1;
     return `${nextNumber.toString().padStart(2, '0')}.)`;
   };
 
   const [patientRecords, setPatientRecords] = useState(() => {
     // Load records from localStorage or use default data
     const savedRecords = localStorage.getItem('patientRecords');
-    return savedRecords ? JSON.parse(savedRecords) : [
+    const records = savedRecords ? JSON.parse(savedRecords) : [
       { id: '01.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D' },
       { id: '02.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D' },
       { id: '03.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D' },
@@ -46,6 +48,8 @@ const PatientRecord = () => {
       { id: '19.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D' },
       { id: '20.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D' },
     ];
+    // Ensure all records have proper sequential numbering
+    return reassignPatientIds(records);
   });
 
   // Check for new uploads and append them
@@ -62,7 +66,7 @@ const PatientRecord = () => {
         file: 'D'
       };
 
-      const updatedRecords = [newRecord, ...patientRecords];
+      const updatedRecords = reassignPatientIds([newRecord, ...patientRecords]);
     setPatientRecords(updatedRecords);
     localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
     // Dispatch event to sync with Dashboard
@@ -80,7 +84,8 @@ const PatientRecord = () => {
   };
 
   const handleDeleteConfirm = () => {
-    const updatedRecords = patientRecords.filter(record => record.id !== deleteDialog.recordId);
+    const filteredRecords = patientRecords.filter(record => record.id !== deleteDialog.recordId);
+    const updatedRecords = reassignPatientIds(filteredRecords);
     setPatientRecords(updatedRecords);
     localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
     // Dispatch event to sync with Dashboard
@@ -117,7 +122,8 @@ const PatientRecord = () => {
   };
 
   const handleBulkDeleteConfirm = () => {
-    const updatedRecords = patientRecords.filter(record => !selectedRecords.includes(record.id));
+    const filteredRecords = patientRecords.filter(record => !selectedRecords.includes(record.id));
+    const updatedRecords = reassignPatientIds(filteredRecords);
     setPatientRecords(updatedRecords);
     localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
     // Dispatch event to sync with Dashboard
@@ -140,7 +146,7 @@ const PatientRecord = () => {
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       file: 'D'
     };
-    const updatedRecords = [newPatient, ...patientRecords];
+    const updatedRecords = reassignPatientIds([newPatient, ...patientRecords]);
     setPatientRecords(updatedRecords);
     localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
     // Dispatch event to sync with Dashboard
