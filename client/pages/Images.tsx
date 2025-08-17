@@ -1,27 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, X, ChevronLeft, Plus, Image as ImageIcon } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const Images = () => {
-  const { folderId } = useParams();
+  const { folderId, patientId } = useParams();
   const navigate = useNavigate();
+  const [patientName, setPatientName] = useState('Unknown Patient');
+
+  useEffect(() => {
+    // Get patient name from localStorage
+    const savedRecords = localStorage.getItem('patientRecords');
+    if (savedRecords) {
+      const records = JSON.parse(savedRecords);
+      const patient = records.find((record: any) => record.id === patientId);
+      if (patient) {
+        setPatientName(patient.name);
+      }
+    }
+  }, [patientId]);
 
   const handleBackToFolders = () => {
-    navigate(-1); // Go back to previous page
+    navigate(`/file-folder/${patientId}`);
+  };
+
+  const handleImageClick = (imageId: string) => {
+    // Navigate to report page when image is clicked
+    navigate(`/report/${imageId}`);
   };
 
   // Medical images data
   const medicalImages = [
-    { id: 'K123456789-1', name: 'K123456789' },
-    { id: 'K123456789-2', name: 'K123456789' },
-    { id: 'K123456789-3', name: 'K123456789' },
-    { id: 'K123456789-4', name: 'K123456789' },
-    { id: 'K123456789-5', name: 'K123456789' },
-    { id: 'K123456789-6', name: 'K123456789' },
-    { id: 'K123456789-7', name: 'K123456789' },
-    { id: 'K123456789-8', name: 'K123456789' },
-    { id: 'K123456789-9', name: 'K123456789' },
-    { id: 'K123456789-10', name: 'K123456789' },
+    { id: 'IMG-001', name: 'Slice 1 - Sagittal' },
+    { id: 'IMG-002', name: 'Slice 2 - Coronal' },
+    { id: 'IMG-003', name: 'Slice 3 - Axial' },
+    { id: 'IMG-004', name: 'Slice 4 - T1 Weighted' },
+    { id: 'IMG-005', name: 'Slice 5 - T2 Weighted' },
+    { id: 'IMG-006', name: 'Slice 6 - FLAIR' },
+    { id: 'IMG-007', name: 'Slice 7 - Sagittal T1' },
+    { id: 'IMG-008', name: 'Slice 8 - Coronal T2' },
+    { id: 'IMG-009', name: 'Slice 9 - Axial FLAIR' },
+    { id: 'IMG-010', name: 'Slice 10 - 3D Recon' },
   ];
 
   return (
@@ -58,7 +76,7 @@ const Images = () => {
             <span className="text-sm">Back to Folders</span>
           </button>
           <div className="bg-card border border-border rounded-lg px-4 py-2">
-            <span className="text-sm text-foreground">Patient: {folderId ? `Patient ${folderId}` : 'Unknown Patient'}</span>
+            <span className="text-sm text-foreground">Patient: {patientName}</span>
           </div>
         </div>
         <button
@@ -73,9 +91,10 @@ const Images = () => {
       {/* Images Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-6">
         {medicalImages.map((image) => (
-          <div 
-            key={image.id} 
+          <div
+            key={image.id}
             className="flex flex-col items-center p-4 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer group"
+            onClick={() => handleImageClick(image.id)}
           >
             {/* Image Thumbnail */}
             <div className="relative mb-3 w-20 h-20 bg-card border-2 border-medical-blue rounded-lg flex items-center justify-center">

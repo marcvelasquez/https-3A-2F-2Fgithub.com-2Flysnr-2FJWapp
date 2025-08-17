@@ -1,27 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, X, ChevronLeft, Plus, Folder, FileText } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const FileFolder = () => {
   const navigate = useNavigate();
   const { patientId } = useParams();
+  const [patientName, setPatientName] = useState('Unknown Patient');
+
+  useEffect(() => {
+    // Get patient name from localStorage
+    const savedRecords = localStorage.getItem('patientRecords');
+    if (savedRecords) {
+      const records = JSON.parse(savedRecords);
+      const patient = records.find((record: any) => record.id === patientId);
+      if (patient) {
+        setPatientName(patient.name);
+      }
+    }
+  }, [patientId]);
 
   const handleFolderClick = (folderId: string) => {
-    navigate(`/report/${folderId}`);
+    // Navigate to images page instead of report
+    navigate(`/file-folder/${patientId}/images`);
   };
 
   // Patient folder data
   const patientFolders = [
-    { id: 'K123456789', name: 'K123456789' },
-    { id: 'K123456789-2', name: 'K123456789' },
-    { id: 'K123456789-3', name: 'K123456789' },
-    { id: 'K123456789-4', name: 'K123456789' },
-    { id: 'K123456789-5', name: 'K123456789' },
-    { id: 'K123456789-6', name: 'K123456789' },
-    { id: 'K123456789-7', name: 'K123456789' },
-    { id: 'K123456789-8', name: 'K123456789' },
-    { id: 'K123456789-9', name: 'K123456789' },
-    { id: 'K123456789-10', name: 'K123456789' },
+    { id: 'MRI-001', name: 'MRI Scan - Knee' },
+    { id: 'MRI-002', name: 'MRI Scan - Follow-up' },
+    { id: 'XRAY-001', name: 'X-Ray - Initial' },
+    { id: 'CT-001', name: 'CT Scan - Detailed' },
+    { id: 'MRI-003', name: 'MRI Scan - Post-treatment' },
+    { id: 'XRAY-002', name: 'X-Ray - Comparison' },
+    { id: 'MRI-004', name: 'MRI Scan - Bilateral' },
+    { id: 'DICOM-001', name: 'DICOM Study 1' },
+    { id: 'DICOM-002', name: 'DICOM Study 2' },
+    { id: 'ULTRASOUND-001', name: 'Ultrasound Scan' },
   ];
 
   return (
@@ -58,7 +72,7 @@ const FileFolder = () => {
             <span className="text-sm">Back to Patient Record</span>
           </button>
           <div className="bg-card border border-border rounded-lg px-4 py-2">
-            <span className="text-sm text-foreground">Patient ID: {patientId || 'Unknown'}</span>
+            <span className="text-sm text-foreground">Patient: {patientName}</span>
           </div>
         </div>
         <button
