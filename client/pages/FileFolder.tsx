@@ -166,11 +166,13 @@ const FileFolder = () => {
           <Search className="w-5 h-5 text-muted-foreground mr-3" />
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search folders..."
+            value={searchTerm}
+            onChange={(e) => handleSearch(e.target.value)}
             className="flex-1 bg-transparent border-none outline-none text-foreground placeholder-muted-foreground"
           />
           <X
-            onClick={() => console.log('Clear search')}
+            onClick={handleClearSearch}
             className="w-5 h-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
           />
         </div>
