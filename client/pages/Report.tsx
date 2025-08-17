@@ -219,19 +219,19 @@ const Report = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Patient:</span>
-                    <span className="text-foreground">{currentPatient?.name || studyData?.patientName || 'N/A'}</span>
+                    <span className="text-foreground">{metadata?.studyInfo?.patientName || currentPatient?.name || studyData?.patientName || 'N/A'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Study Date:</span>
-                    <span className="text-foreground">October 25, 2023</span>
+                    <span className="text-foreground">{metadata?.studyInfo?.studyDate || currentPatient?.date || 'October 25, 2023'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Modality:</span>
-                    <span className="text-foreground">MRI</span>
+                    <span className="text-foreground">{metadata?.studyInfo?.modality || 'MRI'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Body Part:</span>
-                    <span className="text-foreground">Knee</span>
+                    <span className="text-foreground">{metadata?.studyInfo?.bodyPart || currentPatient?.bodyPart || 'Knee'}</span>
                   </div>
                 </div>
               </div>
