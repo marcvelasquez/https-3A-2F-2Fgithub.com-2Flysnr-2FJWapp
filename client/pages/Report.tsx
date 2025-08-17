@@ -253,20 +253,15 @@ const Report = () => {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              alert('Back button clicked!'); // Immediate feedback
-              console.log('Back button clicked!'); // Debug log
               try {
                 // First try to get patient context
                 const patientContext = sessionStorage.getItem('currentPatient');
-                console.log('Patient context:', patientContext); // Debug log
 
                 if (patientContext) {
                   const patient = JSON.parse(patientContext);
-                  console.log('Navigating to:', `/file-folder/${patient.id}/images`); // Debug log
                   // Navigate back to images page for this patient
                   navigate(`/file-folder/${patient.id}/images`, { replace: false });
                 } else {
-                  console.log('No patient context, going to patient record'); // Debug log
                   // No patient context, go to patient record
                   navigate('/patient-record', { replace: false });
                 }
