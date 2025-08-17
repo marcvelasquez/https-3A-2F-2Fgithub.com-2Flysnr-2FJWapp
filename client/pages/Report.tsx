@@ -88,6 +88,51 @@ const Report = () => {
     setCurrentSlice(4);
   };
 
+  const handleEditMetadata = () => {
+    setEditMetadataForm({
+      description: metadata?.description || studyData?.studyDescription || '',
+      remarks: metadata?.remarks || currentPatient?.remarks || ''
+    });
+    setIsEditingMetadata(true);
+  };
+
+  const handleSaveMetadata = () => {
+    const currentPatientId = currentPatient?.id || studyId;
+    const metadataKey = `metadata_${currentPatientId}`;
+
+    const updatedMetadata = {
+      ...metadata,
+      description: editMetadataForm.description,
+      remarks: editMetadataForm.remarks,
+      lastModified: new Date().toISOString()
+    };
+
+    localStorage.setItem(metadataKey, JSON.stringify(updatedMetadata));
+    setMetadata(updatedMetadata);
+    setIsEditingMetadata(false);
+
+    // Also update patient records if needed
+    const savedRecords = localStorage.getItem('patientRecords');
+    if (savedRecords) {
+      const records = JSON.parse(savedRecords);
+      const updatedRecords = records.map((record: any) => {
+        if (record.id === currentPatientId) {
+          return {
+            ...record,
+            remarks: editMetadataForm.remarks
+          };
+        }
+        return record;
+      });
+      localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditingMetadata(false);
+    setEditMetadataForm({ description: '', remarks: '' });
+  };
+
   return (
     <div className="bg-background flex flex-col min-h-full">
       {/* Header */}
