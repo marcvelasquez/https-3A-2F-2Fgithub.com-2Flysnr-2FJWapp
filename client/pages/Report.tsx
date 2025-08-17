@@ -221,7 +221,7 @@ const Report = () => {
                 <div className="text-sm opacity-80">
                   Patient: {currentPatient?.name || studyData?.patientName || 'Unknown Patient'}
                   {studyData?.studyDescription && (
-                    <div className="mt-1">{studyData.studyDescription}</div>
+                    <div className="mt-1">{studyData?.studyDescription}</div>
                   )}
                 </div>
               )}
