@@ -858,7 +858,15 @@ const PatientRecord = () => {
       {filterDialogOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-card p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Filter Options</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-foreground">Filter Options</h3>
+              <button
+                onClick={() => setFilterDialogOpen(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
             <div className="space-y-6">
               {/* Date Sort Section */}
