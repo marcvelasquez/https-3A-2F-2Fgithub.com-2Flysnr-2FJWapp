@@ -302,7 +302,16 @@ const Settings = () => {
                         name="theme"
                         value={theme}
                         checked={appearanceData.theme === theme}
-                        onChange={(e) => setAppearanceData({ ...appearanceData, theme: e.target.value })}
+                        onChange={(e) => {
+                          const newAppearanceData = { ...appearanceData, theme: e.target.value };
+                          setAppearanceData(newAppearanceData);
+                          // Apply theme immediately for real-time feedback
+                          if (e.target.value === 'Dark') {
+                            document.documentElement.classList.add('dark');
+                          } else {
+                            document.documentElement.classList.remove('dark');
+                          }
+                        }}
                         className="w-4 h-4 text-medical-blue border-border focus:ring-medical-blue"
                       />
                       <span className="text-sm text-foreground">{theme}</span>
