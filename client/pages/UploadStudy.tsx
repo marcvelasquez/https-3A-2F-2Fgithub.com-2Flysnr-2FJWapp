@@ -143,8 +143,6 @@ const UploadStudy = () => {
               required
             >
               <option value="Pending">Pending</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Complete">Complete</option>
               <option value="Follow Up">Follow Up</option>
             </select>
           </div>
