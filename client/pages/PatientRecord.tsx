@@ -185,9 +185,7 @@ const PatientRecord = () => {
   };
 
   const handleFileFolder = (patientId: string) => {
-    checkStatusBeforeNavigation('fileFolder', patientId, () => {
-      navigate(`/file-folder/${patientId}`);
-    });
+    navigate(`/file-folder/${patientId}`);
   };
 
   const handleNavigateAnyway = () => {
