@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FileText, Save, Menu, Settings as SettingsIcon } from 'lucide-react';
+import { FileText, Save, Menu, Settings as SettingsIcon, ChevronLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const DICOMViewer = () => {
   const [patientNotes, setPatientNotes] = useState('');
