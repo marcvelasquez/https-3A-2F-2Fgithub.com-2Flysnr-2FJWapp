@@ -609,6 +609,7 @@ const PatientRecord = () => {
                     setSearchTerm('');
                     setBodyPartFilter('');
                     setDateSort('none');
+                    setCurrentPage(1);
                   }}
                   className="mt-2 text-medical-blue hover:underline text-sm"
                 >
