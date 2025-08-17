@@ -98,19 +98,38 @@ const FileFolder = () => {
     return false;
   };
 
-  // Patient folder data - empty for new patients, sample data for existing patients
-  const patientFolders = isNewPatient() ? [] : [
-    { id: 'K123456789', name: 'K123456789' },
-    { id: 'K123456789-2', name: 'K123456789' },
-    { id: 'K123456789-3', name: 'K123456789' },
-    { id: 'K123456789-4', name: 'K123456789' },
-    { id: 'K123456789-5', name: 'K123456789' },
-    { id: 'K123456789-6', name: 'K123456789' },
-    { id: 'K123456789-7', name: 'K123456789' },
-    { id: 'K123456789-8', name: 'K123456789' },
-    { id: 'K123456789-9', name: 'K123456789' },
-    { id: 'K123456789-10', name: 'K123456789' },
-  ];
+  // Patient folder data - check for uploaded files or use default data
+  const getPatientFolders = () => {
+    // Check if files have been uploaded for this patient
+    const uploadedFiles = localStorage.getItem(`folderFiles_${patientId}`);
+
+    if (isNewPatient() && !uploadedFiles) {
+      // New patient with no uploaded files - show empty
+      return [];
+    } else if (uploadedFiles) {
+      // Patient has uploaded files - create a folder for them
+      const files = JSON.parse(uploadedFiles);
+      return [
+        { id: 'K123456789', name: 'K123456789', fileCount: files.length }
+      ];
+    } else {
+      // Existing patient with default folders
+      return [
+        { id: 'K123456789', name: 'K123456789' },
+        { id: 'K123456789-2', name: 'K123456789' },
+        { id: 'K123456789-3', name: 'K123456789' },
+        { id: 'K123456789-4', name: 'K123456789' },
+        { id: 'K123456789-5', name: 'K123456789' },
+        { id: 'K123456789-6', name: 'K123456789' },
+        { id: 'K123456789-7', name: 'K123456789' },
+        { id: 'K123456789-8', name: 'K123456789' },
+        { id: 'K123456789-9', name: 'K123456789' },
+        { id: 'K123456789-10', name: 'K123456789' },
+      ];
+    }
+  };
+
+  const patientFolders = getPatientFolders();
 
   return (
     <div className="p-6 bg-background min-h-full">
