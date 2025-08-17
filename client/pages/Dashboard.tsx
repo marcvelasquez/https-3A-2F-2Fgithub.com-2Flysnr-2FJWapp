@@ -12,8 +12,8 @@ const Dashboard = () => {
       const savedRecords = localStorage.getItem('patientRecords');
       if (savedRecords) {
         const records = JSON.parse(savedRecords);
-        // Show only the first 4 records for dashboard display
-        setPatientData(records.slice(0, 4));
+        // Show only the first 5 records for dashboard display
+        setPatientData(records.slice(0, 5));
       } else {
         // Default data if no records exist
         setPatientData([
@@ -21,6 +21,7 @@ const Dashboard = () => {
           { id: '02.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 19, 2025', time: '4:45 PM', file: 'D' },
           { id: '03.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 18, 2025', time: '11:22 AM', file: 'D' },
           { id: '04.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 16, 2025', time: '9:10 AM', file: 'D' },
+          { id: '05.)', name: 'Sarah Smith', bodyPart: 'Right Ankle', date: 'April 15, 2025', time: '3:30 PM', file: 'D' },
         ]);
       }
     };
