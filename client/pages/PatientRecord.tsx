@@ -952,6 +952,7 @@ const PatientRecord = () => {
                   setSearchTerm('');
                   setBodyPartFilter('');
                   setDateSort('none');
+                  setCurrentPage(1);
                 }}
                 className="px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted transition-colors"
               >
