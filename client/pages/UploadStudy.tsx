@@ -99,7 +99,7 @@ const UploadStudy = () => {
           {/* Patient Name Field */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-foreground mb-2">
-              Patient Name
+              Patient Name <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -107,6 +107,7 @@ const UploadStudy = () => {
               onChange={(e) => setPatientName(e.target.value)}
               className="w-full px-4 py-3 bg-muted border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
               placeholder="Enter patient name"
+              required
             />
           </div>
 
