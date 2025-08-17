@@ -122,7 +122,8 @@ const Report = () => {
         if (record.id === currentPatientId) {
           return {
             ...record,
-            remarks: editMetadataForm.remarks
+            remarks: editMetadataForm.remarks,
+            status: editMetadataForm.status
           };
         }
         return record;
