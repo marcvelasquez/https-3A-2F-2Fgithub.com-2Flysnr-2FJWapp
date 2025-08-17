@@ -589,6 +589,30 @@ const PatientRecord = () => {
               ))}
             </tbody>
           </table>
+
+          {/* No Results Message */}
+          {filteredRecords.length === 0 && patientRecords.length > 0 && (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">
+                {searchTerm || bodyPartFilter ?
+                  'No records match your current filters.' :
+                  'No records found.'
+                }
+              </p>
+              {(searchTerm || bodyPartFilter) && (
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    setBodyPartFilter('');
+                    setDateSort('none');
+                  }}
+                  className="mt-2 text-medical-blue hover:underline text-sm"
+                >
+                  Clear all filters
+                </button>
+              )}
+            </div>
+          )}
         </div>
         
         {/* Table Footer/Pagination could go here if needed */}
