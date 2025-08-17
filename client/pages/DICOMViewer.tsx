@@ -3,6 +3,7 @@ import { FileText, Save, Menu, Settings as SettingsIcon, ChevronLeft } from 'luc
 import { useNavigate } from 'react-router-dom';
 
 const DICOMViewer = () => {
+  const navigate = useNavigate();
   const [patientNotes, setPatientNotes] = useState('');
 
   // DICOM view types
