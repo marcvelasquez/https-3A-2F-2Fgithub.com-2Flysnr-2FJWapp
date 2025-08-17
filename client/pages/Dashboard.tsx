@@ -192,6 +192,21 @@ const Dashboard = () => {
               ))}
             </tbody>
           </table>
+
+          {/* No Results Message */}
+          {filteredPatientData.length === 0 && patientData.length > 0 && searchTerm && (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">
+                No patients match your search for "{searchTerm}".
+              </p>
+              <button
+                onClick={handleClearSearch}
+                className="mt-2 text-medical-blue hover:underline text-sm"
+              >
+                Clear search
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
