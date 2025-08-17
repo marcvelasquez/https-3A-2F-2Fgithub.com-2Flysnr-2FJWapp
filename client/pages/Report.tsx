@@ -21,6 +21,7 @@ const Report = () => {
   const [isEditingStatus, setIsEditingStatus] = useState(false);
   const [tempStatus, setTempStatus] = useState('');
   const [showStatusWarning, setShowStatusWarning] = useState(false);
+  const [showNavigationWarning, setShowNavigationWarning] = useState(false);
 
   useEffect(() => {
     // Get uploaded study data from sessionStorage
