@@ -94,6 +94,16 @@ const Settings = () => {
     // Apply the settings immediately
     applyAppearanceSettings();
 
+    // Dispatch custom event to notify other components
+    window.dispatchEvent(new CustomEvent('themeChanged', {
+      detail: { theme: appearanceData.theme }
+    }));
+
+    // Force a small delay to ensure the theme is applied
+    setTimeout(() => {
+      applyAppearanceSettings();
+    }, 100);
+
     console.log('Appearance settings saved and applied:', appearanceData);
   };
 
