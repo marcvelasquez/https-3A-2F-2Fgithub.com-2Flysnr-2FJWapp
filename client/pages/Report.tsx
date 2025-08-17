@@ -14,7 +14,8 @@ const Report = () => {
   const [isEditingMetadata, setIsEditingMetadata] = useState(false);
   const [editMetadataForm, setEditMetadataForm] = useState({
     description: '',
-    remarks: ''
+    remarks: '',
+    status: 'Pending'
   });
 
   useEffect(() => {
