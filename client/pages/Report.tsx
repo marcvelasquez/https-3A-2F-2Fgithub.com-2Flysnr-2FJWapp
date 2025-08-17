@@ -702,7 +702,7 @@ const Report = () => {
 
         {/* Study Information */}
         {(studyData || metadata || currentPatient) && (
-          <div className="mt-6 medical-card p-4">
+          <div className="mt-6 medical-card p-4 study-information-section">
             <h3 className="text-lg font-semibold text-foreground mb-3">Study Information</h3>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
