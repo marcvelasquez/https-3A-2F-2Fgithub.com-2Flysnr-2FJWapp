@@ -26,21 +26,37 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => {
-  // Initialize theme on app startup
+  // Initialize theme on app startup and listen for changes
   useEffect(() => {
-    const savedSettings = localStorage.getItem('appearanceSettings');
-    if (savedSettings) {
-      const settings = JSON.parse(savedSettings);
-      // Apply saved theme
-      if (settings.theme === 'Dark') {
-        document.documentElement.classList.add('dark');
+    const applyTheme = () => {
+      const savedSettings = localStorage.getItem('appearanceSettings');
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        // Apply saved theme
+        if (settings.theme === 'Dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
       } else {
+        // Default to light theme if no settings saved
         document.documentElement.classList.remove('dark');
       }
-    } else {
-      // Default to light theme if no settings saved
-      document.documentElement.classList.remove('dark');
-    }
+    };
+
+    // Apply theme on load
+    applyTheme();
+
+    // Listen for theme changes
+    const handleThemeChange = () => {
+      applyTheme();
+    };
+
+    window.addEventListener('themeChanged', handleThemeChange);
+
+    return () => {
+      window.removeEventListener('themeChanged', handleThemeChange);
+    };
   }, []);
 
   return (
