@@ -251,21 +251,26 @@ const Report = () => {
         <div className="flex items-center space-x-4">
           <button
             onClick={() => {
+              console.log('Back button clicked!'); // Debug log
               try {
                 // First try to get patient context
                 const patientContext = sessionStorage.getItem('currentPatient');
+                console.log('Patient context:', patientContext); // Debug log
+
                 if (patientContext) {
                   const patient = JSON.parse(patientContext);
+                  console.log('Navigating to:', `/file-folder/${patient.id}/images`); // Debug log
                   // Navigate back to images page for this patient
-                  navigate(`/file-folder/${patient.id}/images`);
+                  navigate(`/file-folder/${patient.id}/images`, { replace: false });
                 } else {
-                  // No patient context, try browser back
-                  navigate(-1);
+                  console.log('No patient context, going to patient record'); // Debug log
+                  // No patient context, go to patient record
+                  navigate('/patient-record', { replace: false });
                 }
               } catch (error) {
                 console.error('Navigation error:', error);
                 // Final fallback to patient record
-                navigate('/patient-record');
+                navigate('/patient-record', { replace: false });
               }
             }}
             className="text-muted-foreground hover:text-foreground"
