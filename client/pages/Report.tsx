@@ -245,6 +245,28 @@ const Report = () => {
     setShowStatusWarning(false);
   };
 
+  const handleNavigateAnyway = () => {
+    setShowNavigationWarning(false);
+    // Proceed with navigation
+    try {
+      const patientContext = sessionStorage.getItem('currentPatient');
+      if (patientContext) {
+        const patient = JSON.parse(patientContext);
+        navigate(`/file-folder/${patient.id}/images`, { replace: false });
+      } else {
+        navigate('/patient-record', { replace: false });
+      }
+    } catch (error) {
+      console.error('Navigation error:', error);
+      navigate('/patient-record', { replace: false });
+    }
+  };
+
+  const handleUpdateStatusFirst = () => {
+    setShowNavigationWarning(false);
+    handleStatusEdit();
+  };
+
   return (
     <div className="bg-background flex flex-col min-h-full">
       {/* Header */}
