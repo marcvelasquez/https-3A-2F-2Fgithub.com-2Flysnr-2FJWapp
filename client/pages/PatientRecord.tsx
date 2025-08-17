@@ -189,7 +189,6 @@ const PatientRecord = () => {
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Date</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Time</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">File</th>
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -217,15 +216,6 @@ const PatientRecord = () => {
                       title="Open File Folder"
                     >
                       <FolderOpen className="w-4 h-4" />
-                    </button>
-                  </td>
-                  <td className="py-3 px-4">
-                    <button
-                      onClick={() => handleDeleteClick(record.id, record.name)}
-                      className="w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded flex items-center justify-center transition-colors"
-                      title="Delete Record"
-                    >
-                      <Trash2 className="w-4 h-4" />
                     </button>
                   </td>
                 </tr>
