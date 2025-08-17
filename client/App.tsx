@@ -25,8 +25,26 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
+const App = () => {
+  // Initialize theme on app startup
+  useEffect(() => {
+    const savedSettings = localStorage.getItem('appearanceSettings');
+    if (savedSettings) {
+      const settings = JSON.parse(savedSettings);
+      // Apply saved theme
+      if (settings.theme === 'Dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } else {
+      // Default to light theme if no settings saved
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
@@ -89,7 +107,8 @@ const App = () => (
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
-  </QueryClientProvider>
-);
+    </QueryClientProvider>
+  );
+};
 
 createRoot(document.getElementById("root")!).render(<App />);
