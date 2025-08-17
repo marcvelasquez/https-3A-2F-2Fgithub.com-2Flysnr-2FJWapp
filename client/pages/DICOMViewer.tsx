@@ -22,7 +22,14 @@ const DICOMViewer = () => {
         <div className="bg-card border-b border-border p-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button
-              onClick={() => navigate(-1)}
+              onClick={() => {
+                // Go back in history or fallback to patient record
+                if (window.history.length > 1) {
+                  navigate(-1);
+                } else {
+                  navigate('/patient-record');
+                }
+              }}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
