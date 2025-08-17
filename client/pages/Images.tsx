@@ -62,10 +62,12 @@ const Images = () => {
           <input
             type="text"
             placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-1 bg-transparent border-none outline-none text-foreground placeholder-muted-foreground"
           />
           <X
-            onClick={() => console.log('Clear search')}
+            onClick={() => setSearchTerm('')}
             className="w-5 h-5 text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
           />
         </div>
