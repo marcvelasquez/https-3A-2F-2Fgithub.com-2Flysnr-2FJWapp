@@ -639,6 +639,40 @@ const Report = () => {
             </div>
           </div>
         )}
+
+        {/* Status Warning Popup */}
+        {showStatusWarning && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+            <div className="bg-card border border-border rounded-lg p-6 max-w-md mx-4 shadow-xl">
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                  <Edit className="w-5 h-5 text-yellow-600" />
+                </div>
+                <h3 className="text-lg font-semibold text-foreground">Status Update Required</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-6">
+                This study's status is currently set to "Pending". Please update the status to reflect the current progress of this case.
+              </p>
+              <div className="flex space-x-3 justify-end">
+                <button
+                  onClick={() => setShowStatusWarning(false)}
+                  className="px-4 py-2 text-sm border border-border rounded-lg text-muted-foreground hover:bg-muted transition-colors"
+                >
+                  Remind Later
+                </button>
+                <button
+                  onClick={() => {
+                    setShowStatusWarning(false);
+                    handleStatusEdit();
+                  }}
+                  className="px-4 py-2 text-sm bg-medical-blue text-white rounded-lg hover:bg-medical-blue-dark transition-colors"
+                >
+                  Update Status
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
