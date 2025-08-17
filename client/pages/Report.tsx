@@ -144,7 +144,7 @@ const Report = () => {
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <h1 className="text-xl font-semibold text-foreground">JointWise - Report</h1>
+          <h1 className="text-xl font-semibold text-foreground">Report</h1>
         </div>
         <button
           onClick={() => setShowMetadata(!showMetadata)}
