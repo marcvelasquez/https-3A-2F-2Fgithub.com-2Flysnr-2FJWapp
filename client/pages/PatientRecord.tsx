@@ -308,15 +308,24 @@ const PatientRecord = () => {
   };
 
   const handleAddPatient = () => {
-    // Example of adding a new patient - this would normally open a form
+    setNewPatientData({ name: '', bodyPart: '', remarks: '' });
+    setNewPatientDialog({ isOpen: true });
+  };
+
+  const handleNewPatientSave = () => {
+    if (!newPatientData.name || !newPatientData.bodyPart) {
+      alert('Please enter patient name and select body part');
+      return;
+    }
+
     const newPatient = {
       id: getNextPatientId(patientRecords),
-      name: 'New Patient',
-      bodyPart: 'To be determined',
+      name: newPatientData.name,
+      bodyPart: newPatientData.bodyPart,
       date: 'Today',
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       file: 'D',
-      remarks: 'Newly added patient'
+      remarks: newPatientData.remarks || 'Newly added patient'
     };
     const updatedRecords = reassignPatientIds([newPatient, ...patientRecords]);
     setPatientRecords(updatedRecords);
@@ -351,6 +360,12 @@ const PatientRecord = () => {
 
     // Dispatch event to sync with Dashboard
     window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+    setNewPatientDialog({ isOpen: false });
+  };
+
+  const handleNewPatientCancel = () => {
+    setNewPatientDialog({ isOpen: false });
+    setNewPatientData({ name: '', bodyPart: '', remarks: '' });
   };
 
 
