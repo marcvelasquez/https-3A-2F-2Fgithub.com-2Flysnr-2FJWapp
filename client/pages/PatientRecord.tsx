@@ -484,6 +484,11 @@ const PatientRecord = () => {
     setCurrentPage(1);
   };
 
+  const handleStatusFilter = (status: string) => {
+    setStatusFilter(status);
+    setCurrentPage(1);
+  };
+
 
   return (
     <div className="p-6 bg-background min-h-full">
