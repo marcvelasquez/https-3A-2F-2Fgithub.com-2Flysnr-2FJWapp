@@ -91,26 +91,7 @@ const Report = () => {
     };
   }, [studyId, currentPatient?.id]);
 
-  // Separate effect to check status warning when metadata or patient data changes
-  useEffect(() => {
-    const checkStatusWhenDataLoaded = () => {
-      const currentStatus = metadata?.status || currentPatient?.status;
-      console.log('Data changed, checking status:', { currentStatus, metadata, currentPatient }); // Debug
-
-      if (currentStatus === 'Pending' || currentStatus === 'In Progress') {
-        console.log('Status needs attention, setting timeout for popup'); // Debug
-        setTimeout(() => {
-          console.log('Showing status warning popup after data load'); // Debug
-          setShowStatusWarning(true);
-        }, 2000);
-      }
-    };
-
-    // Only check if we have some data
-    if (metadata || currentPatient) {
-      checkStatusWhenDataLoaded();
-    }
-  }, [metadata, currentPatient]);
+  // Status warnings only triggered by back button - no automatic checking
 
   const handlePreviousSlice = () => {
     setCurrentSlice(prev => Math.max(1, prev - 1));
