@@ -34,18 +34,18 @@ const Images = () => {
     navigate(`/report/${imageId}`);
   };
 
-  // Medical images data
+  // Medical images data - replaced with actual image filenames
   const medicalImages = [
-    { id: 'IMG-001', name: 'Slice 1 - Sagittal' },
-    { id: 'IMG-002', name: 'Slice 2 - Coronal' },
-    { id: 'IMG-003', name: 'Slice 3 - Axial' },
-    { id: 'IMG-004', name: 'Slice 4 - T1 Weighted' },
-    { id: 'IMG-005', name: 'Slice 5 - T2 Weighted' },
-    { id: 'IMG-006', name: 'Slice 6 - FLAIR' },
-    { id: 'IMG-007', name: 'Slice 7 - Sagittal T1' },
-    { id: 'IMG-008', name: 'Slice 8 - Coronal T2' },
-    { id: 'IMG-009', name: 'Slice 9 - Axial FLAIR' },
-    { id: 'IMG-010', name: 'Slice 10 - 3D Recon' },
+    { id: 'IMG-001', name: 'MRI_KNEE_001.dcm' },
+    { id: 'IMG-002', name: 'MRI_KNEE_002.dcm' },
+    { id: 'IMG-003', name: 'MRI_KNEE_003.dcm' },
+    { id: 'IMG-004', name: 'MRI_KNEE_004.dcm' },
+    { id: 'IMG-005', name: 'MRI_KNEE_005.dcm' },
+    { id: 'IMG-006', name: 'MRI_KNEE_006.dcm' },
+    { id: 'IMG-007', name: 'MRI_KNEE_007.dcm' },
+    { id: 'IMG-008', name: 'MRI_KNEE_008.dcm' },
+    { id: 'IMG-009', name: 'MRI_KNEE_009.dcm' },
+    { id: 'IMG-010', name: 'MRI_KNEE_010.dcm' },
   ];
 
   return (
