@@ -276,6 +276,33 @@ const PatientRecord = () => {
         patientName={deleteDialog.patientName}
         recordId={deleteDialog.recordId}
       />
+
+      {/* Bulk Delete Dialog */}
+      {bulkDeleteDialog.isOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-card p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold text-foreground mb-4">Delete Selected Records</h3>
+            <p className="text-muted-foreground mb-6">
+              Are you sure you want to delete {bulkDeleteDialog.count} selected record{bulkDeleteDialog.count > 1 ? 's' : ''}?
+              This action cannot be undone.
+            </p>
+            <div className="flex space-x-3 justify-end">
+              <button
+                onClick={handleBulkDeleteCancel}
+                className="px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleBulkDeleteConfirm}
+                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+              >
+                Delete {bulkDeleteDialog.count} Record{bulkDeleteDialog.count > 1 ? 's' : ''}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
