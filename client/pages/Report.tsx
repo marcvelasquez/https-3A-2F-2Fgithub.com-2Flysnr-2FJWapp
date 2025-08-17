@@ -486,7 +486,7 @@ const Report = () => {
                 <span className="text-muted-foreground">Study ID:</span>
                 <span className="ml-2 text-foreground font-medium">{studyId}</span>
               </div>
-              {studyData.studyDescription && (
+              {studyData?.studyDescription && (
                 <div className="col-span-2">
                   <span className="text-muted-foreground">Description:</span>
                   <span className="ml-2 text-foreground font-medium">{studyData.studyDescription}</span>
