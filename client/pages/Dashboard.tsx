@@ -13,9 +13,11 @@ const Dashboard = () => {
       if (savedRecords) {
         const records = JSON.parse(savedRecords);
         // Take first 5 records and renumber them sequentially for dashboard display (01-05)
+        // Keep originalId for functionality, use displayId for table display
         const recentRecords = records.slice(0, 5).map((record: any, index: number) => ({
           ...record,
-          id: `${(index + 1).toString().padStart(2, '0')}.)`
+          originalId: record.id, // Keep original ID for navigation
+          displayId: `${(index + 1).toString().padStart(2, '0')}.)`
         }));
         setPatientData(recentRecords);
       } else {
