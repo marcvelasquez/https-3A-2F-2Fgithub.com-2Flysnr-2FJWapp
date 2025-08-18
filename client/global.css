@@ -109,48 +109,49 @@
   /* Enhanced DICOM scrollbar with maximum visibility - always visible */
   .dicom-enhanced-scrollbar {
     overflow-y: scroll !important;
-    scrollbar-width: auto;
-    scrollbar-color: #1d4ed8 #e2e8f0;
+    scrollbar-width: thick !important;
+    scrollbar-color: #1d4ed8 #cbd5e1 !important;
     scrollbar-gutter: stable;
   }
 
   .dicom-enhanced-scrollbar::-webkit-scrollbar {
-    width: 22px !important;
-    height: 22px !important;
+    width: 24px !important;
+    height: 24px !important;
     display: block !important;
+    -webkit-appearance: none !important;
   }
 
   .dicom-enhanced-scrollbar::-webkit-scrollbar-track {
-    background: linear-gradient(to bottom, #f1f5f9, #e2e8f0) !important;
-    border-radius: 11px;
-    border: 3px solid #94a3b8;
-    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.15);
+    background: #cbd5e1 !important;
+    border-radius: 12px;
+    border: 2px solid #64748b !important;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2) !important;
     display: block !important;
   }
 
   .dicom-enhanced-scrollbar::-webkit-scrollbar-thumb {
-    background: linear-gradient(145deg, #2563eb, #1d4ed8, #1e40af) !important;
-    border-radius: 11px;
-    border: 3px solid #f1f5f9;
-    min-height: 60px;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    background: #1d4ed8 !important;
+    border-radius: 12px;
+    border: 2px solid #cbd5e1 !important;
+    min-height: 80px !important;
+    box-shadow: 0 6px 15px rgba(29, 78, 216, 0.6) !important;
     display: block !important;
   }
 
   .dicom-enhanced-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(145deg, #1d4ed8, #1e40af, #1e3a8a) !important;
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.3);
-    transform: scale(1.05);
+    background: #1e40af !important;
+    box-shadow: 0 8px 20px rgba(29, 78, 216, 0.8) !important;
+    transform: scale(1.1);
   }
 
   .dicom-enhanced-scrollbar::-webkit-scrollbar-thumb:active {
-    background: linear-gradient(145deg, #1e40af, #1e3a8a) !important;
-    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.4);
-    transform: scale(0.98);
+    background: #1e3a8a !important;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5) !important;
+    transform: scale(1.05);
   }
 
   .dicom-enhanced-scrollbar::-webkit-scrollbar-corner {
-    background: #f1f5f9;
+    background: #cbd5e1 !important;
   }
 
   /* Custom slider styles for slice navigation */
