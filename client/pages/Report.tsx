@@ -397,56 +397,57 @@ const Report = () => {
           <div className="flex-1 bg-medical-blue rounded-lg relative overflow-hidden">
             {/* Scrollable MRI Image Container */}
             <div className="w-full h-full flex items-center justify-center bg-gray-900 relative">
-              {/* MRI Image Container - Scrollable */}
-              <div
-                className="w-[800px] h-[600px] bg-black border-2 border-gray-600 overflow-auto cursor-grab active:cursor-grabbing mri-scrollbar"
-                onWheel={(e) => {
-                  // Handle scroll wheel for slice navigation when not scrolling content
-                  if (e.ctrlKey || e.metaKey) {
-                    e.preventDefault();
-                    if (e.deltaY > 0 && currentSlice < totalSlices) {
-                      setCurrentSlice(currentSlice + 1);
-                    } else if (e.deltaY < 0 && currentSlice > 1) {
-                      setCurrentSlice(currentSlice - 1);
+              {/* MRI Image Container - Fixed size with slice navigation scrollbar */}
+              <div className="w-[800px] h-[600px] bg-black border-2 border-gray-600 relative overflow-hidden">
+                {/* Virtual scrollable area for slice navigation */}
+                <div
+                  className="absolute inset-0 overflow-y-auto mri-scrollbar"
+                  onScroll={(e) => {
+                    const scrollTop = e.currentTarget.scrollTop;
+                    const maxScroll = e.currentTarget.scrollHeight - e.currentTarget.clientHeight;
+                    const sliceProgress = scrollTop / maxScroll;
+                    const newSlice = Math.round(sliceProgress * (totalSlices - 1)) + 1;
+                    if (newSlice !== currentSlice) {
+                      setCurrentSlice(newSlice);
                     }
-                  }
-                }}
-              >
-                {/* Simulated MRI Image - Larger than container for scrolling */}
-                <div className="w-[1200px] h-[900px] bg-gradient-to-br from-gray-800 to-gray-900 relative">
-                  {/* MRI Image Content */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-white">
-                      <div className="w-64 h-64 bg-gray-700 rounded-full mx-auto mb-4 flex items-center justify-center border-4 border-gray-500">
-                        <div className="text-lg font-mono">MRI Slice {currentSlice}</div>
-                      </div>
-                      <div className="text-sm opacity-80">
-                        {(currentPatient || studyData) && (
-                          <div>
-                            Patient: {currentPatient?.name || studyData?.patientName || 'Unknown Patient'}
-                            {studyData?.studyDescription && (
-                              <div className="mt-1">{studyData?.studyDescription}</div>
-                            )}
-                          </div>
-                        )}
+                  }}
+                >
+                  {/* Virtual content to enable scrolling - height determines scroll range */}
+                  <div className="h-[2800px] w-full">
+                    {/* MRI Image Content - Fixed position */}
+                    <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="text-center text-white">
+                        <div className="w-64 h-64 bg-gray-700 rounded-full mx-auto mb-4 flex items-center justify-center border-4 border-gray-500">
+                          <div className="text-lg font-mono">MRI Slice {currentSlice}</div>
+                        </div>
+                        <div className="text-sm opacity-80">
+                          {(currentPatient || studyData) && (
+                            <div>
+                              Patient: {currentPatient?.name || studyData?.patientName || 'Unknown Patient'}
+                              {studyData?.studyDescription && (
+                                <div className="mt-1">{studyData?.studyDescription}</div>
+                              )}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Grid overlay for reference */}
-                  <div className="absolute inset-0 opacity-20">
-                    <div className="grid grid-cols-12 grid-rows-9 h-full w-full">
-                      {Array.from({ length: 108 }, (_, i) => (
-                        <div key={i} className="border border-gray-600"></div>
-                      ))}
+                    {/* Grid overlay for reference - Fixed position */}
+                    <div className="fixed inset-0 opacity-20 pointer-events-none">
+                      <div className="grid grid-cols-12 grid-rows-9 h-full w-full">
+                        {Array.from({ length: 108 }, (_, i) => (
+                          <div key={i} className="border border-gray-600"></div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* MRI Info */}
+              {/* Slice Navigation Info */}
               <div className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm">
-                Scroll to pan around image
+                Scroll to navigate slices • Slice {currentSlice} of {totalSlices}
               </div>
             </div>
           </div>
@@ -491,26 +492,6 @@ const Report = () => {
                   </button>
                 </div>
 
-                {/* Slice Navigation */}
-                <div className="border-t border-border pt-3 mt-3">
-                  <div className="text-xs text-muted-foreground text-center mb-2 font-medium">Slices</div>
-                  <div className="space-y-2">
-                    <div className="text-center">
-                      <span className="text-xs text-muted-foreground">{currentSlice} / {totalSlices}</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="1"
-                      max={totalSlices}
-                      value={currentSlice}
-                      onChange={(e) => setCurrentSlice(parseInt(e.target.value))}
-                      className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer slider"
-                      style={{
-                        background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, #d1d5db ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, #d1d5db 100%)`
-                      }}
-                    />
-                  </div>
-                </div>
               </div>
             </div>
           </div>
