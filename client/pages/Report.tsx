@@ -547,14 +547,9 @@ const Report = () => {
         <div
           className={`flex flex-col gap-6 ${showMetadata ? "pr-80" : ""} transition-all duration-300`}
         >
-          {/* MRI Display Card with Column Scrollbar */}
+          {/* MRI Display Card */}
           <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-            <div
-              className="space-y-4 h-[600px] overflow-y-scroll mri-traditional-scrollbar pr-2"
-              style={{
-                scrollbarGutter: 'stable'
-              }}
-            >
+            <div className="space-y-4">
               {/* MRI Image Display Card with Embedded Scrollbar */}
               <div className="bg-white border-4 border-gray-400 rounded-lg shadow-lg p-6 relative" style={{boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', outline: '2px solid #3b82f6', outlineOffset: '2px', height: '500px'}}>
                 {/* DICOM Image Area - Fixed container */}
@@ -634,33 +629,6 @@ const Report = () => {
 
               </div>
 
-              {/* Additional content that makes the column scrollable */}
-              <div className="bg-muted/30 rounded-lg p-4">
-                <h4 className="text-sm font-medium text-foreground mb-3">Slice Information</h4>
-                <div className="space-y-2 text-sm">
-                  {Array.from({ length: totalSlices }, (_, i) => i + 1).map((slice) => (
-                    <div
-                      key={slice}
-                      className={`p-3 rounded border cursor-pointer transition-colors ${
-                        slice === currentSlice
-                          ? "bg-medical-blue text-white border-medical-blue"
-                          : "bg-background hover:bg-muted border-border"
-                      }`}
-                      onClick={() => setCurrentSlice(slice)}
-                    >
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium">Slice {slice}</span>
-                        <span className="text-xs opacity-75">
-                          {-15 + slice * 3} mm
-                        </span>
-                      </div>
-                      <div className="text-xs mt-1 opacity-75">
-                        Position: {slice} of {totalSlices}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
               {/* Technical Details */}
               <div className="bg-muted/30 rounded-lg p-4">
