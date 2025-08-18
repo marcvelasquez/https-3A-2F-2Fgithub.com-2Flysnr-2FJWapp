@@ -21,6 +21,7 @@ const Report = () => {
   const navigate = useNavigate();
   const [studyData, setStudyData] = useState<any>(null);
   const [currentSlice, setCurrentSlice] = useState(1);
+  const [initialSliceSet, setInitialSliceSet] = useState(false);
   const [totalSlices, setTotalSlices] = useState(7);
   const [showMetadata, setShowMetadata] = useState(false);
   const [currentPatient, setCurrentPatient] = useState<any>(null);
@@ -42,6 +43,25 @@ const Report = () => {
   );
 
   useEffect(() => {
+    // Check for specific slice selection from sessionStorage or URL
+    const selectedSlice = sessionStorage.getItem("selectedSlice");
+    const urlParams = new URLSearchParams(window.location.search);
+    const sliceFromUrl = urlParams.get("slice");
+
+    // Set initial slice based on selection or default to 1
+    if (!initialSliceSet) {
+      if (sliceFromUrl && !isNaN(parseInt(sliceFromUrl))) {
+        setCurrentSlice(parseInt(sliceFromUrl));
+      } else if (selectedSlice && !isNaN(parseInt(selectedSlice))) {
+        setCurrentSlice(parseInt(selectedSlice));
+        // Clear the selected slice after using it
+        sessionStorage.removeItem("selectedSlice");
+      } else {
+        setCurrentSlice(1);
+      }
+      setInitialSliceSet(true);
+    }
+
     // Get uploaded study data from sessionStorage
     const uploadedStudy = sessionStorage.getItem("uploadedStudy");
     if (uploadedStudy) {
@@ -136,7 +156,7 @@ const Report = () => {
       window.removeEventListener("metadataUpdated", handleMetadataUpdate);
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [studyId, currentPatient?.id]);
+  }, [studyId, currentPatient?.id, initialSliceSet]);
 
   // Sync scroll position when slice changes
   useEffect(() => {
