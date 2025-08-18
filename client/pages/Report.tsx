@@ -509,175 +509,156 @@ const Report = () => {
           <h3 className="text-lg font-semibold text-foreground">MRI Viewer</h3>
         </div>
 
-        {/* Main Content */}
+        {/* Main Content - Column Layout */}
         <div
-          className={`flex gap-6 h-[600px] ${showMetadata ? "pr-80" : ""} transition-all duration-300`}
+          className={`flex flex-col gap-6 ${showMetadata ? "pr-80" : ""} transition-all duration-300`}
         >
-          {/* Dual Viewer Layout with Combined Navigation */}
-          <div className="flex-1 flex flex-col bg-medical-blue rounded-lg p-4 overflow-hidden">
-            {/* Dual Image Display */}
-            <div className="flex gap-4 flex-1">
-              {/* First MRI Image */}
-              <div className="flex-1 bg-white border-4 border-gray-400 rounded-lg shadow-lg p-4 relative">
-                <div className="w-full h-full flex items-center justify-center">
+          {/* MRI Display Card */}
+          <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
+            <div className="flex flex-col space-y-4">
+              {/* MRI Image Display Card */}
+              <div className="bg-white border-4 border-gray-400 rounded-lg shadow-lg p-4 relative">
+                <div className="w-full h-96 flex items-center justify-center">
                   <img
                     src="https://cdn.builder.io/api/v1/image/assets%2F7801b78ee0e14b1588e246353c18a505%2Fe8a62d6eae8941df8ce08c2f8bc15ef9?format=webp&width=800"
-                    alt={`MRI View 1 - Slice ${currentSlice}`}
+                    alt={`MRI Slice ${currentSlice}`}
                     className="max-w-full max-h-full object-contain rounded"
                   />
                 </div>
 
-                {/* Label - Top Left */}
-                <div className="absolute top-2 left-2">
-                  <div className="bg-medical-blue/90 text-white px-2 py-1 rounded text-xs font-medium">
-                    MRI View 1
+                {/* Slice Number Display - Top Right */}
+                <div className="absolute top-2 right-2">
+                  <div className="bg-black/70 text-white px-3 py-1 rounded text-sm font-mono">
+                    Slice {currentSlice}/{totalSlices}
+                  </div>
+                </div>
+
+                {/* Patient Info - Bottom Left */}
+                <div className="absolute bottom-2 left-2">
+                  <div className="text-sm text-muted-foreground bg-card/90 backdrop-blur px-3 py-2 rounded border border-border">
+                    {(currentPatient || studyData) && (
+                      <div>
+                        <div className="font-medium text-foreground text-xs">
+                          {currentPatient?.name ||
+                            studyData?.patientName ||
+                            "Unknown Patient"}
+                        </div>
+                        {studyData?.studyDescription && (
+                          <div className="text-xs mt-1">
+                            {studyData?.studyDescription}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
 
-              {/* Second MRI Image */}
-              <div className="flex-1 bg-white border-4 border-gray-400 rounded-lg shadow-lg p-4 relative">
-                <div className="w-full h-full flex items-center justify-center">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets%2F7801b78ee0e14b1588e246353c18a505%2Fbc7a86ac83bf447a8c24e484e20b0e98?format=webp&width=800"
-                    alt={`MRI View 2 - Slice ${currentSlice}`}
-                    className="max-w-full max-h-full object-contain rounded"
-                  />
-                </div>
-
-                {/* Label - Top Left */}
-                <div className="absolute top-2 left-2">
-                  <div className="bg-medical-blue/90 text-white px-2 py-1 rounded text-xs font-medium">
-                    MRI View 2
+              {/* Working Scrollbar for Slice Navigation */}
+              <div className="bg-muted/30 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="text-sm font-medium text-foreground">Slice Navigation</h4>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={handlePreviousSlice}
+                      disabled={currentSlice === 1}
+                      className="bg-medical-blue hover:bg-medical-blue-dark disabled:bg-muted disabled:cursor-not-allowed text-white p-1 rounded transition-colors"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={handleNextSlice}
+                      disabled={currentSlice === totalSlices}
+                      className="bg-medical-blue hover:bg-medical-blue-dark disabled:bg-muted disabled:cursor-not-allowed text-white p-1 rounded transition-colors"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Combined Navigation Controls */}
-            <div className="mt-4 bg-white/10 rounded-lg p-3">
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-white text-sm font-medium">
-                  Slice Navigation
-                </div>
-                <div className="bg-black/70 text-white px-3 py-1 rounded text-sm font-mono">
-                  Slice {currentSlice}/{totalSlices}
-                </div>
-              </div>
-
-              {/* Slice Navigation Controls */}
-              <div className="flex items-center space-x-4">
-                <button
-                  onClick={handlePreviousSlice}
-                  disabled={currentSlice === 1}
-                  className="bg-white/20 hover:bg-white/30 disabled:bg-white/10 disabled:cursor-not-allowed text-white p-2 rounded transition-colors"
+                {/* Scrollable Area */}
+                <div
+                  ref={setScrollContainer}
+                  className="w-full h-32 overflow-y-scroll dicom-enhanced-scrollbar bg-background border border-border rounded"
+                  style={{
+                    scrollbarWidth: 'auto',
+                    scrollbarColor: '#2563eb #e5e7eb',
+                    scrollbarGutter: 'stable',
+                    overflowY: 'scroll'
+                  }}
+                  onScroll={(e) => {
+                    const scrollTop = e.currentTarget.scrollTop;
+                    const maxScroll =
+                      e.currentTarget.scrollHeight -
+                      e.currentTarget.clientHeight;
+                    const sliceProgress = scrollTop / maxScroll;
+                    const newSlice =
+                      Math.round(sliceProgress * (totalSlices - 1)) + 1;
+                    if (newSlice !== currentSlice) {
+                      setCurrentSlice(newSlice);
+                    }
+                  }}
                 >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-
-                {/* Slice Slider */}
-                <div className="flex-1 relative">
-                  <input
-                    type="range"
-                    min="1"
-                    max={totalSlices}
-                    value={currentSlice}
-                    onChange={(e) => setCurrentSlice(parseInt(e.target.value))}
-                    className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer slider"
-                  />
-                  <div className="flex justify-between text-xs text-white/70 mt-1">
-                    <span>1</span>
-                    <span>{totalSlices}</span>
+                  {/* Virtual content for scrolling through slices */}
+                  <div className="h-[800px] w-full p-2">
+                    <div className="text-center text-sm text-muted-foreground mb-2">
+                      Scroll to navigate through {totalSlices} slices
+                    </div>
+                    {/* Slice markers */}
+                    {Array.from({ length: totalSlices }, (_, i) => i + 1).map((slice) => (
+                      <div
+                        key={slice}
+                        className={`p-2 mb-2 rounded text-center text-sm cursor-pointer transition-colors ${
+                          slice === currentSlice
+                            ? "bg-medical-blue text-white"
+                            : "bg-muted hover:bg-muted/80 text-foreground"
+                        }`}
+                        onClick={() => setCurrentSlice(slice)}
+                      >
+                        Slice {slice}
+                      </div>
+                    ))}
                   </div>
                 </div>
-
-                <button
-                  onClick={handleNextSlice}
-                  disabled={currentSlice === totalSlices}
-                  className="bg-white/20 hover:bg-white/30 disabled:bg-white/10 disabled:cursor-not-allowed text-white p-2 rounded transition-colors"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* Scrollable Navigation */}
-              <div
-                ref={setScrollContainer}
-                className="w-full h-16 overflow-y-scroll dicom-enhanced-scrollbar mt-3 bg-white/10 rounded"
-                style={{
-                  scrollbarWidth: 'auto',
-                  scrollbarColor: '#2563eb #e5e7eb',
-                  backgroundColor: 'rgba(255,255,255,0.1)',
-                  scrollbarGutter: 'stable',
-                  overflowY: 'scroll'
-                }}
-                onScroll={(e) => {
-                  const scrollTop = e.currentTarget.scrollTop;
-                  const maxScroll =
-                    e.currentTarget.scrollHeight -
-                    e.currentTarget.clientHeight;
-                  const sliceProgress = scrollTop / maxScroll;
-                  const newSlice =
-                    Math.round(sliceProgress * (totalSlices - 1)) + 1;
-                  if (newSlice !== currentSlice) {
-                    setCurrentSlice(newSlice);
-                  }
-                }}
-              >
-                {/* Virtual content for scrolling */}
-                <div className="h-[400px] w-full"></div>
               </div>
             </div>
           </div>
 
 
-          {/* Right Side Controls Card */}
-          <div className="w-40">
-            <div className="bg-card border border-border rounded-lg p-3 shadow-sm">
-              <div className="text-xs text-muted-foreground text-center mb-2 font-medium">
-                Controls
-              </div>
-              <div className="flex flex-col space-y-2">
-                <button
-                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-2"
-                  title="Zoom Out"
-                >
-                  <ZoomOut className="w-4 h-4" />
-                  <span className="text-xs">Zoom Out</span>
-                </button>
-                <button
-                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-2"
-                  title="Zoom In"
-                >
-                  <ZoomIn className="w-4 h-4" />
-                  <span className="text-xs">Zoom In</span>
-                </button>
-                <button
-                  onClick={handleReset}
-                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-2"
-                  title="Reset View"
-                >
-                  <RotateCw className="w-4 h-4" />
-                  <span className="text-xs">Reset</span>
-                </button>
-                <div className="border-t border-border pt-2 mt-2">
-                  <button
-                    onClick={() => setShowFilterPopup(true)}
-                    className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors w-full flex items-center space-x-2"
-                    title="ACL/Meniscal Filter"
-                  >
-                    <Filter className="w-4 h-4" />
-                    <span className="text-xs">Filter</span>
-                  </button>
-                  <button
-                    className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors w-full mt-2 flex items-center space-x-2"
-                    title="Sort Options"
-                  >
-                    <ArrowUpDown className="w-4 h-4" />
-                    <span className="text-xs">Sort</span>
-                  </button>
-                </div>
-              </div>
+          {/* Controls Card */}
+          <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
+            <h4 className="text-sm font-medium text-foreground mb-3">Controls</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <button
+                className="bg-muted hover:bg-muted/80 text-foreground p-3 rounded transition-colors flex flex-col items-center space-y-1"
+                title="Zoom Out"
+              >
+                <ZoomOut className="w-5 h-5" />
+                <span className="text-xs">Zoom Out</span>
+              </button>
+              <button
+                className="bg-muted hover:bg-muted/80 text-foreground p-3 rounded transition-colors flex flex-col items-center space-y-1"
+                title="Zoom In"
+              >
+                <ZoomIn className="w-5 h-5" />
+                <span className="text-xs">Zoom In</span>
+              </button>
+              <button
+                onClick={handleReset}
+                className="bg-muted hover:bg-muted/80 text-foreground p-3 rounded transition-colors flex flex-col items-center space-y-1"
+                title="Reset View"
+              >
+                <RotateCw className="w-5 h-5" />
+                <span className="text-xs">Reset</span>
+              </button>
+              <button
+                onClick={() => setShowFilterPopup(true)}
+                className="bg-muted hover:bg-muted/80 text-foreground p-3 rounded transition-colors flex flex-col items-center space-y-1"
+                title="ACL/Meniscal Filter"
+              >
+                <Filter className="w-5 h-5" />
+                <span className="text-xs">Filter</span>
+              </button>
             </div>
           </div>
         </div>
