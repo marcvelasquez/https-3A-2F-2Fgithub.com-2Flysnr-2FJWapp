@@ -513,126 +513,123 @@ const Report = () => {
         <div
           className={`flex gap-6 h-[600px] ${showMetadata ? "pr-80" : ""} transition-all duration-300`}
         >
-          {/* Dual Viewer Layout */}
-          <div className="flex-1 flex gap-4 bg-medical-blue rounded-lg p-4 overflow-hidden">
-            {/* First MRI Image */}
-            <div className="flex-1 bg-white border-4 border-gray-400 rounded-lg shadow-lg p-4 relative">
-              <div className="w-full h-full flex flex-col items-center justify-center">
-                {/* First Image */}
-                <div className="flex-1 flex items-center justify-center">
+          {/* Dual Viewer Layout with Combined Navigation */}
+          <div className="flex-1 flex flex-col bg-medical-blue rounded-lg p-4 overflow-hidden">
+            {/* Dual Image Display */}
+            <div className="flex gap-4 flex-1">
+              {/* First MRI Image */}
+              <div className="flex-1 bg-white border-4 border-gray-400 rounded-lg shadow-lg p-4 relative">
+                <div className="w-full h-full flex items-center justify-center">
                   <img
                     src="https://cdn.builder.io/api/v1/image/assets%2F7801b78ee0e14b1588e246353c18a505%2Fe8a62d6eae8941df8ce08c2f8bc15ef9?format=webp&width=800"
-                    alt="MRI Slice 1"
+                    alt={`MRI View 1 - Slice ${currentSlice}`}
                     className="max-w-full max-h-full object-contain rounded"
                   />
                 </div>
 
-                {/* Slice Navigation for First Image */}
-                <div
-                  ref={setScrollContainer}
-                  className="w-full h-8 overflow-y-scroll dicom-enhanced-scrollbar mt-2"
-                  style={{
-                    scrollbarWidth: 'auto',
-                    scrollbarColor: '#2563eb #e5e7eb',
-                    backgroundColor: 'rgba(0,0,0,0.02)',
-                    scrollbarGutter: 'stable',
-                    overflowY: 'scroll'
-                  }}
-                  onScroll={(e) => {
-                    const scrollTop = e.currentTarget.scrollTop;
-                    const maxScroll =
-                      e.currentTarget.scrollHeight -
-                      e.currentTarget.clientHeight;
-                    const sliceProgress = scrollTop / maxScroll;
-                    const newSlice =
-                      Math.round(sliceProgress * (totalSlices - 1)) + 1;
-                    if (newSlice !== currentSlice) {
-                      setCurrentSlice(newSlice);
-                    }
-                  }}
-                >
-                  {/* Virtual content for scrolling */}
-                  <div className="h-[200px] w-full"></div>
+                {/* Label - Top Left */}
+                <div className="absolute top-2 left-2">
+                  <div className="bg-medical-blue/90 text-white px-2 py-1 rounded text-xs font-medium">
+                    MRI View 1
+                  </div>
                 </div>
               </div>
 
-              {/* Slice Number Display - Top Right */}
-              <div className="absolute top-2 right-2">
-                <div className="bg-black/70 text-white px-2 py-1 rounded text-xs font-mono">
-                  Slice {currentSlice}/{totalSlices}
-                </div>
-              </div>
-
-              {/* Label - Top Left */}
-              <div className="absolute top-2 left-2">
-                <div className="bg-medical-blue/90 text-white px-2 py-1 rounded text-xs font-medium">
-                  MRI View 1
-                </div>
-              </div>
-            </div>
-
-            {/* Second MRI Image */}
-            <div className="flex-1 bg-white border-4 border-gray-400 rounded-lg shadow-lg p-4 relative">
-              <div className="w-full h-full flex flex-col items-center justify-center">
-                {/* Second Image */}
-                <div className="flex-1 flex items-center justify-center">
+              {/* Second MRI Image */}
+              <div className="flex-1 bg-white border-4 border-gray-400 rounded-lg shadow-lg p-4 relative">
+                <div className="w-full h-full flex items-center justify-center">
                   <img
                     src="https://cdn.builder.io/api/v1/image/assets%2F7801b78ee0e14b1588e246353c18a505%2Fbc7a86ac83bf447a8c24e484e20b0e98?format=webp&width=800"
-                    alt="MRI Slice 2"
+                    alt={`MRI View 2 - Slice ${currentSlice}`}
                     className="max-w-full max-h-full object-contain rounded"
                   />
                 </div>
 
-                {/* Slice Navigation for Second Image */}
-                <div className="w-full h-8 overflow-y-scroll dicom-enhanced-scrollbar mt-2"
-                  style={{
-                    scrollbarWidth: 'auto',
-                    scrollbarColor: '#2563eb #e5e7eb',
-                    backgroundColor: 'rgba(0,0,0,0.02)',
-                    scrollbarGutter: 'stable',
-                    overflowY: 'scroll'
-                  }}
-                >
-                  {/* Virtual content for scrolling */}
-                  <div className="h-[200px] w-full"></div>
+                {/* Label - Top Left */}
+                <div className="absolute top-2 left-2">
+                  <div className="bg-medical-blue/90 text-white px-2 py-1 rounded text-xs font-medium">
+                    MRI View 2
+                  </div>
                 </div>
               </div>
+            </div>
 
-              {/* Slice Number Display - Top Right */}
-              <div className="absolute top-2 right-2">
-                <div className="bg-black/70 text-white px-2 py-1 rounded text-xs font-mono">
+            {/* Combined Navigation Controls */}
+            <div className="mt-4 bg-white/10 rounded-lg p-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-white text-sm font-medium">
+                  Slice Navigation
+                </div>
+                <div className="bg-black/70 text-white px-3 py-1 rounded text-sm font-mono">
                   Slice {currentSlice}/{totalSlices}
                 </div>
               </div>
 
-              {/* Label - Top Left */}
-              <div className="absolute top-2 left-2">
-                <div className="bg-medical-blue/90 text-white px-2 py-1 rounded text-xs font-medium">
-                  MRI View 2
+              {/* Slice Navigation Controls */}
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={handlePreviousSlice}
+                  disabled={currentSlice === 1}
+                  className="bg-white/20 hover:bg-white/30 disabled:bg-white/10 disabled:cursor-not-allowed text-white p-2 rounded transition-colors"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+
+                {/* Slice Slider */}
+                <div className="flex-1 relative">
+                  <input
+                    type="range"
+                    min="1"
+                    max={totalSlices}
+                    value={currentSlice}
+                    onChange={(e) => setCurrentSlice(parseInt(e.target.value))}
+                    className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer slider"
+                  />
+                  <div className="flex justify-between text-xs text-white/70 mt-1">
+                    <span>1</span>
+                    <span>{totalSlices}</span>
+                  </div>
                 </div>
+
+                <button
+                  onClick={handleNextSlice}
+                  disabled={currentSlice === totalSlices}
+                  className="bg-white/20 hover:bg-white/30 disabled:bg-white/10 disabled:cursor-not-allowed text-white p-2 rounded transition-colors"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Scrollable Navigation */}
+              <div
+                ref={setScrollContainer}
+                className="w-full h-16 overflow-y-scroll dicom-enhanced-scrollbar mt-3 bg-white/10 rounded"
+                style={{
+                  scrollbarWidth: 'auto',
+                  scrollbarColor: '#2563eb #e5e7eb',
+                  backgroundColor: 'rgba(255,255,255,0.1)',
+                  scrollbarGutter: 'stable',
+                  overflowY: 'scroll'
+                }}
+                onScroll={(e) => {
+                  const scrollTop = e.currentTarget.scrollTop;
+                  const maxScroll =
+                    e.currentTarget.scrollHeight -
+                    e.currentTarget.clientHeight;
+                  const sliceProgress = scrollTop / maxScroll;
+                  const newSlice =
+                    Math.round(sliceProgress * (totalSlices - 1)) + 1;
+                  if (newSlice !== currentSlice) {
+                    setCurrentSlice(newSlice);
+                  }
+                }}
+              >
+                {/* Virtual content for scrolling */}
+                <div className="h-[400px] w-full"></div>
               </div>
             </div>
           </div>
 
-          {/* Patient Info - Bottom of Viewer */}
-          <div className="absolute bottom-4 left-4">
-            <div className="text-sm text-muted-foreground bg-card/90 backdrop-blur px-3 py-2 rounded border border-border">
-              {(currentPatient || studyData) && (
-                <div>
-                  <div className="font-medium text-foreground">
-                    {currentPatient?.name ||
-                      studyData?.patientName ||
-                      "Unknown Patient"}
-                  </div>
-                  {studyData?.studyDescription && (
-                    <div className="text-xs mt-1">
-                      {studyData?.studyDescription}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
 
           {/* Right Side Controls Card */}
           <div className="w-40">
