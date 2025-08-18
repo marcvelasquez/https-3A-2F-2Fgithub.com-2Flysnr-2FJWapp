@@ -517,7 +517,7 @@ const Report = () => {
           <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
             <div className="space-y-4">
               {/* MRI Image Display Card with Embedded Scrollbar */}
-              <div className="bg-white border-4 border-gray-400 rounded-lg shadow-lg p-6 relative" style={{boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', outline: '2px solid #3b82f6', outlineOffset: '2px'}}>
+              <div className="bg-white border-4 border-gray-400 rounded-lg shadow-lg p-6 relative" style={{boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', outline: '2px solid #3b82f6', outlineOffset: '2px', height: '500px'}}>
                 {/* DICOM Image Area - Fixed container */}
                 <div className="absolute inset-4 flex items-center justify-center">
                   <div className="relative w-96 h-96">
@@ -596,22 +596,28 @@ const Report = () => {
                   </div>
                 </div>
 
-                {/* Navigation Controls - Bottom Right */}
-                <div className="absolute bottom-4 right-4 flex items-center space-x-2">
-                  <button
-                    onClick={handlePreviousSlice}
-                    disabled={currentSlice === 1}
-                    className="bg-medical-blue/90 hover:bg-medical-blue disabled:bg-muted disabled:cursor-not-allowed text-white p-2 rounded transition-colors"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={handleNextSlice}
-                    disabled={currentSlice === totalSlices}
-                    className="bg-medical-blue/90 hover:bg-medical-blue disabled:bg-muted disabled:cursor-not-allowed text-white p-2 rounded transition-colors"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
+                {/* Visible Scrollbar - Bottom Right */}
+                <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur rounded-lg p-2 shadow-lg border border-border">
+                  <div className="flex flex-col items-center space-y-2">
+                    <div className="text-xs text-muted-foreground font-medium">Slice Navigation</div>
+                    <div className="relative">
+                      <input
+                        type="range"
+                        min="1"
+                        max={totalSlices}
+                        value={currentSlice}
+                        onChange={(e) => setCurrentSlice(parseInt(e.target.value))}
+                        className="w-24 h-2 bg-muted rounded-lg appearance-none cursor-pointer slider transform rotate-90 origin-center"
+                        style={{
+                          background: `linear-gradient(to right, hsl(var(--medical-blue)) 0%, hsl(var(--medical-blue)) ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, hsl(var(--muted)) ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, hsl(var(--muted)) 100%)`
+                        }}
+                      />
+                      <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-mono text-foreground bg-medical-blue text-white px-1 rounded">
+                        {currentSlice}
+                      </div>
+                    </div>
+                    <div className="text-xs text-muted-foreground">of {totalSlices}</div>
+                  </div>
                 </div>
               </div>
             </div>
