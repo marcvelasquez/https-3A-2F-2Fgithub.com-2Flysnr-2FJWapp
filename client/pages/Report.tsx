@@ -633,44 +633,88 @@ const Report = () => {
                 </div>
 
               </div>
-            </div>
-          </div>
 
+              {/* Additional content that makes the column scrollable */}
+              <div className="bg-muted/30 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-foreground mb-3">Slice Information</h4>
+                <div className="space-y-2 text-sm">
+                  {Array.from({ length: totalSlices }, (_, i) => i + 1).map((slice) => (
+                    <div
+                      key={slice}
+                      className={`p-3 rounded border cursor-pointer transition-colors ${
+                        slice === currentSlice
+                          ? "bg-medical-blue text-white border-medical-blue"
+                          : "bg-background hover:bg-muted border-border"
+                      }`}
+                      onClick={() => setCurrentSlice(slice)}
+                    >
+                      <div className="flex justify-between items-center">
+                        <span className="font-medium">Slice {slice}</span>
+                        <span className="text-xs opacity-75">
+                          {-15 + slice * 3} mm
+                        </span>
+                      </div>
+                      <div className="text-xs mt-1 opacity-75">
+                        Position: {slice} of {totalSlices}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-          {/* Controls Card */}
-          <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
-            <h4 className="text-sm font-medium text-foreground mb-3">Controls</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <button
-                className="bg-muted hover:bg-muted/80 text-foreground p-3 rounded transition-colors flex flex-col items-center space-y-1"
-                title="Zoom Out"
-              >
-                <ZoomOut className="w-5 h-5" />
-                <span className="text-xs">Zoom Out</span>
-              </button>
-              <button
-                className="bg-muted hover:bg-muted/80 text-foreground p-3 rounded transition-colors flex flex-col items-center space-y-1"
-                title="Zoom In"
-              >
-                <ZoomIn className="w-5 h-5" />
-                <span className="text-xs">Zoom In</span>
-              </button>
-              <button
-                onClick={handleReset}
-                className="bg-muted hover:bg-muted/80 text-foreground p-3 rounded transition-colors flex flex-col items-center space-y-1"
-                title="Reset View"
-              >
-                <RotateCw className="w-5 h-5" />
-                <span className="text-xs">Reset</span>
-              </button>
-              <button
-                onClick={() => setShowFilterPopup(true)}
-                className="bg-muted hover:bg-muted/80 text-foreground p-3 rounded transition-colors flex flex-col items-center space-y-1"
-                title="ACL/Meniscal Filter"
-              >
-                <Filter className="w-5 h-5" />
-                <span className="text-xs">Filter</span>
-              </button>
+              {/* Technical Details */}
+              <div className="bg-muted/30 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-foreground mb-3">Technical Parameters</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Slice Thickness:</span>
+                    <span className="text-foreground">3.0 mm</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">TR:</span>
+                    <span className="text-foreground">2500 ms</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">TE:</span>
+                    <span className="text-foreground">85 ms</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Field Strength:</span>
+                    <span className="text-foreground">1.5 Tesla</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Matrix:</span>
+                    <span className="text-foreground">512 x 512</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* AI Analysis */}
+              <div className="bg-muted/30 rounded-lg p-4">
+                <h4 className="text-sm font-medium text-foreground mb-3">AI Analysis</h4>
+                <div className="space-y-2">
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                    <div className="flex justify-between items-center">
+                      <span className="text-red-700 font-medium text-sm">ACL Tear</span>
+                      <span className="text-red-600 font-bold">72%</span>
+                    </div>
+                    <p className="text-red-600 text-xs mt-1">
+                      High probability detected
+                    </p>
+                  </div>
+                  <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
+                    <div className="flex justify-between items-center">
+                      <span className="text-orange-700 font-medium text-sm">
+                        Meniscus Tear
+                      </span>
+                      <span className="text-orange-600 font-bold">64%</span>
+                    </div>
+                    <p className="text-orange-600 text-xs mt-1">
+                      Moderate probability
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
