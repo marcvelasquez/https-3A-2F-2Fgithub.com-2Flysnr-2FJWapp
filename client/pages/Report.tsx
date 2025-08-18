@@ -484,66 +484,74 @@ const Report = () => {
             {/* Scrollable MRI Image Container */}
             <div className="w-full h-full flex items-center justify-center bg-muted/30 relative">
               {/* MRI Image Container - Clean design */}
-              <div className="w-[800px] h-[600px] bg-card border-2 border-border rounded-lg relative overflow-hidden shadow-lg">
-                {/* Fixed DICOM Image - Always in center */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                  <div className="text-center">
-                    {/* MRI Image Placeholder - Fixed Position */}
-                    <div className="w-96 h-96 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg mx-auto mb-4 flex items-center justify-center border border-border shadow-inner">
-                      <div className="text-center text-white">
-                        <div className="text-2xl font-mono mb-2">MRI Slice {currentSlice}</div>
-                        <div className="w-32 h-32 bg-slate-700 rounded-full mx-auto flex items-center justify-center">
-                          <div className="text-xs opacity-75">DICOM Image</div>
-                        </div>
-                        <div className="text-xs mt-4 opacity-60">
-                          Slice {currentSlice} of {totalSlices}
+              <div className="w-[800px] h-[600px] bg-card border-2 border-border rounded-lg relative shadow-lg">
+                {/* DICOM Image Area - Fixed container */}
+                <div className="absolute inset-4 flex items-center justify-center">
+                  <div className="relative w-96 h-96">
+                    {/* Fixed DICOM Image */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                      <div className="text-center">
+                        {/* MRI Image Placeholder - Fixed Position */}
+                        <div className="w-96 h-96 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg flex items-center justify-center border border-border shadow-inner">
+                          <div className="text-center text-white">
+                            <div className="text-2xl font-mono mb-2">MRI Slice {currentSlice}</div>
+                            <div className="w-32 h-32 bg-slate-700 rounded-full mx-auto flex items-center justify-center">
+                              <div className="text-xs opacity-75">DICOM Image</div>
+                            </div>
+                            <div className="text-xs mt-4 opacity-60">
+                              Slice {currentSlice} of {totalSlices}
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    {/* Patient Info - Fixed Position */}
-                    <div className="text-sm text-muted-foreground">
-                      {(currentPatient || studyData) && (
-                        <div>
-                          <div className="font-medium text-foreground">
-                            {currentPatient?.name ||
-                              studyData?.patientName ||
-                              "Unknown Patient"}
-                          </div>
-                          {studyData?.studyDescription && (
-                            <div className="mt-1">
-                              {studyData?.studyDescription}
-                            </div>
-                          )}
-                        </div>
-                      )}
+
+                    {/* Scroll area contained within image bounds */}
+                    <div
+                      ref={setScrollContainer}
+                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg"
+                      style={{
+                        scrollbarWidth: 'thin',
+                        scrollbarColor: '#3b82f6 #e5e7eb'
+                      }}
+                      onScroll={(e) => {
+                        const scrollTop = e.currentTarget.scrollTop;
+                        const maxScroll =
+                          e.currentTarget.scrollHeight -
+                          e.currentTarget.clientHeight;
+                        const sliceProgress = scrollTop / maxScroll;
+                        const newSlice =
+                          Math.round(sliceProgress * (totalSlices - 1)) + 1;
+                        if (newSlice !== currentSlice) {
+                          setCurrentSlice(newSlice);
+                        }
+                      }}
+                    >
+                      {/* Virtual content - only for creating scroll height */}
+                      <div className="h-[1600px] w-full opacity-0">
+                        {/* Empty space to enable scrolling */}
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Invisible scroll area for slice navigation only */}
-                <div
-                  ref={setScrollContainer}
-                  className="absolute inset-0 overflow-y-scroll z-10"
-                  style={{
-                    scrollbarWidth: 'thin',
-                    scrollbarColor: '#3b82f6 #e5e7eb'
-                  }}
-                  onScroll={(e) => {
-                    const scrollTop = e.currentTarget.scrollTop;
-                    const maxScroll =
-                      e.currentTarget.scrollHeight -
-                      e.currentTarget.clientHeight;
-                    const sliceProgress = scrollTop / maxScroll;
-                    const newSlice =
-                      Math.round(sliceProgress * (totalSlices - 1)) + 1;
-                    if (newSlice !== currentSlice) {
-                      setCurrentSlice(newSlice);
-                    }
-                  }}
-                >
-                  {/* Virtual content - only for creating scroll height */}
-                  <div className="h-[2800px] w-full opacity-0">
-                    {/* Empty space to enable scrolling */}
+                {/* Patient Info - Below image */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
+                  <div className="text-sm text-muted-foreground bg-card/80 backdrop-blur px-3 py-1 rounded">
+                    {(currentPatient || studyData) && (
+                      <div>
+                        <div className="font-medium text-foreground">
+                          {currentPatient?.name ||
+                            studyData?.patientName ||
+                            "Unknown Patient"}
+                        </div>
+                        {studyData?.studyDescription && (
+                          <div className="text-xs mt-1">
+                            {studyData?.studyDescription}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
