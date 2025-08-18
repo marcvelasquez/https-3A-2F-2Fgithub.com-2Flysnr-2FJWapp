@@ -23,6 +23,7 @@ const Report = () => {
   const [showStatusWarning, setShowStatusWarning] = useState(false);
   const [showNavigationWarning, setShowNavigationWarning] = useState(false);
   const [showFilterPopup, setShowFilterPopup] = useState(false);
+  const [scrollContainer, setScrollContainer] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
     // Get uploaded study data from sessionStorage
