@@ -407,9 +407,9 @@ const Report = () => {
           {/* Main Viewer - Full Width */}
           <div className="flex-1 bg-medical-blue rounded-lg relative overflow-hidden">
             {/* Scrollable MRI Image Container */}
-            <div className="w-full h-full flex items-center justify-center bg-gray-900 relative">
-              {/* MRI Image Container - Fixed size with slice navigation scrollbar */}
-              <div className="w-[800px] h-[600px] bg-black border-2 border-gray-600 relative overflow-hidden">
+            <div className="w-full h-full flex items-center justify-center bg-muted/30 relative">
+              {/* MRI Image Container - Clean design */}
+              <div className="w-[800px] h-[600px] bg-card border-2 border-border rounded-lg relative overflow-hidden shadow-lg">
                 {/* Virtual scrollable area for slice navigation */}
                 <div
                   ref={setScrollContainer}
@@ -425,17 +425,26 @@ const Report = () => {
                   }}
                 >
                   {/* Virtual content to enable scrolling - height determines scroll range */}
-                  <div className="h-[2800px] w-full">
-                    {/* MRI Image Content - Fixed position */}
-                    <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="text-center text-white">
-                        <div className="w-64 h-64 bg-gray-700 rounded-full mx-auto mb-4 flex items-center justify-center border-4 border-gray-500">
-                          <div className="text-lg font-mono">MRI Slice {currentSlice}</div>
+                  <div className="h-[2800px] w-full relative">
+                    {/* MRI Image Content - Centered */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center">
+                        {/* MRI Image Placeholder */}
+                        <div className="w-96 h-96 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg mx-auto mb-4 flex items-center justify-center border border-border shadow-inner">
+                          <div className="text-center text-white">
+                            <div className="text-2xl font-mono mb-2">MRI Slice {currentSlice}</div>
+                            <div className="w-32 h-32 bg-slate-700 rounded-full mx-auto flex items-center justify-center">
+                              <div className="text-xs opacity-75">DICOM Image</div>
+                            </div>
+                          </div>
                         </div>
-                        <div className="text-sm opacity-80">
+                        {/* Patient Info */}
+                        <div className="text-sm text-muted-foreground">
                           {(currentPatient || studyData) && (
                             <div>
-                              Patient: {currentPatient?.name || studyData?.patientName || 'Unknown Patient'}
+                              <div className="font-medium text-foreground">
+                                {currentPatient?.name || studyData?.patientName || 'Unknown Patient'}
+                              </div>
                               {studyData?.studyDescription && (
                                 <div className="mt-1">{studyData?.studyDescription}</div>
                               )}
@@ -444,22 +453,16 @@ const Report = () => {
                         </div>
                       </div>
                     </div>
-
-                    {/* Grid overlay for reference - Fixed position */}
-                    <div className="fixed inset-0 opacity-20 pointer-events-none">
-                      <div className="grid grid-cols-12 grid-rows-9 h-full w-full">
-                        {Array.from({ length: 108 }, (_, i) => (
-                          <div key={i} className="border border-gray-600"></div>
-                        ))}
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Slice Navigation Info */}
-              <div className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm">
-                Scroll to navigate slices • Slice {currentSlice} of {totalSlices}
+              <div className="absolute bottom-4 left-4 bg-card border border-border text-foreground px-3 py-2 rounded-lg text-sm shadow-sm">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-medical-blue rounded-full"></div>
+                  <span>Scroll to navigate • Slice {currentSlice} of {totalSlices}</span>
+                </div>
               </div>
             </div>
           </div>
