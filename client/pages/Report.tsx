@@ -630,59 +630,6 @@ const Report = () => {
               </div>
 
 
-              {/* Technical Details */}
-              <div className="bg-muted/30 rounded-lg p-4">
-                <h4 className="text-sm font-medium text-foreground mb-3">Technical Parameters</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Slice Thickness:</span>
-                    <span className="text-foreground">3.0 mm</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">TR:</span>
-                    <span className="text-foreground">2500 ms</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">TE:</span>
-                    <span className="text-foreground">85 ms</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Field Strength:</span>
-                    <span className="text-foreground">1.5 Tesla</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Matrix:</span>
-                    <span className="text-foreground">512 x 512</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* AI Analysis */}
-              <div className="bg-muted/30 rounded-lg p-4">
-                <h4 className="text-sm font-medium text-foreground mb-3">AI Analysis</h4>
-                <div className="space-y-2">
-                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                    <div className="flex justify-between items-center">
-                      <span className="text-red-700 font-medium text-sm">ACL Tear</span>
-                      <span className="text-red-600 font-bold">72%</span>
-                    </div>
-                    <p className="text-red-600 text-xs mt-1">
-                      High probability detected
-                    </p>
-                  </div>
-                  <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                    <div className="flex justify-between items-center">
-                      <span className="text-orange-700 font-medium text-sm">
-                        Meniscus Tear
-                      </span>
-                      <span className="text-orange-600 font-bold">64%</span>
-                    </div>
-                    <p className="text-orange-600 text-xs mt-1">
-                      Moderate probability
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
