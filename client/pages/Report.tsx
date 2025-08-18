@@ -403,59 +403,87 @@ const Report = () => {
           {/* Main Viewer - Full Width */}
           <div className="flex-1 bg-medical-blue rounded-lg relative overflow-hidden">
             {/* Scrollable MRI Image Container */}
-            <div
-              className="w-full h-full overflow-auto cursor-grab active:cursor-grabbing mri-scrollbar"
-              onWheel={(e) => {
-                // Handle scroll wheel for slice navigation
-                e.preventDefault();
-                if (e.deltaY > 0 && currentSlice < totalSlices) {
-                  setCurrentSlice(currentSlice + 1);
-                } else if (e.deltaY < 0 && currentSlice > 1) {
-                  setCurrentSlice(currentSlice - 1);
-                }
-              }}
-            >
-              {/* Main Content Display */}
-              <div className="min-w-full min-h-full flex items-center justify-center text-center text-white p-8">
-                <div>
-                  <h2 className="text-4xl font-bold mb-4">MRI Slice {currentSlice}</h2>
-                  {(currentPatient || studyData) && (
-                    <div className="text-sm opacity-80">
-                      Patient: {currentPatient?.name || studyData?.patientName || 'Unknown Patient'}
-                      {studyData?.studyDescription && (
-                        <div className="mt-1">{studyData?.studyDescription}</div>
-                      )}
+            <div className="w-full h-full flex items-center justify-center bg-gray-900 relative">
+              {/* MRI Image Container - Scrollable */}
+              <div
+                className="w-[800px] h-[600px] bg-black border-2 border-gray-600 overflow-auto cursor-grab active:cursor-grabbing mri-scrollbar"
+                onWheel={(e) => {
+                  // Handle scroll wheel for slice navigation when not scrolling content
+                  if (e.ctrlKey || e.metaKey) {
+                    e.preventDefault();
+                    if (e.deltaY > 0 && currentSlice < totalSlices) {
+                      setCurrentSlice(currentSlice + 1);
+                    } else if (e.deltaY < 0 && currentSlice > 1) {
+                      setCurrentSlice(currentSlice - 1);
+                    }
+                  }
+                }}
+              >
+                {/* Simulated MRI Image - Larger than container for scrolling */}
+                <div className="w-[1200px] h-[900px] bg-gradient-to-br from-gray-800 to-gray-900 relative">
+                  {/* MRI Image Content */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center text-white">
+                      <div className="w-64 h-64 bg-gray-700 rounded-full mx-auto mb-4 flex items-center justify-center border-4 border-gray-500">
+                        <div className="text-lg font-mono">MRI Slice {currentSlice}</div>
+                      </div>
+                      <div className="text-sm opacity-80">
+                        {(currentPatient || studyData) && (
+                          <div>
+                            Patient: {currentPatient?.name || studyData?.patientName || 'Unknown Patient'}
+                            {studyData?.studyDescription && (
+                              <div className="mt-1">{studyData?.studyDescription}</div>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  )}
-                  <div className="mt-4 text-xs opacity-60">
-                    Scroll to navigate slices • {currentSlice} of {totalSlices}
+                  </div>
+
+                  {/* Grid overlay for reference */}
+                  <div className="absolute inset-0 opacity-20">
+                    <div className="grid grid-cols-12 grid-rows-9 h-full w-full">
+                      {Array.from({ length: 108 }, (_, i) => (
+                        <div key={i} className="border border-gray-600"></div>
+                      ))}
+                    </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Slice Navigation Info */}
+              <div className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm">
+                Slice {currentSlice} of {totalSlices} • Scroll image to pan • Ctrl+Scroll to change slice
               </div>
             </div>
           </div>
 
-          {/* Right Side Controls */}
-          <div className="w-12 flex flex-col space-y-2">
-            <button
-              className="bg-card hover:bg-muted border border-border text-foreground p-2 rounded transition-colors"
-              title="Zoom Out"
-            >
-              <ZoomOut className="w-4 h-4" />
-            </button>
-            <button
-              className="bg-card hover:bg-muted border border-border text-foreground p-2 rounded transition-colors"
-              title="Zoom In"
-            >
-              <ZoomIn className="w-4 h-4" />
-            </button>
-            <button
-              onClick={handleReset}
-              className="bg-card hover:bg-muted border border-border text-foreground p-2 rounded transition-colors"
-              title="Reset View"
-            >
-              <RotateCw className="w-4 h-4" />
-            </button>
+          {/* Right Side Controls Card */}
+          <div className="w-20">
+            <div className="bg-card border border-border rounded-lg p-3 shadow-sm">
+              <div className="text-xs text-muted-foreground text-center mb-2 font-medium">Controls</div>
+              <div className="flex flex-col space-y-2">
+                <button
+                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors"
+                  title="Zoom Out"
+                >
+                  <ZoomOut className="w-4 h-4" />
+                </button>
+                <button
+                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors"
+                  title="Zoom In"
+                >
+                  <ZoomIn className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors"
+                  title="Reset View"
+                >
+                  <RotateCw className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
