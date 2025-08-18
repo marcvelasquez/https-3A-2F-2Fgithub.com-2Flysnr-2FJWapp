@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Upload, Cloud, FileText, Check, ChevronLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Upload, Cloud, FileText, Check, ChevronLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const UploadStudy = () => {
-  const [patientName, setPatientName] = useState('John Doe');
-  const [studyDescription, setStudyDescription] = useState('');
-  const [bodyPart, setBodyPart] = useState('');
-  const [status, setStatus] = useState('Pending');
+  const [patientName, setPatientName] = useState("John Doe");
+  const [studyDescription, setStudyDescription] = useState("");
+  const [bodyPart, setBodyPart] = useState("");
+  const [status, setStatus] = useState("Pending");
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -37,25 +37,32 @@ const UploadStudy = () => {
   };
 
   const handleFiles = (files: File[]) => {
-    const validFiles = files.filter(file =>
-      file.type.startsWith('image/') ||
-      file.name.toLowerCase().endsWith('.dcm') ||
-      file.name.toLowerCase().endsWith('.dicom') ||
-      ['application/zip', 'application/x-rar-compressed', 'application/x-7z-compressed'].includes(file.type)
+    const validFiles = files.filter(
+      (file) =>
+        file.type.startsWith("image/") ||
+        file.name.toLowerCase().endsWith(".dcm") ||
+        file.name.toLowerCase().endsWith(".dicom") ||
+        [
+          "application/zip",
+          "application/x-rar-compressed",
+          "application/x-7z-compressed",
+        ].includes(file.type),
     );
     setUploadedFiles(validFiles);
   };
 
   const handleUpload = async () => {
     if (!patientName || !bodyPart || uploadedFiles.length === 0) {
-      alert('Please enter patient name, select body part, and choose files to upload');
+      alert(
+        "Please enter patient name, select body part, and choose files to upload",
+      );
       return;
     }
 
     setIsUploading(true);
 
     // Simulate upload process
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     // Create file data for the study
     const fileData = {
@@ -63,14 +70,18 @@ const UploadStudy = () => {
       studyDescription,
       bodyPart,
       status,
-      files: uploadedFiles.map(f => ({ name: f.name, type: f.type, size: f.size }))
+      files: uploadedFiles.map((f) => ({
+        name: f.name,
+        type: f.type,
+        size: f.size,
+      })),
     };
 
     // Store file data in sessionStorage for the report page
-    sessionStorage.setItem('uploadedStudy', JSON.stringify(fileData));
+    sessionStorage.setItem("uploadedStudy", JSON.stringify(fileData));
 
     // Also store for adding to patient records
-    sessionStorage.setItem('newPatientRecord', JSON.stringify(fileData));
+    sessionStorage.setItem("newPatientRecord", JSON.stringify(fileData));
 
     // Generate a new patient ID for the uploaded study
     const patientId = `${Date.now()}`;
@@ -80,24 +91,24 @@ const UploadStudy = () => {
       studyInfo: {
         studyId: patientId,
         patientName: patientName,
-        studyDate: 'Today',
-        modality: 'MRI',
-        bodyPart: bodyPart
+        studyDate: "Today",
+        modality: "MRI",
+        bodyPart: bodyPart,
       },
       technicalParams: {
-        sliceThickness: '3.0 mm',
-        tr: '2500 ms',
-        te: '85 ms',
-        fieldStrength: '1.5 Tesla',
-        matrix: '512 x 512'
+        sliceThickness: "3.0 mm",
+        tr: "2500 ms",
+        te: "85 ms",
+        fieldStrength: "1.5 Tesla",
+        matrix: "512 x 512",
       },
       equipment: {
-        manufacturer: 'Siemens',
-        model: 'MAGNETOM Aera',
-        software: 'syngo MR E11'
+        manufacturer: "Siemens",
+        model: "MAGNETOM Aera",
+        software: "syngo MR E11",
       },
-      remarks: studyDescription || 'Newly uploaded study',
-      created: new Date().toISOString()
+      remarks: studyDescription || "Newly uploaded study",
+      created: new Date().toISOString(),
     };
 
     localStorage.setItem(`metadata_${patientId}`, JSON.stringify(metadata));
@@ -117,23 +128,28 @@ const UploadStudy = () => {
               if (window.history.length > 1) {
                 navigate(-1);
               } else {
-                navigate('/patient-record');
+                navigate("/patient-record");
               }
             }}
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <h1 className="text-2xl font-semibold text-foreground">Upload New Study</h1>
+          <h1 className="text-2xl font-semibold text-foreground">
+            Upload New Study
+          </h1>
         </div>
       </div>
 
       {/* Upload Form */}
       <div className="max-w-2xl mx-auto">
         <div className="medical-card p-8">
-          <h2 className="text-xl font-semibold text-foreground mb-6">Upload DICOM Study</h2>
+          <h2 className="text-xl font-semibold text-foreground mb-6">
+            Upload DICOM Study
+          </h2>
           <p className="text-sm text-muted-foreground mb-8">
-            Select a DICOM file (max 25 or 3 compressed archive (.zip, .rar, .7z) to upload. You can also
+            Select a DICOM file (max 25 or 3 compressed archive (.zip, .rar,
+            .7z) to upload. You can also
           </p>
 
           {/* Patient Name Field */}
@@ -207,9 +223,10 @@ const UploadStudy = () => {
             <div
               className={`
                 relative border-2 border-dashed rounded-lg p-12 text-center transition-colors
-                ${isDragOver
-                  ? 'border-medical-blue bg-medical-blue/5'
-                  : 'border-border hover:border-medical-blue/50'
+                ${
+                  isDragOver
+                    ? "border-medical-blue bg-medical-blue/5"
+                    : "border-border hover:border-medical-blue/50"
                 }
               `}
               onDragOver={handleDragOver}
@@ -224,9 +241,13 @@ const UploadStudy = () => {
                   Click to upload or drag and drop
                 </h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Images (.jpg, .png, .jpeg), DICOM files (.dcm, .dicom) or archives (.zip, .rar, .7z)
+                  Images (.jpg, .png, .jpeg), DICOM files (.dcm, .dicom) or
+                  archives (.zip, .rar, .7z)
                 </p>
-                <button type="button" className="bg-medical-blue hover:bg-medical-blue-dark text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                <button
+                  type="button"
+                  className="bg-medical-blue hover:bg-medical-blue-dark text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                >
                   Choose Files
                 </button>
               </div>
@@ -242,13 +263,20 @@ const UploadStudy = () => {
             {/* Show uploaded files */}
             {uploadedFiles.length > 0 && (
               <div className="mt-4 p-4 bg-muted/50 rounded-lg">
-                <h4 className="text-sm font-medium text-foreground mb-2">Selected Files:</h4>
+                <h4 className="text-sm font-medium text-foreground mb-2">
+                  Selected Files:
+                </h4>
                 <div className="space-y-2">
                   {uploadedFiles.map((file, index) => (
-                    <div key={index} className="flex items-center space-x-2 text-sm">
+                    <div
+                      key={index}
+                      className="flex items-center space-x-2 text-sm"
+                    >
                       <Check className="w-4 h-4 text-green-500" />
                       <span className="text-foreground">{file.name}</span>
-                      <span className="text-muted-foreground">({(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                      <span className="text-muted-foreground">
+                        ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -263,13 +291,15 @@ const UploadStudy = () => {
             className="w-full bg-medical-blue hover:bg-medical-blue-dark text-white py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Upload className="w-5 h-5" />
-            <span>{isUploading ? 'Uploading...' : 'Upload Study'}</span>
+            <span>{isUploading ? "Uploading..." : "Upload Study"}</span>
           </button>
         </div>
 
         {/* Upload Guidelines */}
         <div className="mt-6 p-6 bg-muted/50 rounded-lg">
-          <h3 className="text-sm font-semibold text-foreground mb-3">Upload Guidelines</h3>
+          <h3 className="text-sm font-semibold text-foreground mb-3">
+            Upload Guidelines
+          </h3>
           <ul className="text-sm text-muted-foreground space-y-2">
             <li className="flex items-start space-x-2">
               <div className="w-1.5 h-1.5 bg-medical-blue rounded-full mt-2 flex-shrink-0"></div>
@@ -277,7 +307,10 @@ const UploadStudy = () => {
             </li>
             <li className="flex items-start space-x-2">
               <div className="w-1.5 h-1.5 bg-medical-blue rounded-full mt-2 flex-shrink-0"></div>
-              <span>Supported formats: DICOM (.dcm, .dicom), Archives (.zip, .rar, .7z)</span>
+              <span>
+                Supported formats: DICOM (.dcm, .dicom), Archives (.zip, .rar,
+                .7z)
+              </span>
             </li>
             <li className="flex items-start space-x-2">
               <div className="w-1.5 h-1.5 bg-medical-blue rounded-full mt-2 flex-shrink-0"></div>
@@ -285,7 +318,9 @@ const UploadStudy = () => {
             </li>
             <li className="flex items-start space-x-2">
               <div className="w-1.5 h-1.5 bg-medical-blue rounded-full mt-2 flex-shrink-0"></div>
-              <span>Processing time varies based on study size and complexity</span>
+              <span>
+                Processing time varies based on study size and complexity
+              </span>
             </li>
           </ul>
         </div>

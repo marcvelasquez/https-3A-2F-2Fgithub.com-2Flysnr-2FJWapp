@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;500;600;700&family=Lato:wght@400;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -126,7 +126,7 @@
     --teal-accent: 173 80% 40%;
 
     /* Auth page specific colors */
-    --auth-bg: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    --auth-bg: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
     --auth-card: rgba(255, 255, 255, 0.95);
   }
 
@@ -186,7 +186,11 @@
 
   /* Medical app specific utility classes */
   .medical-sidebar {
-    background: linear-gradient(180deg, hsl(var(--medical-blue)) 0%, hsl(var(--medical-blue-dark)) 100%);
+    background: linear-gradient(
+      180deg,
+      hsl(var(--medical-blue)) 0%,
+      hsl(var(--medical-blue-dark)) 100%
+    );
   }
 
   .medical-card {
@@ -194,7 +198,11 @@
   }
 
   .medical-gradient {
-    background: linear-gradient(135deg, hsl(var(--medical-blue)) 0%, hsl(var(--medical-blue-dark)) 100%);
+    background: linear-gradient(
+      135deg,
+      hsl(var(--medical-blue)) 0%,
+      hsl(var(--medical-blue-dark)) 100%
+    );
   }
 
   /* Custom scrollbar for medical app */

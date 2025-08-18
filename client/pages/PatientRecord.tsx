@@ -1,22 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import { Search, X, FileText, Plus, FolderOpen, Trash2, Minus, Edit, Download } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import DeleteDialog from '../components/DeleteDialog';
+import React, { useState, useEffect } from "react";
+import {
+  Search,
+  X,
+  FileText,
+  Plus,
+  FolderOpen,
+  Trash2,
+  Minus,
+  Edit,
+  Download,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import DeleteDialog from "../components/DeleteDialog";
 
 const PatientRecord = () => {
   const navigate = useNavigate();
-  const [deleteDialog, setDeleteDialog] = useState({ isOpen: false, recordId: '', patientName: '' });
+  const [deleteDialog, setDeleteDialog] = useState({
+    isOpen: false,
+    recordId: "",
+    patientName: "",
+  });
   const [selectedRecords, setSelectedRecords] = useState<string[]>([]);
-  const [bulkDeleteDialog, setBulkDeleteDialog] = useState({ isOpen: false, count: 0 });
-  const [editDialog, setEditDialog] = useState({ isOpen: false, records: [] as any[] });
-  const [editFormData, setEditFormData] = useState({ name: '', bodyPart: '', remarks: '', status: 'Pending' });
-  const [deleteConfirmDialog, setDeleteConfirmDialog] = useState({ isOpen: false, message: '', onConfirm: () => {} });
+  const [bulkDeleteDialog, setBulkDeleteDialog] = useState({
+    isOpen: false,
+    count: 0,
+  });
+  const [editDialog, setEditDialog] = useState({
+    isOpen: false,
+    records: [] as any[],
+  });
+  const [editFormData, setEditFormData] = useState({
+    name: "",
+    bodyPart: "",
+    remarks: "",
+    status: "Pending",
+  });
+  const [deleteConfirmDialog, setDeleteConfirmDialog] = useState({
+    isOpen: false,
+    message: "",
+    onConfirm: () => {},
+  });
   const [newPatientDialog, setNewPatientDialog] = useState({ isOpen: false });
-  const [newPatientData, setNewPatientData] = useState({ name: '', bodyPart: '', remarks: '', status: 'Pending' });
-  const [searchTerm, setSearchTerm] = useState('');
-  const [dateSort, setDateSort] = useState<'asc' | 'desc' | 'none'>('none');
-  const [bodyPartFilter, setBodyPartFilter] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
+  const [newPatientData, setNewPatientData] = useState({
+    name: "",
+    bodyPart: "",
+    remarks: "",
+    status: "Pending",
+  });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [dateSort, setDateSort] = useState<"asc" | "desc" | "none">("none");
+  const [bodyPartFilter, setBodyPartFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [filterDialogOpen, setFilterDialogOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
@@ -25,55 +59,245 @@ const PatientRecord = () => {
   const reassignPatientIds = (records: any[]) => {
     return records.map((record, index) => ({
       ...record,
-      id: `${(index + 1).toString().padStart(2, '0')}.)`
+      id: `${(index + 1).toString().padStart(2, "0")}.)`,
     }));
   };
 
   // Function to generate next patient ID (always sequential)
   const getNextPatientId = (records: any[]) => {
     const nextNumber = records.length + 1;
-    return `${nextNumber.toString().padStart(2, '0')}.)`;
+    return `${nextNumber.toString().padStart(2, "0")}.)`;
   };
 
   // Function to generate subject ID based on patient data
   const generateSubjectId = (record: any) => {
-    const initials = record.name.split(' ').map((n: string) => n.charAt(0)).join('');
-    const bodyPart = record.bodyPart === 'Left Knee' ? 'LK' :
-                     record.bodyPart === 'Right Knee' ? 'RK' :
-                     record.bodyPart === 'Bilateral Knees' ? 'BK' : 'UK';
-    const recordNumber = record.id.replace('.)', '');
+    const initials = record.name
+      .split(" ")
+      .map((n: string) => n.charAt(0))
+      .join("");
+    const bodyPart =
+      record.bodyPart === "Left Knee"
+        ? "LK"
+        : record.bodyPart === "Right Knee"
+          ? "RK"
+          : record.bodyPart === "Bilateral Knees"
+            ? "BK"
+            : "UK";
+    const recordNumber = record.id.replace(".)", "");
     return `${initials}${bodyPart}${recordNumber}`;
   };
 
   const [patientRecords, setPatientRecords] = useState(() => {
     // Load records from localStorage or use default data
-    const savedRecords = localStorage.getItem('patientRecords');
-    const records = savedRecords ? JSON.parse(savedRecords) : [
-      { id: '01.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D', remarks: 'Initial scan', status: 'Complete' },
-      { id: '02.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D', remarks: 'Follow-up examination', status: 'In Progress' },
-      { id: '03.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D', remarks: 'Comparative study', status: 'Complete' },
-      { id: '04.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Post-surgery assessment', status: 'Follow Up' },
-      { id: '05.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D', remarks: 'Routine check-up', status: 'Complete' },
-      { id: '06.)', name: 'Jason Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D', remarks: 'Sports injury evaluation', status: 'Pending' },
-      { id: '07.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D', remarks: 'Pain assessment', status: 'In Progress' },
-      { id: '08.)', name: 'Jude Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D', remarks: 'Arthritis monitoring', status: 'Complete' },
-      { id: '09.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Recovery progress', status: 'Follow Up' },
-      { id: '10.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '9:10 AM', file: 'D', remarks: 'Annual screening', status: 'Complete' },
-      { id: '11.)', name: 'James Doe', bodyPart: 'Right Knee', date: 'Today', time: '10:34 AM', file: 'D', remarks: 'Injury diagnosis', status: 'Pending' },
-      { id: '12.)', name: 'Jane Doe', bodyPart: 'Left Knee', date: 'Yesterday', time: '2:17 PM', file: 'D', remarks: 'Treatment planning', status: 'In Progress' },
-      { id: '13.)', name: 'Jude Doe', bodyPart: 'Bilateral Knees', date: 'April 20, 2025', time: '4:45 PM', file: 'D', remarks: 'Joint stability test', status: 'Complete' },
-      { id: '14.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Mobility assessment', status: 'Follow Up' },
-      { id: '15.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D', remarks: 'Preventive care', status: 'Complete' },
-      { id: '16.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Surgical planning', status: 'Pending' },
-      { id: '17.)', name: 'Jake Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D', remarks: 'Consultation', status: 'Complete' },
-      { id: '18.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Second opinion', status: 'In Progress' },
-      { id: '19.)', name: 'Jeff Doe', bodyPart: 'Bilateral Knees', date: 'April 18, 2025', time: '9:10 AM', file: 'D', remarks: 'Baseline study', status: 'Complete' },
-      { id: '20.)', name: 'Jane Doe', bodyPart: 'Right Knee', date: 'April 19, 2025', time: '11:22 AM', file: 'D', remarks: 'Progress monitoring', status: 'Follow Up' },
-    ];
+    const savedRecords = localStorage.getItem("patientRecords");
+    const records = savedRecords
+      ? JSON.parse(savedRecords)
+      : [
+          {
+            id: "01.)",
+            name: "Jane Doe",
+            bodyPart: "Right Knee",
+            date: "Today",
+            time: "10:34 AM",
+            file: "D",
+            remarks: "Initial scan",
+            status: "Complete",
+          },
+          {
+            id: "02.)",
+            name: "Jane Doe",
+            bodyPart: "Left Knee",
+            date: "Yesterday",
+            time: "2:17 PM",
+            file: "D",
+            remarks: "Follow-up examination",
+            status: "In Progress",
+          },
+          {
+            id: "03.)",
+            name: "Jake Doe",
+            bodyPart: "Bilateral Knees",
+            date: "April 20, 2025",
+            time: "4:45 PM",
+            file: "D",
+            remarks: "Comparative study",
+            status: "Complete",
+          },
+          {
+            id: "04.)",
+            name: "Jane Doe",
+            bodyPart: "Right Knee",
+            date: "April 19, 2025",
+            time: "11:22 AM",
+            file: "D",
+            remarks: "Post-surgery assessment",
+            status: "Follow Up",
+          },
+          {
+            id: "05.)",
+            name: "Jeff Doe",
+            bodyPart: "Bilateral Knees",
+            date: "April 18, 2025",
+            time: "9:10 AM",
+            file: "D",
+            remarks: "Routine check-up",
+            status: "Complete",
+          },
+          {
+            id: "06.)",
+            name: "Jason Doe",
+            bodyPart: "Right Knee",
+            date: "Today",
+            time: "10:34 AM",
+            file: "D",
+            remarks: "Sports injury evaluation",
+            status: "Pending",
+          },
+          {
+            id: "07.)",
+            name: "Jane Doe",
+            bodyPart: "Left Knee",
+            date: "Yesterday",
+            time: "2:17 PM",
+            file: "D",
+            remarks: "Pain assessment",
+            status: "In Progress",
+          },
+          {
+            id: "08.)",
+            name: "Jude Doe",
+            bodyPart: "Bilateral Knees",
+            date: "April 20, 2025",
+            time: "4:45 PM",
+            file: "D",
+            remarks: "Arthritis monitoring",
+            status: "Complete",
+          },
+          {
+            id: "09.)",
+            name: "Jane Doe",
+            bodyPart: "Right Knee",
+            date: "April 19, 2025",
+            time: "11:22 AM",
+            file: "D",
+            remarks: "Recovery progress",
+            status: "Follow Up",
+          },
+          {
+            id: "10.)",
+            name: "Jeff Doe",
+            bodyPart: "Bilateral Knees",
+            date: "April 20, 2025",
+            time: "9:10 AM",
+            file: "D",
+            remarks: "Annual screening",
+            status: "Complete",
+          },
+          {
+            id: "11.)",
+            name: "James Doe",
+            bodyPart: "Right Knee",
+            date: "Today",
+            time: "10:34 AM",
+            file: "D",
+            remarks: "Injury diagnosis",
+            status: "Pending",
+          },
+          {
+            id: "12.)",
+            name: "Jane Doe",
+            bodyPart: "Left Knee",
+            date: "Yesterday",
+            time: "2:17 PM",
+            file: "D",
+            remarks: "Treatment planning",
+            status: "In Progress",
+          },
+          {
+            id: "13.)",
+            name: "Jude Doe",
+            bodyPart: "Bilateral Knees",
+            date: "April 20, 2025",
+            time: "4:45 PM",
+            file: "D",
+            remarks: "Joint stability test",
+            status: "Complete",
+          },
+          {
+            id: "14.)",
+            name: "Jane Doe",
+            bodyPart: "Right Knee",
+            date: "April 19, 2025",
+            time: "11:22 AM",
+            file: "D",
+            remarks: "Mobility assessment",
+            status: "Follow Up",
+          },
+          {
+            id: "15.)",
+            name: "Jeff Doe",
+            bodyPart: "Bilateral Knees",
+            date: "April 18, 2025",
+            time: "9:10 AM",
+            file: "D",
+            remarks: "Preventive care",
+            status: "Complete",
+          },
+          {
+            id: "16.)",
+            name: "Jane Doe",
+            bodyPart: "Right Knee",
+            date: "April 19, 2025",
+            time: "11:22 AM",
+            file: "D",
+            remarks: "Surgical planning",
+            status: "Pending",
+          },
+          {
+            id: "17.)",
+            name: "Jake Doe",
+            bodyPart: "Bilateral Knees",
+            date: "April 18, 2025",
+            time: "9:10 AM",
+            file: "D",
+            remarks: "Consultation",
+            status: "Complete",
+          },
+          {
+            id: "18.)",
+            name: "Jane Doe",
+            bodyPart: "Right Knee",
+            date: "April 19, 2025",
+            time: "11:22 AM",
+            file: "D",
+            remarks: "Second opinion",
+            status: "In Progress",
+          },
+          {
+            id: "19.)",
+            name: "Jeff Doe",
+            bodyPart: "Bilateral Knees",
+            date: "April 18, 2025",
+            time: "9:10 AM",
+            file: "D",
+            remarks: "Baseline study",
+            status: "Complete",
+          },
+          {
+            id: "20.)",
+            name: "Jane Doe",
+            bodyPart: "Right Knee",
+            date: "April 19, 2025",
+            time: "11:22 AM",
+            file: "D",
+            remarks: "Progress monitoring",
+            status: "Follow Up",
+          },
+        ];
 
     // Initialize metadata for default records if not already present
     if (!savedRecords) {
-      records.forEach(record => {
+      records.forEach((record) => {
         const metadataKey = `metadata_${record.id}`;
         if (!localStorage.getItem(metadataKey)) {
           const metadata = {
@@ -81,23 +305,23 @@ const PatientRecord = () => {
               studyId: record.id,
               patientName: record.name,
               studyDate: record.date,
-              modality: 'MRI',
-              bodyPart: record.bodyPart
+              modality: "MRI",
+              bodyPart: record.bodyPart,
             },
             technicalParams: {
-              sliceThickness: '3.0 mm',
-              tr: '2500 ms',
-              te: '85 ms',
-              fieldStrength: '1.5 Tesla',
-              matrix: '512 x 512'
+              sliceThickness: "3.0 mm",
+              tr: "2500 ms",
+              te: "85 ms",
+              fieldStrength: "1.5 Tesla",
+              matrix: "512 x 512",
             },
             equipment: {
-              manufacturer: 'Siemens',
-              model: 'MAGNETOM Aera',
-              software: 'syngo MR E11'
+              manufacturer: "Siemens",
+              model: "MAGNETOM Aera",
+              software: "syngo MR E11",
             },
-            remarks: record.remarks || '',
-            created: new Date().toISOString()
+            remarks: record.remarks || "",
+            created: new Date().toISOString(),
           };
           localStorage.setItem(metadataKey, JSON.stringify(metadata));
         }
@@ -110,23 +334,27 @@ const PatientRecord = () => {
 
   // Check for new uploads and append them
   useEffect(() => {
-    const newUpload = sessionStorage.getItem('newPatientRecord');
+    const newUpload = sessionStorage.getItem("newPatientRecord");
     if (newUpload) {
       const uploadData = JSON.parse(newUpload);
       const newRecord = {
         id: getNextPatientId(patientRecords),
         name: uploadData.patientName,
-        bodyPart: uploadData.bodyPart || uploadData.studyDescription || 'Study',
-        date: 'Today',
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        file: 'D',
-        remarks: uploadData.studyDescription || uploadData.remarks || 'Uploaded study',
-        status: uploadData.status || 'Pending'
+        bodyPart: uploadData.bodyPart || uploadData.studyDescription || "Study",
+        date: "Today",
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        file: "D",
+        remarks:
+          uploadData.studyDescription || uploadData.remarks || "Uploaded study",
+        status: uploadData.status || "Pending",
       };
 
       const updatedRecords = reassignPatientIds([newRecord, ...patientRecords]);
       setPatientRecords(updatedRecords);
-      localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+      localStorage.setItem("patientRecords", JSON.stringify(updatedRecords));
 
       // Initialize metadata for uploaded patient
       const metadataKey = `metadata_${newRecord.id}`;
@@ -135,31 +363,31 @@ const PatientRecord = () => {
           studyId: newRecord.id,
           patientName: newRecord.name,
           studyDate: newRecord.date,
-          modality: 'MRI',
-          bodyPart: newRecord.bodyPart
+          modality: "MRI",
+          bodyPart: newRecord.bodyPart,
         },
         technicalParams: {
-          sliceThickness: '3.0 mm',
-          tr: '2500 ms',
-          te: '85 ms',
-          fieldStrength: '1.5 Tesla',
-          matrix: '512 x 512'
+          sliceThickness: "3.0 mm",
+          tr: "2500 ms",
+          te: "85 ms",
+          fieldStrength: "1.5 Tesla",
+          matrix: "512 x 512",
         },
         equipment: {
-          manufacturer: 'Siemens',
-          model: 'MAGNETOM Aera',
-          software: 'syngo MR E11'
+          manufacturer: "Siemens",
+          model: "MAGNETOM Aera",
+          software: "syngo MR E11",
         },
-        remarks: newRecord.remarks || '',
-        created: new Date().toISOString()
+        remarks: newRecord.remarks || "",
+        created: new Date().toISOString(),
       };
       localStorage.setItem(metadataKey, JSON.stringify(metadata));
 
       // Dispatch event to sync with Dashboard
       setTimeout(() => {
-        window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+        window.dispatchEvent(new CustomEvent("patientRecordsUpdated"));
       }, 50);
-      sessionStorage.removeItem('newPatientRecord');
+      sessionStorage.removeItem("newPatientRecord");
     }
   }, []);
 
@@ -176,121 +404,140 @@ const PatientRecord = () => {
     const metadataKey = `metadata_${deleteDialog.recordId}`;
     localStorage.removeItem(metadataKey);
 
-    const filteredRecords = patientRecords.filter(record => record.id !== deleteDialog.recordId);
+    const filteredRecords = patientRecords.filter(
+      (record) => record.id !== deleteDialog.recordId,
+    );
     const updatedRecords = reassignPatientIds(filteredRecords);
     setPatientRecords(updatedRecords);
-    localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    localStorage.setItem("patientRecords", JSON.stringify(updatedRecords));
     // Dispatch event to sync with Dashboard
     setTimeout(() => {
-      window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+      window.dispatchEvent(new CustomEvent("patientRecordsUpdated"));
     }, 50);
-    setDeleteDialog({ isOpen: false, recordId: '', patientName: '' });
+    setDeleteDialog({ isOpen: false, recordId: "", patientName: "" });
   };
 
   const handleDeleteCancel = () => {
-    setDeleteDialog({ isOpen: false, recordId: '', patientName: '' });
+    setDeleteDialog({ isOpen: false, recordId: "", patientName: "" });
   };
 
   const handleSelectRecord = (recordId: string) => {
-    setSelectedRecords(prev =>
+    setSelectedRecords((prev) =>
       prev.includes(recordId)
-        ? prev.filter(id => id !== recordId)
-        : [...prev, recordId]
+        ? prev.filter((id) => id !== recordId)
+        : [...prev, recordId],
     );
   };
 
   const handleSelectAll = () => {
-    const currentPageRecordIds = currentPageRecords.map(record => record.id);
-    const allCurrentPageSelected = currentPageRecordIds.every(id => selectedRecords.includes(id));
+    const currentPageRecordIds = currentPageRecords.map((record) => record.id);
+    const allCurrentPageSelected = currentPageRecordIds.every((id) =>
+      selectedRecords.includes(id),
+    );
 
     if (allCurrentPageSelected) {
       // Deselect all records on current page
-      setSelectedRecords(prev => prev.filter(id => !currentPageRecordIds.includes(id)));
+      setSelectedRecords((prev) =>
+        prev.filter((id) => !currentPageRecordIds.includes(id)),
+      );
     } else {
       // Select all records on current page
-      setSelectedRecords(prev => [...new Set([...prev, ...currentPageRecordIds])]);
+      setSelectedRecords((prev) => [
+        ...new Set([...prev, ...currentPageRecordIds]),
+      ]);
     }
   };
 
   const handleBulkDelete = () => {
     if (selectedRecords.length === 0) {
-      alert('Please select records to delete');
+      alert("Please select records to delete");
       return;
     }
 
     setDeleteConfirmDialog({
       isOpen: true,
-      message: `Are you sure you want to delete ${selectedRecords.length} selected record${selectedRecords.length > 1 ? 's' : ''}? This action cannot be undone.`,
+      message: `Are you sure you want to delete ${selectedRecords.length} selected record${selectedRecords.length > 1 ? "s" : ""}? This action cannot be undone.`,
       onConfirm: () => {
         // Remove metadata for all deleted records
-        selectedRecords.forEach(recordId => {
+        selectedRecords.forEach((recordId) => {
           const metadataKey = `metadata_${recordId}`;
           localStorage.removeItem(metadataKey);
         });
 
-        const filteredRecords = patientRecords.filter(record => !selectedRecords.includes(record.id));
+        const filteredRecords = patientRecords.filter(
+          (record) => !selectedRecords.includes(record.id),
+        );
         const updatedRecords = reassignPatientIds(filteredRecords);
         setPatientRecords(updatedRecords);
-        localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
-        window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+        localStorage.setItem("patientRecords", JSON.stringify(updatedRecords));
+        window.dispatchEvent(new CustomEvent("patientRecordsUpdated"));
         setSelectedRecords([]);
-        setDeleteConfirmDialog({ isOpen: false, message: '', onConfirm: () => {} });
-      }
+        setDeleteConfirmDialog({
+          isOpen: false,
+          message: "",
+          onConfirm: () => {},
+        });
+      },
     });
   };
 
   const handleDeleteConfirmCancel = () => {
-    setDeleteConfirmDialog({ isOpen: false, message: '', onConfirm: () => {} });
+    setDeleteConfirmDialog({ isOpen: false, message: "", onConfirm: () => {} });
   };
 
   const handleBulkEdit = () => {
     if (selectedRecords.length === 0) {
-      alert('Please select records to edit');
+      alert("Please select records to edit");
       return;
     }
 
-    const recordsToEdit = patientRecords.filter(record => selectedRecords.includes(record.id));
+    const recordsToEdit = patientRecords.filter((record) =>
+      selectedRecords.includes(record.id),
+    );
     // If editing multiple records, use the first record's data as default
     const firstRecord = recordsToEdit[0];
     setEditFormData({
       name: firstRecord.name,
       bodyPart: firstRecord.bodyPart,
-      remarks: firstRecord.remarks || '',
-      status: firstRecord.status || 'Pending'
+      remarks: firstRecord.remarks || "",
+      status: firstRecord.status || "Pending",
     });
     setEditDialog({ isOpen: true, records: recordsToEdit });
   };
 
   const handleDownloadSelected = () => {
     if (selectedRecords.length === 0) {
-      alert('Please select records to download');
+      alert("Please select records to download");
       return;
     }
 
-    const recordsToDownload = patientRecords.filter(record => selectedRecords.includes(record.id));
+    const recordsToDownload = patientRecords.filter((record) =>
+      selectedRecords.includes(record.id),
+    );
 
     // Create downloadable data
-    const downloadData = recordsToDownload.map(record => ({
+    const downloadData = recordsToDownload.map((record) => ({
       id: record.id,
       subjectId: generateSubjectId(record),
       patientName: record.name,
       bodyPart: record.bodyPart,
       date: record.date,
       time: record.time,
-      status: record.status || 'Pending',
-      remarks: record.remarks || '',
-      downloadedAt: new Date().toISOString()
+      status: record.status || "Pending",
+      remarks: record.remarks || "",
+      downloadedAt: new Date().toISOString(),
     }));
 
     // Convert to JSON and create download link
     const dataStr = JSON.stringify(downloadData, null, 2);
-    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    const dataUri =
+      "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
 
-    const exportFileDefaultName = `patient_records_${new Date().toISOString().split('T')[0]}.json`;
+    const exportFileDefaultName = `patient_records_${new Date().toISOString().split("T")[0]}.json`;
 
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportFileDefaultName);
+    const linkElement = document.createElement("a");
+    linkElement.setAttribute("href", dataUri);
+    linkElement.setAttribute("download", exportFileDefaultName);
     linkElement.click();
 
     // Clear selections after download
@@ -298,7 +545,7 @@ const PatientRecord = () => {
   };
 
   const handleEditSave = () => {
-    const updatedRecords = patientRecords.map(record => {
+    const updatedRecords = patientRecords.map((record) => {
       if (selectedRecords.includes(record.id)) {
         return {
           ...record,
@@ -307,50 +554,54 @@ const PatientRecord = () => {
           remarks: editFormData.remarks,
           status: editFormData.status,
           date: record.date, // Keep original date
-          time: record.time   // Keep original time
+          time: record.time, // Keep original time
         };
       }
       return record;
     });
 
     setPatientRecords(updatedRecords);
-    localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    localStorage.setItem("patientRecords", JSON.stringify(updatedRecords));
 
     // Update metadata for each edited record
-    const editedRecords = updatedRecords.filter(record => selectedRecords.includes(record.id));
-    editedRecords.forEach(record => {
+    const editedRecords = updatedRecords.filter((record) =>
+      selectedRecords.includes(record.id),
+    );
+    editedRecords.forEach((record) => {
       // Create or update metadata for this patient
       const metadataKey = `metadata_${record.id}`;
       const existingMetadata = localStorage.getItem(metadataKey);
 
-      const metadata = existingMetadata ? JSON.parse(existingMetadata) : {
-        // Default metadata structure
-        studyInfo: {
-          studyId: record.id,
-          patientName: record.name,
-          studyDate: record.date,
-          modality: 'MRI',
-          bodyPart: record.bodyPart
-        },
-        technicalParams: {
-          sliceThickness: '3.0 mm',
-          tr: '2500 ms',
-          te: '85 ms',
-          fieldStrength: '1.5 Tesla',
-          matrix: '512 x 512'
-        },
-        equipment: {
-          manufacturer: 'Siemens',
-          model: 'MAGNETOM Aera',
-          software: 'syngo MR E11'
-        },
-        remarks: record.remarks || ''
-      };
+      const metadata = existingMetadata
+        ? JSON.parse(existingMetadata)
+        : {
+            // Default metadata structure
+            studyInfo: {
+              studyId: record.id,
+              patientName: record.name,
+              studyDate: record.date,
+              modality: "MRI",
+              bodyPart: record.bodyPart,
+            },
+            technicalParams: {
+              sliceThickness: "3.0 mm",
+              tr: "2500 ms",
+              te: "85 ms",
+              fieldStrength: "1.5 Tesla",
+              matrix: "512 x 512",
+            },
+            equipment: {
+              manufacturer: "Siemens",
+              model: "MAGNETOM Aera",
+              software: "syngo MR E11",
+            },
+            remarks: record.remarks || "",
+          };
 
       // Update metadata with new values
       metadata.studyInfo.patientName = record.name;
       metadata.studyInfo.bodyPart = record.bodyPart;
-      metadata.remarks = record.remarks || '';
+      metadata.remarks = record.remarks || "";
       metadata.lastModified = new Date().toISOString();
 
       // Save updated metadata
@@ -359,10 +610,12 @@ const PatientRecord = () => {
 
     // Dispatch events to sync with Dashboard and other components
     setTimeout(() => {
-      window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
-      window.dispatchEvent(new CustomEvent('metadataUpdated', {
-        detail: { updatedRecords: editedRecords }
-      }));
+      window.dispatchEvent(new CustomEvent("patientRecordsUpdated"));
+      window.dispatchEvent(
+        new CustomEvent("metadataUpdated", {
+          detail: { updatedRecords: editedRecords },
+        }),
+      );
     }, 50);
 
     setEditDialog({ isOpen: false, records: [] });
@@ -371,17 +624,22 @@ const PatientRecord = () => {
 
   const handleEditCancel = () => {
     setEditDialog({ isOpen: false, records: [] });
-    setEditFormData({ name: '', bodyPart: '', remarks: '', status: 'Pending' });
+    setEditFormData({ name: "", bodyPart: "", remarks: "", status: "Pending" });
   };
 
   const handleAddPatient = () => {
-    setNewPatientData({ name: '', bodyPart: '', remarks: '', status: 'Pending' });
+    setNewPatientData({
+      name: "",
+      bodyPart: "",
+      remarks: "",
+      status: "Pending",
+    });
     setNewPatientDialog({ isOpen: true });
   };
 
   const handleNewPatientSave = () => {
     if (!newPatientData.name || !newPatientData.bodyPart) {
-      alert('Please enter patient name and select body part');
+      alert("Please enter patient name and select body part");
       return;
     }
 
@@ -389,17 +647,20 @@ const PatientRecord = () => {
       id: getNextPatientId(patientRecords),
       name: newPatientData.name,
       bodyPart: newPatientData.bodyPart,
-      date: 'Today',
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      file: 'D',
-      remarks: newPatientData.remarks || 'Newly added patient',
+      date: "Today",
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+      file: "D",
+      remarks: newPatientData.remarks || "Newly added patient",
       status: newPatientData.status,
       isNewlyAdded: true,
-      addedTimestamp: Date.now()
+      addedTimestamp: Date.now(),
     };
     const updatedRecords = reassignPatientIds([newPatient, ...patientRecords]);
     setPatientRecords(updatedRecords);
-    localStorage.setItem('patientRecords', JSON.stringify(updatedRecords));
+    localStorage.setItem("patientRecords", JSON.stringify(updatedRecords));
 
     // Initialize metadata for new patient
     const metadataKey = `metadata_${newPatient.id}`;
@@ -408,48 +669,53 @@ const PatientRecord = () => {
         studyId: newPatient.id,
         patientName: newPatient.name,
         studyDate: newPatient.date,
-        modality: 'MRI',
-        bodyPart: newPatient.bodyPart
+        modality: "MRI",
+        bodyPart: newPatient.bodyPart,
       },
       technicalParams: {
-        sliceThickness: '3.0 mm',
-        tr: '2500 ms',
-        te: '85 ms',
-        fieldStrength: '1.5 Tesla',
-        matrix: '512 x 512'
+        sliceThickness: "3.0 mm",
+        tr: "2500 ms",
+        te: "85 ms",
+        fieldStrength: "1.5 Tesla",
+        matrix: "512 x 512",
       },
       equipment: {
-        manufacturer: 'Siemens',
-        model: 'MAGNETOM Aera',
-        software: 'syngo MR E11'
+        manufacturer: "Siemens",
+        model: "MAGNETOM Aera",
+        software: "syngo MR E11",
       },
-      remarks: newPatient.remarks || '',
-      created: new Date().toISOString()
+      remarks: newPatient.remarks || "",
+      created: new Date().toISOString(),
     };
     localStorage.setItem(metadataKey, JSON.stringify(metadata));
 
     // Dispatch event to sync with Dashboard
     setTimeout(() => {
-      window.dispatchEvent(new CustomEvent('patientRecordsUpdated'));
+      window.dispatchEvent(new CustomEvent("patientRecordsUpdated"));
     }, 50);
     setNewPatientDialog({ isOpen: false });
   };
 
   const handleNewPatientCancel = () => {
     setNewPatientDialog({ isOpen: false });
-    setNewPatientData({ name: '', bodyPart: '', remarks: '', status: 'Pending' });
+    setNewPatientData({
+      name: "",
+      bodyPart: "",
+      remarks: "",
+      status: "Pending",
+    });
   };
 
   // Search and filter functions
   const handleClearSearch = () => {
-    setSearchTerm('');
+    setSearchTerm("");
     setCurrentPage(1);
   };
 
   // Convert date string to Date object for sorting
   const parseDate = (dateStr: string) => {
-    if (dateStr === 'Today') return new Date();
-    if (dateStr === 'Yesterday') {
+    if (dateStr === "Today") return new Date();
+    if (dateStr === "Yesterday") {
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
       return yesterday;
@@ -463,30 +729,35 @@ const PatientRecord = () => {
 
     // Apply search filter
     if (searchTerm) {
-      filtered = filtered.filter(record =>
-        record.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        record.bodyPart.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        record.remarks?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        record.id.includes(searchTerm)
+      filtered = filtered.filter(
+        (record) =>
+          record.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          record.bodyPart.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          record.remarks?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          record.id.includes(searchTerm),
       );
     }
 
     // Apply body part filter
     if (bodyPartFilter) {
-      filtered = filtered.filter(record => record.bodyPart === bodyPartFilter);
+      filtered = filtered.filter(
+        (record) => record.bodyPart === bodyPartFilter,
+      );
     }
 
     // Apply status filter
     if (statusFilter) {
-      filtered = filtered.filter(record => record.status === statusFilter);
+      filtered = filtered.filter((record) => record.status === statusFilter);
     }
 
     // Apply date sorting
-    if (dateSort !== 'none') {
+    if (dateSort !== "none") {
       filtered = [...filtered].sort((a, b) => {
         const dateA = parseDate(a.date);
         const dateB = parseDate(b.date);
-        return dateSort === 'asc' ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+        return dateSort === "asc"
+          ? dateA.getTime() - dateB.getTime()
+          : dateB.getTime() - dateA.getTime();
       });
     }
 
@@ -525,7 +796,7 @@ const PatientRecord = () => {
     setCurrentPage(1);
   };
 
-  const handleDateSort = (sortType: 'asc' | 'desc' | 'none') => {
+  const handleDateSort = (sortType: "asc" | "desc" | "none") => {
     setDateSort(sortType);
     setCurrentPage(1);
   };
@@ -540,12 +811,13 @@ const PatientRecord = () => {
     setCurrentPage(1);
   };
 
-
   return (
     <div className="p-6 bg-background min-h-full">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold text-foreground">Patient Record</h1>
+        <h1 className="text-2xl font-semibold text-foreground">
+          Patient Record
+        </h1>
       </div>
 
       {/* Search Bar with New Button */}
@@ -617,26 +889,52 @@ const PatientRecord = () => {
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground w-12">
                   <input
                     type="checkbox"
-                    checked={currentPageRecords.length > 0 && currentPageRecords.every(record => selectedRecords.includes(record.id))}
+                    checked={
+                      currentPageRecords.length > 0 &&
+                      currentPageRecords.every((record) =>
+                        selectedRecords.includes(record.id),
+                      )
+                    }
                     onChange={handleSelectAll}
                     className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
                   />
                 </th>
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">No.</th>
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Subject ID</th>
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Patient Name</th>
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Body Part</th>
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Date</th>
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Time</th>
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Status</th>
-                <th className="text-left py-3 px-4 font-medium text-muted-foreground">File</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">
+                  No.
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">
+                  Subject ID
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">
+                  Patient Name
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">
+                  Body Part
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">
+                  Date
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">
+                  Time
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">
+                  Status
+                </th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">
+                  File
+                </th>
               </tr>
             </thead>
             <tbody>
               {currentPageRecords.map((record, index) => (
-                <tr key={record.id} className={`border-b border-border hover:bg-muted/50 transition-colors ${
-                  selectedRecords.includes(record.id) ? 'bg-medical-blue/10' : ''
-                }`}>
+                <tr
+                  key={record.id}
+                  className={`border-b border-border hover:bg-muted/50 transition-colors ${
+                    selectedRecords.includes(record.id)
+                      ? "bg-medical-blue/10"
+                      : ""
+                  }`}
+                >
                   <td className="py-3 px-4">
                     <input
                       type="checkbox"
@@ -645,21 +943,33 @@ const PatientRecord = () => {
                       className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
                     />
                   </td>
-                  <td className="py-3 px-4 text-foreground">{(startIndex + index + 1).toString().padStart(2, '0')}.)</td>
-                  <td className="py-3 px-4 text-foreground font-mono text-sm bg-gray-50 dark:bg-gray-800 rounded px-2 py-1">{generateSubjectId(record)}</td>
+                  <td className="py-3 px-4 text-foreground">
+                    {(startIndex + index + 1).toString().padStart(2, "0")}.)
+                  </td>
+                  <td className="py-3 px-4 text-foreground font-mono text-sm bg-gray-50 dark:bg-gray-800 rounded px-2 py-1">
+                    {generateSubjectId(record)}
+                  </td>
                   <td className="py-3 px-4 text-foreground">{record.name}</td>
-                  <td className="py-3 px-4 text-foreground">{record.bodyPart}</td>
+                  <td className="py-3 px-4 text-foreground">
+                    {record.bodyPart}
+                  </td>
                   <td className="py-3 px-4 text-foreground">{record.date}</td>
                   <td className="py-3 px-4 text-foreground">{record.time}</td>
                   <td className="py-3 px-4">
-                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                      (record.status || 'Pending') === 'Complete' ? 'bg-green-100 text-green-800' :
-                      (record.status || 'Pending') === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                      (record.status || 'Pending') === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                      (record.status || 'Pending') === 'Follow Up' ? 'bg-purple-100 text-purple-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {record.status || 'Pending'}
+                    <span
+                      className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                        (record.status || "Pending") === "Complete"
+                          ? "bg-green-100 text-green-800"
+                          : (record.status || "Pending") === "In Progress"
+                            ? "bg-blue-100 text-blue-800"
+                            : (record.status || "Pending") === "Pending"
+                              ? "bg-yellow-100 text-yellow-800"
+                              : (record.status || "Pending") === "Follow Up"
+                                ? "bg-purple-100 text-purple-800"
+                                : "bg-yellow-100 text-yellow-800"
+                      }`}
+                    >
+                      {record.status || "Pending"}
                     </span>
                   </td>
                   <td className="py-3 px-4">
@@ -680,17 +990,16 @@ const PatientRecord = () => {
           {filteredRecords.length === 0 && patientRecords.length > 0 && (
             <div className="text-center py-8">
               <p className="text-muted-foreground">
-                {searchTerm || bodyPartFilter ?
-                  'No records match your current filters.' :
-                  'No records found.'
-                }
+                {searchTerm || bodyPartFilter
+                  ? "No records match your current filters."
+                  : "No records found."}
               </p>
               {(searchTerm || bodyPartFilter) && (
                 <button
                   onClick={() => {
-                    setSearchTerm('');
-                    setBodyPartFilter('');
-                    setDateSort('none');
+                    setSearchTerm("");
+                    setBodyPartFilter("");
+                    setDateSort("none");
                     setCurrentPage(1);
                   }}
                   className="mt-2 text-medical-blue hover:underline text-sm"
@@ -701,14 +1010,16 @@ const PatientRecord = () => {
             </div>
           )}
         </div>
-        
+
         {/* Table Footer/Pagination could go here if needed */}
         {/* Pagination Controls */}
         {filteredRecords.length > 0 && (
           <div className="mt-4 flex items-center justify-between">
             <div className="text-sm text-muted-foreground">
-              Showing {startIndex + 1}-{Math.min(endIndex, filteredRecords.length)} of {filteredRecords.length} records
-              (Page {currentPage} of {totalPages})
+              Showing {startIndex + 1}-
+              {Math.min(endIndex, filteredRecords.length)} of{" "}
+              {filteredRecords.length} records (Page {currentPage} of{" "}
+              {totalPages})
             </div>
 
             {totalPages > 1 && (
@@ -740,8 +1051,8 @@ const PatientRecord = () => {
                       onClick={() => handlePageChange(pageNum)}
                       className={`px-3 py-1 rounded text-sm transition-colors ${
                         currentPage === pageNum
-                          ? 'bg-medical-blue text-white hover:bg-medical-blue-dark'
-                          : 'border border-border text-muted-foreground hover:bg-muted'
+                          ? "bg-medical-blue text-white hover:bg-medical-blue-dark"
+                          : "border border-border text-muted-foreground hover:bg-muted"
                       }`}
                     >
                       {pageNum}
@@ -776,7 +1087,10 @@ const PatientRecord = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-card p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
             <h3 className="text-lg font-semibold text-foreground mb-4">
-              Edit {editDialog.records.length > 1 ? `${editDialog.records.length} Records` : 'Record'}
+              Edit{" "}
+              {editDialog.records.length > 1
+                ? `${editDialog.records.length} Records`
+                : "Record"}
             </h3>
 
             <div className="space-y-4">
@@ -787,7 +1101,9 @@ const PatientRecord = () => {
                 <input
                   type="text"
                   value={editFormData.name}
-                  onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })}
+                  onChange={(e) =>
+                    setEditFormData({ ...editFormData, name: e.target.value })
+                  }
                   className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
                   placeholder="Enter patient name"
                 />
@@ -799,7 +1115,12 @@ const PatientRecord = () => {
                 </label>
                 <select
                   value={editFormData.bodyPart}
-                  onChange={(e) => setEditFormData({ ...editFormData, bodyPart: e.target.value })}
+                  onChange={(e) =>
+                    setEditFormData({
+                      ...editFormData,
+                      bodyPart: e.target.value,
+                    })
+                  }
                   className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
                 >
                   <option value="">Select knee</option>
@@ -815,7 +1136,9 @@ const PatientRecord = () => {
                 </label>
                 <select
                   value={editFormData.status}
-                  onChange={(e) => setEditFormData({ ...editFormData, status: e.target.value })}
+                  onChange={(e) =>
+                    setEditFormData({ ...editFormData, status: e.target.value })
+                  }
                   className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
                 >
                   <option value="Pending">Pending</option>
@@ -831,7 +1154,12 @@ const PatientRecord = () => {
                 </label>
                 <textarea
                   value={editFormData.remarks}
-                  onChange={(e) => setEditFormData({ ...editFormData, remarks: e.target.value })}
+                  onChange={(e) =>
+                    setEditFormData({
+                      ...editFormData,
+                      remarks: e.target.value,
+                    })
+                  }
                   rows={3}
                   className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent resize-none"
                   placeholder="Enter remarks or notes"
@@ -861,7 +1189,9 @@ const PatientRecord = () => {
       {deleteConfirmDialog.isOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-card p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Confirm Delete</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-4">
+              Confirm Delete
+            </h3>
             <p className="text-muted-foreground mb-6">
               {deleteConfirmDialog.message}
             </p>
@@ -899,7 +1229,12 @@ const PatientRecord = () => {
                 <input
                   type="text"
                   value={newPatientData.name}
-                  onChange={(e) => setNewPatientData({ ...newPatientData, name: e.target.value })}
+                  onChange={(e) =>
+                    setNewPatientData({
+                      ...newPatientData,
+                      name: e.target.value,
+                    })
+                  }
                   className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
                   placeholder="Enter patient name"
                 />
@@ -911,7 +1246,12 @@ const PatientRecord = () => {
                 </label>
                 <select
                   value={newPatientData.bodyPart}
-                  onChange={(e) => setNewPatientData({ ...newPatientData, bodyPart: e.target.value })}
+                  onChange={(e) =>
+                    setNewPatientData({
+                      ...newPatientData,
+                      bodyPart: e.target.value,
+                    })
+                  }
                   className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
                 >
                   <option value="">Select knee</option>
@@ -927,7 +1267,12 @@ const PatientRecord = () => {
                 </label>
                 <select
                   value={newPatientData.status}
-                  onChange={(e) => setNewPatientData({ ...newPatientData, status: e.target.value })}
+                  onChange={(e) =>
+                    setNewPatientData({
+                      ...newPatientData,
+                      status: e.target.value,
+                    })
+                  }
                   className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent"
                 >
                   <option value="Pending">Pending</option>
@@ -943,7 +1288,12 @@ const PatientRecord = () => {
                 </label>
                 <textarea
                   value={newPatientData.remarks}
-                  onChange={(e) => setNewPatientData({ ...newPatientData, remarks: e.target.value })}
+                  onChange={(e) =>
+                    setNewPatientData({
+                      ...newPatientData,
+                      remarks: e.target.value,
+                    })
+                  }
                   rows={3}
                   className="w-full px-3 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-medical-blue focus:border-transparent resize-none"
                   placeholder="Enter remarks or notes (optional)"
@@ -974,7 +1324,9 @@ const PatientRecord = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-card p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-foreground">Filter Options</h3>
+              <h3 className="text-lg font-semibold text-foreground">
+                Filter Options
+              </h3>
               <button
                 onClick={() => setFilterDialogOpen(false)}
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -986,14 +1338,16 @@ const PatientRecord = () => {
             <div className="space-y-6">
               {/* Date Sort Section */}
               <div>
-                <h4 className="text-sm font-medium text-foreground mb-3">Date Sorting</h4>
+                <h4 className="text-sm font-medium text-foreground mb-3">
+                  Date Sorting
+                </h4>
                 <div className="space-y-2">
                   <label className="flex items-center space-x-2">
                     <input
                       type="radio"
                       name="dateSort"
-                      checked={dateSort === 'none'}
-                      onChange={() => handleDateSort('none')}
+                      checked={dateSort === "none"}
+                      onChange={() => handleDateSort("none")}
                       className="text-medical-blue focus:ring-medical-blue"
                     />
                     <span className="text-sm text-foreground">No Sort</span>
@@ -1002,35 +1356,41 @@ const PatientRecord = () => {
                     <input
                       type="radio"
                       name="dateSort"
-                      checked={dateSort === 'desc'}
-                      onChange={() => handleDateSort('desc')}
+                      checked={dateSort === "desc"}
+                      onChange={() => handleDateSort("desc")}
                       className="text-medical-blue focus:ring-medical-blue"
                     />
-                    <span className="text-sm text-foreground">Newest First</span>
+                    <span className="text-sm text-foreground">
+                      Newest First
+                    </span>
                   </label>
                   <label className="flex items-center space-x-2">
                     <input
                       type="radio"
                       name="dateSort"
-                      checked={dateSort === 'asc'}
-                      onChange={() => handleDateSort('asc')}
+                      checked={dateSort === "asc"}
+                      onChange={() => handleDateSort("asc")}
                       className="text-medical-blue focus:ring-medical-blue"
                     />
-                    <span className="text-sm text-foreground">Oldest First</span>
+                    <span className="text-sm text-foreground">
+                      Oldest First
+                    </span>
                   </label>
                 </div>
               </div>
 
               {/* Body Part Filter Section */}
               <div>
-                <h4 className="text-sm font-medium text-foreground mb-3">Body Part</h4>
+                <h4 className="text-sm font-medium text-foreground mb-3">
+                  Body Part
+                </h4>
                 <div className="space-y-2">
                   <label className="flex items-center space-x-2">
                     <input
                       type="radio"
                       name="bodyPart"
-                      checked={bodyPartFilter === ''}
-                      onChange={() => handleBodyPartFilter('')}
+                      checked={bodyPartFilter === ""}
+                      onChange={() => handleBodyPartFilter("")}
                       className="text-medical-blue focus:ring-medical-blue"
                     />
                     <span className="text-sm text-foreground">All</span>
@@ -1039,8 +1399,8 @@ const PatientRecord = () => {
                     <input
                       type="radio"
                       name="bodyPart"
-                      checked={bodyPartFilter === 'Left Knee'}
-                      onChange={() => handleBodyPartFilter('Left Knee')}
+                      checked={bodyPartFilter === "Left Knee"}
+                      onChange={() => handleBodyPartFilter("Left Knee")}
                       className="text-medical-blue focus:ring-medical-blue"
                     />
                     <span className="text-sm text-foreground">Left Knee</span>
@@ -1049,8 +1409,8 @@ const PatientRecord = () => {
                     <input
                       type="radio"
                       name="bodyPart"
-                      checked={bodyPartFilter === 'Right Knee'}
-                      onChange={() => handleBodyPartFilter('Right Knee')}
+                      checked={bodyPartFilter === "Right Knee"}
+                      onChange={() => handleBodyPartFilter("Right Knee")}
                       className="text-medical-blue focus:ring-medical-blue"
                     />
                     <span className="text-sm text-foreground">Right Knee</span>
@@ -1059,11 +1419,13 @@ const PatientRecord = () => {
                     <input
                       type="radio"
                       name="bodyPart"
-                      checked={bodyPartFilter === 'Bilateral Knees'}
-                      onChange={() => handleBodyPartFilter('Bilateral Knees')}
+                      checked={bodyPartFilter === "Bilateral Knees"}
+                      onChange={() => handleBodyPartFilter("Bilateral Knees")}
                       className="text-medical-blue focus:ring-medical-blue"
                     />
-                    <span className="text-sm text-foreground">Bilateral Knees</span>
+                    <span className="text-sm text-foreground">
+                      Bilateral Knees
+                    </span>
                   </label>
                 </div>
               </div>
@@ -1072,9 +1434,9 @@ const PatientRecord = () => {
             <div className="flex space-x-3 justify-end mt-6">
               <button
                 onClick={() => {
-                  setSearchTerm('');
-                  setBodyPartFilter('');
-                  setDateSort('none');
+                  setSearchTerm("");
+                  setBodyPartFilter("");
+                  setDateSort("none");
                   setCurrentPage(1);
                 }}
                 className="px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted transition-colors"
@@ -1091,7 +1453,6 @@ const PatientRecord = () => {
           </div>
         </div>
       )}
-
     </div>
   );
 };
