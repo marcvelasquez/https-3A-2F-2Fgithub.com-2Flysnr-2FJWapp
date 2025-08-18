@@ -464,7 +464,11 @@ const Report = () => {
                 {/* Virtual scrollable area for slice navigation */}
                 <div
                   ref={setScrollContainer}
-                  className="absolute inset-0 overflow-y-auto mri-scrollbar"
+                  className="absolute inset-0 overflow-y-scroll"
+                  style={{
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: '#3b82f6 #e5e7eb'
+                  }}
                   onScroll={(e) => {
                     const scrollTop = e.currentTarget.scrollTop;
                     const maxScroll =
