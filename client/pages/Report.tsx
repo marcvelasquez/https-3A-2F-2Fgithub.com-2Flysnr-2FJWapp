@@ -412,6 +412,7 @@ const Report = () => {
               <div className="w-[800px] h-[600px] bg-black border-2 border-gray-600 relative overflow-hidden">
                 {/* Virtual scrollable area for slice navigation */}
                 <div
+                  ref={setScrollContainer}
                   className="absolute inset-0 overflow-y-auto mri-scrollbar"
                   onScroll={(e) => {
                     const scrollTop = e.currentTarget.scrollTop;
