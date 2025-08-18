@@ -428,24 +428,7 @@ const Report = () => {
 
         {/* Main Content */}
         <div className={`flex gap-6 h-96 ${showMetadata ? 'pr-80' : ''} transition-all duration-300`}>
-          {/* Left Sidebar - MRI Slices */}
-          <div className="w-32 space-y-2 overflow-y-auto max-h-96">
-            {Array.from({ length: totalSlices }, (_, i) => i + 1).map((slice) => (
-              <button
-                key={slice}
-                onClick={() => handleSliceSelect(slice)}
-                className={`w-full h-16 rounded-lg border-2 flex items-center justify-center text-xs font-medium transition-all ${
-                  currentSlice === slice
-                    ? 'bg-medical-blue text-white border-medical-blue'
-                    : 'bg-card text-muted-foreground border-border hover:border-medical-blue/50'
-                }`}
-              >
-                MRI Slice {slice}
-              </button>
-            ))}
-          </div>
-
-          {/* Main Viewer */}
+          {/* Main Viewer - Full Width */}
           <div className="flex-1 bg-medical-blue rounded-lg relative flex items-center justify-center">
             {/* Navigation Controls */}
             <button
