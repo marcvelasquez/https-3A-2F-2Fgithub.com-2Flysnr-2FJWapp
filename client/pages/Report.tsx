@@ -539,14 +539,14 @@ const Report = () => {
                       </div>
                     </div>
 
-                    {/* Embedded Scrollbar for slice navigation */}
+                    {/* Traditional Scrollbar for slice navigation */}
                     <div
                       ref={setScrollContainer}
-                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg dicom-enhanced-scrollbar"
+                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg"
                       style={{
                         scrollbarWidth: 'auto',
                         scrollbarColor: '#2563eb #e5e7eb',
-                        backgroundColor: 'rgba(0,0,0,0.02)',
+                        backgroundColor: 'transparent',
                         scrollbarGutter: 'stable',
                         overflowY: 'scroll'
                       }}
@@ -596,29 +596,6 @@ const Report = () => {
                   </div>
                 </div>
 
-                {/* Visible Scrollbar - Bottom Right */}
-                <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur rounded-lg p-2 shadow-lg border border-border">
-                  <div className="flex flex-col items-center space-y-2">
-                    <div className="text-xs text-muted-foreground font-medium">Slice Navigation</div>
-                    <div className="relative">
-                      <input
-                        type="range"
-                        min="1"
-                        max={totalSlices}
-                        value={currentSlice}
-                        onChange={(e) => setCurrentSlice(parseInt(e.target.value))}
-                        className="w-24 h-2 bg-muted rounded-lg appearance-none cursor-pointer slider transform rotate-90 origin-center"
-                        style={{
-                          background: `linear-gradient(to right, hsl(var(--medical-blue)) 0%, hsl(var(--medical-blue)) ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, hsl(var(--muted)) ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, hsl(var(--muted)) 100%)`
-                        }}
-                      />
-                      <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-mono text-foreground bg-medical-blue text-white px-1 rounded">
-                        {currentSlice}
-                      </div>
-                    </div>
-                    <div className="text-xs text-muted-foreground">of {totalSlices}</div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
