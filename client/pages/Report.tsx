@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, RotateCw, ZoomIn, ZoomOut, RotateCcw, Info, X, Edit, Save } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RotateCw, ZoomIn, ZoomOut, RotateCcw, Info, X, Edit, Save, Settings } from 'lucide-react';
 
 const Report = () => {
   const { studyId } = useParams();
@@ -22,6 +22,7 @@ const Report = () => {
   const [tempStatus, setTempStatus] = useState('');
   const [showStatusWarning, setShowStatusWarning] = useState(false);
   const [showNavigationWarning, setShowNavigationWarning] = useState(false);
+  const [showImageControls, setShowImageControls] = useState(false);
 
   useEffect(() => {
     // Get uploaded study data from sessionStorage
@@ -384,107 +385,53 @@ const Report = () => {
         </button>
       </div>
 
-      {/* Settings Panel and Filters */}
+      {/* Image Controls Button */}
       <div className="p-6 bg-background">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-foreground">Image Controls</h3>
-          <div className="flex items-center space-x-4">
-            {/* Filter Options */}
-            <div className="flex items-center space-x-3">
-              <span className="text-sm font-medium text-foreground">Filter:</span>
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
-                />
-                <span className="text-sm text-foreground">ACL</span>
-              </label>
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
-                />
-                <span className="text-sm text-foreground">Meniscal</span>
-              </label>
-            </div>
-            {/* Zoom and Rotation Controls */}
-            <div className="flex items-center space-x-2">
-              <button className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors">
-                <ZoomOut className="w-4 h-4" />
-              </button>
-              <button className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors">
-                <ZoomIn className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleReset}
-                className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors"
-              >
-                <RotateCw className="w-4 h-4" />
-              </button>
-              <span className="text-sm text-foreground">Reset</span>
-            </div>
-          </div>
+          <h3 className="text-lg font-semibold text-foreground">MRI Viewer</h3>
+          <button
+            onClick={() => setShowImageControls(true)}
+            className="flex items-center space-x-2 bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg transition-colors"
+          >
+            <Settings className="w-4 h-4" />
+            <span>Image Controls</span>
+          </button>
         </div>
 
         {/* Main Content */}
         <div className={`flex gap-6 h-96 ${showMetadata ? 'pr-80' : ''} transition-all duration-300`}>
           {/* Main Viewer - Full Width */}
-          <div className="flex-1 bg-medical-blue rounded-lg relative flex items-center justify-center">
-            {/* Navigation Controls */}
-            <button
-              onClick={handlePreviousSlice}
-              disabled={currentSlice === 1}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white p-2 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          <div className="flex-1 bg-medical-blue rounded-lg relative overflow-hidden">
+            {/* Scrollable MRI Image Container */}
+            <div
+              className="w-full h-full overflow-auto cursor-grab active:cursor-grabbing"
+              onWheel={(e) => {
+                // Handle scroll wheel for slice navigation
+                e.preventDefault();
+                if (e.deltaY > 0 && currentSlice < totalSlices) {
+                  setCurrentSlice(currentSlice + 1);
+                } else if (e.deltaY < 0 && currentSlice > 1) {
+                  setCurrentSlice(currentSlice - 1);
+                }
+              }}
             >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            <button
-              onClick={handleNextSlice}
-              disabled={currentSlice === totalSlices}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white p-2 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            {/* Main Content Display */}
-            <div className="text-center text-white">
-              <h2 className="text-4xl font-bold mb-4">MRI Slice {currentSlice}</h2>
-              {(currentPatient || studyData) && (
-                <div className="text-sm opacity-80">
-                  Patient: {currentPatient?.name || studyData?.patientName || 'Unknown Patient'}
-                  {studyData?.studyDescription && (
-                    <div className="mt-1">{studyData?.studyDescription}</div>
+              {/* Main Content Display */}
+              <div className="min-w-full min-h-full flex items-center justify-center text-center text-white p-8">
+                <div>
+                  <h2 className="text-4xl font-bold mb-4">MRI Slice {currentSlice}</h2>
+                  {(currentPatient || studyData) && (
+                    <div className="text-sm opacity-80">
+                      Patient: {currentPatient?.name || studyData?.patientName || 'Unknown Patient'}
+                      {studyData?.studyDescription && (
+                        <div className="mt-1">{studyData?.studyDescription}</div>
+                      )}
+                    </div>
                   )}
-                  {/* AI Final Diagnosis moved here */}
-                  <div className="mt-3 p-3 bg-black/20 rounded-lg">
-                    <div className="text-lg font-bold text-yellow-300">AI Final Diagnosis</div>
-                    <div className="text-base mt-1">Likely ACL Tear</div>
-                    <div className="text-xs mt-1 opacity-75">ACL: 72% | Meniscal: 64%</div>
+                  <div className="mt-4 text-xs opacity-60">
+                    Scroll to navigate slices • {currentSlice} of {totalSlices}
                   </div>
                 </div>
-              )}
-            </div>
-
-            {/* Slice Navigation */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center space-x-2">
-              <button
-                onClick={handlePreviousSlice}
-                disabled={currentSlice === 1}
-                className="bg-black/20 hover:bg-black/40 text-white px-4 py-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Previous
-              </button>
-              <span className="text-white text-sm px-3 py-1 bg-black/20 rounded">
-                {currentSlice} / {totalSlices}
-              </span>
-              <button
-                onClick={handleNextSlice}
-                disabled={currentSlice === totalSlices}
-                className="bg-black/20 hover:bg-black/40 text-white px-4 py-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Next
-              </button>
+              </div>
             </div>
           </div>
         </div>
@@ -534,6 +481,16 @@ const Report = () => {
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Body Part:</span>
                     <span className="text-foreground">{metadata?.studyInfo?.bodyPart || currentPatient?.bodyPart || 'Knee'}</span>
+                  </div>
+                  {/* AI Final Diagnosis in Study Information */}
+                  <div className="border-t border-border pt-3 mt-3">
+                    <span className="text-muted-foreground text-xs">AI Final Diagnosis:</span>
+                    <div className="mt-2 p-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded">
+                      <div className="text-sm font-semibold text-yellow-800 dark:text-yellow-300">Likely ACL Tear</div>
+                      <div className="text-xs text-yellow-700 dark:text-yellow-400 mt-1">
+                        ACL Probability: 72% | Meniscal Probability: 64%
+                      </div>
+                    </div>
                   </div>
                   <div className="space-y-1">
                     <span className="text-muted-foreground text-xs">Status:</span>
