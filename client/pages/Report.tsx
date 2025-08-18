@@ -93,6 +93,16 @@ const Report = () => {
     };
   }, [studyId, currentPatient?.id]);
 
+  // Sync scroll position when slice changes
+  useEffect(() => {
+    if (scrollContainer) {
+      const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+      const sliceProgress = (currentSlice - 1) / (totalSlices - 1);
+      const scrollPosition = sliceProgress * maxScroll;
+      scrollContainer.scrollTop = scrollPosition;
+    }
+  }, [currentSlice, totalSlices, scrollContainer]);
+
   // Status warnings only triggered by back button - no automatic checking
 
   const handlePreviousSlice = () => {
