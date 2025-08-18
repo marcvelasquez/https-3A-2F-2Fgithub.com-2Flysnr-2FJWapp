@@ -132,6 +132,9 @@ const Dashboard = () => {
         ))}
       </div>
 
+      {/* Recent Record Label */}
+      <h2 className="text-lg font-semibold text-foreground mb-4">Recent Record</h2>
+
       {/* Search Bar */}
       <div className="relative mb-6">
         <div className="flex items-center bg-card border border-border rounded-lg px-4 py-3">
