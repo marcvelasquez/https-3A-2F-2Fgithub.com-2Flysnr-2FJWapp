@@ -107,16 +107,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        {stats.map((stat, index) => (
-          <div key={index} className={`${stat.bgColor} rounded-lg p-6 text-white`}>
-            <div className="text-2xl font-bold mb-1">{stat.value}</div>
-            <div className="text-sm opacity-90">{stat.label}</div>
-          </div>
-        ))}
-      </div>
-
       {/* Recent Record Label */}
       <h2 className="text-lg font-semibold text-foreground mb-4">Recent Record</h2>
 
@@ -138,8 +128,10 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Patient Data Table - Full Width */}
-      <div className="medical-card p-6 mb-6">
+      {/* Main Content: Table and Stats Cards Side by Side */}
+      <div className="flex gap-6 mb-6">
+        {/* Patient Data Table - Left Side */}
+        <div className="flex-1 medical-card p-6">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -200,6 +192,87 @@ const Dashboard = () => {
               </button>
             </div>
           )}
+        </div>
+        </div>
+
+        {/* Right Side: Stats Cards and Donut Chart */}
+        <div className="w-80 space-y-4">
+          {/* Stats Cards */}
+          <div className="space-y-4">
+            {stats.map((stat, index) => (
+              <div key={index} className={`${stat.bgColor} rounded-lg p-4 text-white`}>
+                <div className="text-xl font-bold mb-1">{stat.value}</div>
+                <div className="text-sm opacity-90">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* ACL and Meniscal Tear Distribution Donut Chart */}
+          <div className="medical-card p-4">
+            <h3 className="text-md font-semibold text-foreground mb-3">ACL & Meniscal Tear Distribution</h3>
+            <div className="flex items-center justify-center">
+              <div className="relative w-32 h-32">
+                {/* Simple donut chart representation */}
+                <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 100 100">
+                  {/* Background circle */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="35"
+                    fill="none"
+                    stroke="#e5e7eb"
+                    strokeWidth="10"
+                  />
+                  {/* ACL segment (60%) */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="35"
+                    fill="none"
+                    stroke="#3b82f6"
+                    strokeWidth="10"
+                    strokeDasharray="131.95 87.96"
+                    strokeDashoffset="0"
+                  />
+                  {/* Meniscal segment (40%) */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="35"
+                    fill="none"
+                    stroke="#f59e0b"
+                    strokeWidth="10"
+                    strokeDasharray="87.96 131.95"
+                    strokeDashoffset="-131.95"
+                  />
+                </svg>
+                {/* Center text */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-foreground">18</div>
+                    <div className="text-xs text-muted-foreground">Total</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Legend */}
+            <div className="mt-3 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                  <span className="text-sm text-foreground">ACL</span>
+                </div>
+                <span className="text-sm font-medium text-foreground">11 (60%)</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-amber-500 rounded-full mr-2"></div>
+                  <span className="text-sm text-foreground">Meniscal</span>
+                </div>
+                <span className="text-sm font-medium text-foreground">7 (40%)</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
