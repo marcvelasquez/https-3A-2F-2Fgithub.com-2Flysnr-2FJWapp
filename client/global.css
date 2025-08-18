@@ -13,28 +13,50 @@
 
   /* Custom scrollbar styles for MRI viewer */
   .mri-scrollbar::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
   }
 
   .mri-scrollbar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    background: #e5e7eb;
+    border-radius: 6px;
   }
 
   .mri-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
+    background: #3b82f6;
+    border-radius: 6px;
+    border: 2px solid #e5e7eb;
   }
 
   .mri-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
+    background: #2563eb;
+  }
+
+  /* Default scrollbar styling for elements */
+  *::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 6px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 6px;
+    border: 2px solid #f1f5f9;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
   }
 
   /* Firefox scrollbar */
   .mri-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+    scrollbar-color: #3b82f6 #e5e7eb;
   }
 
   /* Custom slider styles for slice navigation */
