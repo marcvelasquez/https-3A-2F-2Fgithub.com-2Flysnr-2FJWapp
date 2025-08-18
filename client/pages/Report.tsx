@@ -507,15 +507,54 @@ const Report = () => {
       <div className="p-6 bg-background">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-foreground">MRI Viewer</h3>
+
+          {/* Controls moved to header row */}
+          <div className="flex items-center space-x-2">
+            <button
+              className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-1"
+              title="Zoom Out"
+            >
+              <ZoomOut className="w-4 h-4" />
+              <span className="text-xs hidden sm:inline">Zoom Out</span>
+            </button>
+            <button
+              className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-1"
+              title="Zoom In"
+            >
+              <ZoomIn className="w-4 h-4" />
+              <span className="text-xs hidden sm:inline">Zoom In</span>
+            </button>
+            <button
+              onClick={handleReset}
+              className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-1"
+              title="Reset View"
+            >
+              <RotateCw className="w-4 h-4" />
+              <span className="text-xs hidden sm:inline">Reset</span>
+            </button>
+            <button
+              onClick={() => setShowFilterPopup(true)}
+              className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-1"
+              title="ACL/Meniscal Filter"
+            >
+              <Filter className="w-4 h-4" />
+              <span className="text-xs hidden sm:inline">Filter</span>
+            </button>
+          </div>
         </div>
 
         {/* Main Content - Column Layout */}
         <div
           className={`flex flex-col gap-6 ${showMetadata ? "pr-80" : ""} transition-all duration-300`}
         >
-          {/* MRI Display Card */}
+          {/* MRI Display Card with Column Scrollbar */}
           <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-            <div className="space-y-4">
+            <div
+              className="space-y-4 h-[600px] overflow-y-scroll mri-traditional-scrollbar pr-2"
+              style={{
+                scrollbarGutter: 'stable'
+              }}
+            >
               {/* MRI Image Display Card with Embedded Scrollbar */}
               <div className="bg-white border-4 border-gray-400 rounded-lg shadow-lg p-6 relative" style={{boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', outline: '2px solid #3b82f6', outlineOffset: '2px', height: '500px'}}>
                 {/* DICOM Image Area - Fixed container */}
