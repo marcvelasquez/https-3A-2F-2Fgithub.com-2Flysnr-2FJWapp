@@ -57,7 +57,7 @@ const UploadStudy = () => {
     // Simulate upload process
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // Navigate to report page with uploaded file data
+    // Create file data for the study
     const fileData = {
       patientName,
       studyDescription,
@@ -72,7 +72,38 @@ const UploadStudy = () => {
     // Also store for adding to patient records
     sessionStorage.setItem('newPatientRecord', JSON.stringify(fileData));
 
-    navigate(`/report/${Date.now()}`);
+    // Generate a new patient ID for the uploaded study
+    const patientId = `${Date.now()}`;
+
+    // Store the study metadata for DICOM viewer
+    const metadata = {
+      studyInfo: {
+        studyId: patientId,
+        patientName: patientName,
+        studyDate: 'Today',
+        modality: 'MRI',
+        bodyPart: bodyPart
+      },
+      technicalParams: {
+        sliceThickness: '3.0 mm',
+        tr: '2500 ms',
+        te: '85 ms',
+        fieldStrength: '1.5 Tesla',
+        matrix: '512 x 512'
+      },
+      equipment: {
+        manufacturer: 'Siemens',
+        model: 'MAGNETOM Aera',
+        software: 'syngo MR E11'
+      },
+      remarks: studyDescription || 'Newly uploaded study',
+      created: new Date().toISOString()
+    };
+
+    localStorage.setItem(`metadata_${patientId}`, JSON.stringify(metadata));
+
+    // Auto-open DICOM viewer instead of going to report page
+    navigate(`/dicom-viewer/${patientId}`);
   };
 
   return (
