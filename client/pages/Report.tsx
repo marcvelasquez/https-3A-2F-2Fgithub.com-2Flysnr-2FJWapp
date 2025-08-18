@@ -75,16 +75,23 @@ const Report = () => {
       // Determine slice count from study data
       if (study.files && study.files.length > 0) {
         // For DICOM files, estimate slices based on file count or size
-        const dicomFiles = study.files.filter((f: any) =>
-          f.name.toLowerCase().includes('.dcm') ||
-          f.name.toLowerCase().includes('dicom') ||
-          f.name.toLowerCase().includes('mri')
+        const dicomFiles = study.files.filter(
+          (f: any) =>
+            f.name.toLowerCase().includes(".dcm") ||
+            f.name.toLowerCase().includes("dicom") ||
+            f.name.toLowerCase().includes("mri"),
         );
 
         if (dicomFiles.length > 0) {
           // Simulate realistic slice counts (5-25 slices typical for knee MRI)
-          const totalSize = study.files.reduce((sum: number, f: any) => sum + f.size, 0);
-          const estimatedSlices = Math.max(5, Math.min(25, Math.round(totalSize / (1024 * 1024 * 2))));
+          const totalSize = study.files.reduce(
+            (sum: number, f: any) => sum + f.size,
+            0,
+          );
+          const estimatedSlices = Math.max(
+            5,
+            Math.min(25, Math.round(totalSize / (1024 * 1024 * 2))),
+          );
           setTotalSlices(estimatedSlices);
         }
       }
@@ -176,7 +183,8 @@ const Report = () => {
   // Sync scroll position when container is ready and slice is set
   useEffect(() => {
     if (scrollContainer && initialSliceSet) {
-      const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+      const maxScroll =
+        scrollContainer.scrollHeight - scrollContainer.clientHeight;
       const sliceProgress = (currentSlice - 1) / (totalSlices - 1);
       const scrollPosition = sliceProgress * maxScroll;
       scrollContainer.scrollTop = scrollPosition;
@@ -210,19 +218,19 @@ const Report = () => {
   };
 
   const handleZoomIn = () => {
-    setZoomLevel(prev => Math.min(prev + 0.25, 5)); // Max zoom 5x
+    setZoomLevel((prev) => Math.min(prev + 0.25, 5)); // Max zoom 5x
   };
 
   const handleZoomOut = () => {
-    setZoomLevel(prev => Math.max(prev - 0.25, 0.25)); // Min zoom 0.25x
+    setZoomLevel((prev) => Math.max(prev - 0.25, 0.25)); // Min zoom 0.25x
   };
 
   const handleRotateClockwise = () => {
-    setRotation(prev => (prev + 90) % 360);
+    setRotation((prev) => (prev + 90) % 360);
   };
 
   const handleRotateCounterClockwise = () => {
-    setRotation(prev => (prev - 90 + 360) % 360);
+    setRotation((prev) => (prev - 90 + 360) % 360);
   };
 
   const handleEditMetadata = () => {
@@ -587,7 +595,16 @@ const Report = () => {
           <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
             <div className="space-y-4">
               {/* MRI Image Display Card with Embedded Scrollbar */}
-              <div className="bg-white border-4 border-gray-400 rounded-lg shadow-lg p-6 relative" style={{boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', outline: '2px solid #3b82f6', outlineOffset: '2px', height: '500px'}}>
+              <div
+                className="bg-white border-4 border-gray-400 rounded-lg shadow-lg p-6 relative"
+                style={{
+                  boxShadow:
+                    "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                  outline: "2px solid #3b82f6",
+                  outlineOffset: "2px",
+                  height: "500px",
+                }}
+              >
                 {/* DICOM Image Area - Fixed container */}
                 <div className="absolute inset-4 flex items-center justify-center">
                   <div className="relative w-96 h-96">
@@ -600,13 +617,17 @@ const Report = () => {
                           style={{
                             transform: `scale(${zoomLevel}) rotate(${rotation}deg)`,
                             filter: `brightness(${brightness}%) contrast(${contrast}%)`,
-                            transformOrigin: 'center'
+                            transformOrigin: "center",
                           }}
                         >
                           <div className="text-center text-white">
-                            <div className="text-2xl font-mono mb-2">MRI Slice {currentSlice}</div>
+                            <div className="text-2xl font-mono mb-2">
+                              MRI Slice {currentSlice}
+                            </div>
                             <div className="w-32 h-32 bg-slate-700 rounded-full mx-auto flex items-center justify-center">
-                              <div className="text-xs opacity-75">DICOM Image</div>
+                              <div className="text-xs opacity-75">
+                                DICOM Image
+                              </div>
                             </div>
                             <div className="text-xs mt-4 opacity-60">
                               Slice {currentSlice} of {totalSlices}
@@ -624,10 +645,10 @@ const Report = () => {
                       ref={setScrollContainer}
                       className="absolute inset-0 overflow-y-scroll z-10 rounded-lg dicom-visible-scrollbar"
                       style={{
-                        backgroundColor: 'rgba(0,0,0,0.02)',
-                        scrollbarWidth: 'auto',
-                        scrollbarGutter: 'stable',
-                        scrollbarColor: '#3b82f6 #e5e7eb'
+                        backgroundColor: "rgba(0,0,0,0.02)",
+                        scrollbarWidth: "auto",
+                        scrollbarGutter: "stable",
+                        scrollbarColor: "#3b82f6 #e5e7eb",
                       }}
                       onScroll={(e) => {
                         const scrollTop = e.currentTarget.scrollTop;
@@ -674,10 +695,7 @@ const Report = () => {
                     )}
                   </div>
                 </div>
-
               </div>
-
-
             </div>
           </div>
         </div>
