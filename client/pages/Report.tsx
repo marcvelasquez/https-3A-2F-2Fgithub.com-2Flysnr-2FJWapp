@@ -20,7 +20,7 @@ const Report = () => {
   const { studyId } = useParams();
   const navigate = useNavigate();
   const [studyData, setStudyData] = useState<any>(null);
-  const [currentSlice, setCurrentSlice] = useState(4);
+  const [currentSlice, setCurrentSlice] = useState(1);
   const [totalSlices, setTotalSlices] = useState(7);
   const [showMetadata, setShowMetadata] = useState(false);
   const [currentPatient, setCurrentPatient] = useState<any>(null);
@@ -164,7 +164,11 @@ const Report = () => {
   };
 
   const handleReset = () => {
-    setCurrentSlice(4);
+    setCurrentSlice(1);
+    // Reset scroll position to top
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 0;
+    }
   };
 
   const handleEditMetadata = () => {
