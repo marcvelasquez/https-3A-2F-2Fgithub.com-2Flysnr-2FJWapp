@@ -385,16 +385,15 @@ const Report = () => {
         </button>
       </div>
 
-      {/* Image Controls Button */}
+      {/* MRI Viewer Header */}
       <div className="p-6 bg-background">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-foreground">MRI Viewer</h3>
           <button
-            onClick={() => setShowImageControls(true)}
-            className="flex items-center space-x-2 bg-medical-blue hover:bg-medical-blue-dark text-white px-4 py-2 rounded-lg transition-colors"
+            onClick={() => setShowFilterPopup(true)}
+            className="text-sm bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 rounded transition-colors"
           >
-            <Settings className="w-4 h-4" />
-            <span>Image Controls</span>
+            ACL/Meniscal Filter
           </button>
         </div>
 
