@@ -433,6 +433,30 @@ const Report = () => {
               </div>
             </div>
           </div>
+
+          {/* Right Side Controls */}
+          <div className="w-16 flex flex-col space-y-2">
+            <div className="text-xs text-muted-foreground text-center mb-2">Controls</div>
+            <button
+              className="bg-card hover:bg-muted border border-border text-foreground p-2 rounded transition-colors"
+              title="Zoom Out"
+            >
+              <ZoomOut className="w-4 h-4" />
+            </button>
+            <button
+              className="bg-card hover:bg-muted border border-border text-foreground p-2 rounded transition-colors"
+              title="Zoom In"
+            >
+              <ZoomIn className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleReset}
+              className="bg-card hover:bg-muted border border-border text-foreground p-2 rounded transition-colors"
+              title="Reset View"
+            >
+              <RotateCw className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* Metadata Panel - Sliding from right */}
