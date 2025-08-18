@@ -149,6 +149,14 @@ const Report = () => {
     }
   }, [currentSlice, totalSlices, scrollContainer]);
 
+  // Reset to slice 1 on component mount
+  useEffect(() => {
+    setCurrentSlice(1);
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 0;
+    }
+  }, [scrollContainer]);
+
   // Status warnings only triggered by back button - no automatic checking
 
   const handlePreviousSlice = () => {
