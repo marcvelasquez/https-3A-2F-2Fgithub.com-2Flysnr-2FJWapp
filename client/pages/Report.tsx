@@ -542,13 +542,10 @@ const Report = () => {
                     {/* Traditional Scrollbar for slice navigation */}
                     <div
                       ref={setScrollContainer}
-                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg"
+                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg mri-traditional-scrollbar"
                       style={{
-                        scrollbarWidth: 'auto',
-                        scrollbarColor: '#2563eb #e5e7eb',
                         backgroundColor: 'transparent',
-                        scrollbarGutter: 'stable',
-                        overflowY: 'scroll'
+                        scrollbarGutter: 'stable'
                       }}
                       onScroll={(e) => {
                         const scrollTop = e.currentTarget.scrollTop;
