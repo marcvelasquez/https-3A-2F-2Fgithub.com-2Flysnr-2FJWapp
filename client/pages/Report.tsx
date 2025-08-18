@@ -511,65 +511,76 @@ const Report = () => {
                     {/* MRI Image Content - Centered */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center">
-                        {/* MRI Sample Images */}
+                        {/* Dynamic MRI Sample Images */}
                         <div className="w-96 h-96 bg-black rounded-lg mx-auto mb-4 flex items-center justify-center border border-border shadow-inner overflow-hidden">
-                          {/* Sample MRI Images based on slice */}
-                          {currentSlice === 1 && (
-                            <div className="w-full h-full flex items-center justify-center relative" style={{background: 'radial-gradient(circle, #9ca3af 20%, #6b7280 50%, #374151 100%)'}}>
-                              <div className="w-64 h-64 border-2 border-gray-500 rounded-full opacity-60"></div>
-                              <div className="absolute text-white text-xs top-4 left-4 bg-black/50 px-2 py-1 rounded">Slice 1/7 - Superior</div>
-                            </div>
-                          )}
-                          {currentSlice === 2 && (
-                            <div className="w-full h-full flex items-center justify-center relative" style={{background: 'radial-gradient(circle, #d1d5db 15%, #9ca3af 45%, #6b7280 100%)'}}>
-                              <div className="w-64 h-64 border-2 border-gray-400 rounded-full opacity-70 relative">
-                                <div className="w-32 h-32 bg-gray-600 rounded-full mx-auto mt-16"></div>
+                          {(() => {
+                            // Dynamic slice image generator
+                            const progress = (currentSlice - 1) / Math.max(1, totalSlices - 1);
+                            const isStart = currentSlice <= 2;
+                            const isEnd = currentSlice >= totalSlices - 1;
+                            const isCenter = Math.abs(currentSlice - Math.ceil(totalSlices / 2)) <= 1;
+
+                            // Calculate visual properties based on position
+                            const intensity = isCenter ? 0.9 : isStart || isEnd ? 0.6 : 0.75;
+                            const grayLevel = Math.round(160 + (95 * intensity));
+
+                            // Position label
+                            const getPositionLabel = () => {
+                              if (isStart) return currentSlice === 1 ? 'Superior' : 'Upper';
+                              if (isEnd) return currentSlice === totalSlices ? 'Inferior' : 'Lower';
+                              if (isCenter) return 'Center';
+                              return currentSlice < Math.ceil(totalSlices / 2) ? 'Mid-Upper' : 'Mid-Lower';
+                            };
+
+                            return (
+                              <div className="w-full h-full flex items-center justify-center relative"
+                                   style={{background: `radial-gradient(circle, rgb(${grayLevel}, ${grayLevel}, ${grayLevel}) 10%, rgb(${grayLevel - 40}, ${grayLevel - 40}, ${grayLevel - 40}) 50%, rgb(${grayLevel - 80}, ${grayLevel - 80}, ${grayLevel - 80}) 100%)`}}>
+
+                                {/* Main anatomy structure */}
+                                <div className="border-2 rounded-full relative"
+                                     style={{
+                                       width: `${200 + (intensity * 60)}px`,
+                                       height: `${200 + (intensity * 60)}px`,
+                                       borderColor: `rgb(${grayLevel - 60}, ${grayLevel - 60}, ${grayLevel - 60})`,
+                                       opacity: intensity
+                                     }}>
+
+                                  {/* Internal structures for center slices */}
+                                  {isCenter && (
+                                    <>
+                                      <div className="absolute top-8 left-8 right-8 bottom-8 bg-gray-500 rounded-full opacity-60"></div>
+                                      {/* ACL area - only in center slices */}
+                                      <div className="absolute top-12 left-12 w-6 h-6 bg-red-500 rounded-full opacity-80"
+                                           title="ACL tear location"></div>
+                                      {/* Meniscal area */}
+                                      <div className="absolute top-20 right-16 w-4 h-4 bg-yellow-400 rounded-full opacity-70"
+                                           title="Meniscal area"></div>
+                                    </>
+                                  )}
+
+                                  {/* Basic internal structure for non-edge slices */}
+                                  {!isStart && !isEnd && !isCenter && (
+                                    <div className="absolute top-12 left-12 right-12 bottom-12 bg-gray-600 rounded-full opacity-50"></div>
+                                  )}
+                                </div>
+
+                                {/* Slice label */}
+                                <div className="absolute text-white text-xs top-4 left-4 bg-black/50 px-2 py-1 rounded">
+                                  Slice {currentSlice}/{totalSlices} - {getPositionLabel()}
+                                </div>
+
+                                {/* Study info */}
+                                <div className="absolute text-white text-xs top-4 right-4 bg-black/50 px-2 py-1 rounded opacity-75">
+                                  {studyData?.files?.[0]?.name?.split('.')[0] || 'MRI Study'}
+                                </div>
+
+                                {/* Slice thickness indicator */}
+                                <div className="absolute text-white text-xs bottom-4 left-4 bg-black/50 px-2 py-1 rounded opacity-60">
+                                  {metadata?.technicalParams?.sliceThickness || '3.0mm'}
+                                </div>
                               </div>
-                              <div className="absolute text-white text-xs top-4 left-4 bg-black/50 px-2 py-1 rounded">Slice 2/7</div>
-                            </div>
-                          )}
-                          {currentSlice === 3 && (
-                            <div className="w-full h-full flex items-center justify-center relative" style={{background: 'radial-gradient(circle, #e5e7eb 10%, #d1d5db 40%, #9ca3af 100%)'}}>
-                              <div className="w-64 h-64 border-2 border-gray-300 rounded-full opacity-80 relative">
-                                <div className="w-40 h-40 bg-gray-500 rounded-full mx-auto mt-12"></div>
-                                <div className="absolute top-20 left-20 w-6 h-6 bg-red-400 rounded-full opacity-75" title="Potential ACL area"></div>
-                              </div>
-                              <div className="absolute text-white text-xs top-4 left-4 bg-black/50 px-2 py-1 rounded">Slice 3/7</div>
-                            </div>
-                          )}
-                          {currentSlice === 4 && (
-                            <div className="w-full h-full flex items-center justify-center relative" style={{background: 'radial-gradient(circle, #f3f4f6 5%, #e5e7eb 35%, #d1d5db 100%)'}}>
-                              <div className="w-64 h-64 border-2 border-gray-200 rounded-full opacity-90 relative">
-                                <div className="w-48 h-48 bg-gray-400 rounded-full mx-auto mt-8"></div>
-                                <div className="absolute top-16 left-16 w-8 h-8 bg-red-500 rounded-full opacity-80" title="ACL tear location"></div>
-                                <div className="absolute top-24 right-20 w-6 h-6 bg-yellow-400 rounded-full opacity-70" title="Meniscal area"></div>
-                              </div>
-                              <div className="absolute text-white text-xs top-4 left-4 bg-black/50 px-2 py-1 rounded">Slice 4/7 - Center</div>
-                            </div>
-                          )}
-                          {currentSlice === 5 && (
-                            <div className="w-full h-full flex items-center justify-center relative" style={{background: 'radial-gradient(circle, #e5e7eb 10%, #d1d5db 40%, #9ca3af 100%)'}}>
-                              <div className="w-64 h-64 border-2 border-gray-300 rounded-full opacity-80 relative">
-                                <div className="w-40 h-40 bg-gray-500 rounded-full mx-auto mt-12"></div>
-                                <div className="absolute top-28 left-24 w-4 h-4 bg-orange-400 rounded-full opacity-70"></div>
-                              </div>
-                              <div className="absolute text-white text-xs top-4 left-4 bg-black/50 px-2 py-1 rounded">Slice 5/7</div>
-                            </div>
-                          )}
-                          {currentSlice === 6 && (
-                            <div className="w-full h-full flex items-center justify-center relative" style={{background: 'radial-gradient(circle, #d1d5db 15%, #9ca3af 45%, #6b7280 100%)'}}>
-                              <div className="w-64 h-64 border-2 border-gray-400 rounded-full opacity-70 relative">
-                                <div className="w-32 h-32 bg-gray-600 rounded-full mx-auto mt-16"></div>
-                              </div>
-                              <div className="absolute text-white text-xs top-4 left-4 bg-black/50 px-2 py-1 rounded">Slice 6/7</div>
-                            </div>
-                          )}
-                          {currentSlice === 7 && (
-                            <div className="w-full h-full flex items-center justify-center relative" style={{background: 'radial-gradient(circle, #9ca3af 20%, #6b7280 50%, #374151 100%)'}}>
-                              <div className="w-64 h-64 border-2 border-gray-500 rounded-full opacity-60"></div>
-                              <div className="absolute text-white text-xs top-4 left-4 bg-black/50 px-2 py-1 rounded">Slice 7/7 - Inferior</div>
-                            </div>
-                          )}
+                            );
+                          })()}
                         </div>
                         {/* Patient Info */}
                         <div className="text-sm text-muted-foreground">
