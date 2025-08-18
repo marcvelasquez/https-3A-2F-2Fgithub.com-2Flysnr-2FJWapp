@@ -404,11 +404,7 @@ const Report = () => {
           <div className="flex-1 bg-medical-blue rounded-lg relative overflow-hidden">
             {/* Scrollable MRI Image Container */}
             <div
-              className="w-full h-full overflow-auto cursor-grab active:cursor-grabbing scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent"
-              style={{
-                scrollbarWidth: 'thin',
-                scrollbarColor: 'rgba(255,255,255,0.3) transparent'
-              }}
+              className="w-full h-full overflow-auto cursor-grab active:cursor-grabbing mri-scrollbar"
               onWheel={(e) => {
                 // Handle scroll wheel for slice navigation
                 e.preventDefault();
