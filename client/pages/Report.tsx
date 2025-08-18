@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, RotateCw, ZoomIn, ZoomOut, RotateCcw, Info, X, Edit, Save, Settings, Filter } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RotateCw, ZoomIn, ZoomOut, RotateCcw, Info, X, Edit, Save, Settings, Filter, ArrowUpDown } from 'lucide-react';
 
 const Report = () => {
   const { studyId } = useParams();
@@ -389,13 +389,6 @@ const Report = () => {
       <div className="p-6 bg-background">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold text-foreground">MRI Viewer</h3>
-          <button
-            onClick={() => setShowFilterPopup(true)}
-            className="bg-card hover:bg-muted border border-border text-foreground p-2 rounded transition-colors"
-            title="ACL/Meniscal Filter"
-          >
-            <Filter className="w-4 h-4" />
-          </button>
         </div>
 
         {/* Main Content */}
@@ -451,9 +444,27 @@ const Report = () => {
                 </div>
               </div>
 
-              {/* Slice Navigation Info */}
-              <div className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm">
-                Slice {currentSlice} of {totalSlices} • Scroll image to pan • Ctrl+Scroll to change slice
+              {/* Slice Navigation Scrollbar */}
+              <div className="absolute bottom-4 left-4 bg-black/70 text-white p-3 rounded-lg">
+                <div className="text-xs mb-2 text-center">Slice Navigation</div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs">{currentSlice}</span>
+                  <input
+                    type="range"
+                    min="1"
+                    max={totalSlices}
+                    value={currentSlice}
+                    onChange={(e) => setCurrentSlice(parseInt(e.target.value))}
+                    className="w-32 h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
+                    style={{
+                      background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, #4b5563 ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, #4b5563 100%)`
+                    }}
+                  />
+                  <span className="text-xs">{totalSlices}</span>
+                </div>
+                <div className="text-xs text-center mt-1 opacity-75">
+                  Scroll image to pan
+                </div>
               </div>
             </div>
           </div>
@@ -482,6 +493,21 @@ const Report = () => {
                 >
                   <RotateCw className="w-4 h-4" />
                 </button>
+                <div className="border-t border-border pt-2 mt-2">
+                  <button
+                    onClick={() => setShowFilterPopup(true)}
+                    className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors w-full"
+                    title="ACL/Meniscal Filter"
+                  >
+                    <Filter className="w-4 h-4" />
+                  </button>
+                  <button
+                    className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors w-full mt-2"
+                    title="Sort Options"
+                  >
+                    <ArrowUpDown className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
