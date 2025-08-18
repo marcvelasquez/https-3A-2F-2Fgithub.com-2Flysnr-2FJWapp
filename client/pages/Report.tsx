@@ -483,8 +483,8 @@ const Report = () => {
           <div className="flex-1 bg-medical-blue rounded-lg relative overflow-hidden">
             {/* Scrollable MRI Image Container */}
             <div className="w-full h-full flex items-center justify-center bg-muted/30 relative">
-              {/* MRI Image Container - Enhanced visibility */}
-              <div className="w-[800px] h-[600px] bg-white border-2 border-gray-300 rounded-lg shadow-lg p-6 relative" style={{boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'}}>
+              {/* MRI Image Container - Enhanced visibility with outline */}
+              <div className="w-[800px] h-[600px] bg-white border-4 border-gray-400 rounded-lg shadow-lg p-6 relative" style={{boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', outline: '2px solid #3b82f6', outlineOffset: '2px'}}>
                 {/* DICOM Image Area - Fixed container */}
                 <div className="absolute inset-4 flex items-center justify-center">
                   <div className="relative w-96 h-96">
@@ -509,7 +509,7 @@ const Report = () => {
                     {/* Visible scroll area for slice navigation */}
                     <div
                       ref={setScrollContainer}
-                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg"
+                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg dicom-enhanced-scrollbar"
                       style={{
                         scrollbarWidth: 'auto',
                         scrollbarColor: '#2563eb #e5e7eb',
