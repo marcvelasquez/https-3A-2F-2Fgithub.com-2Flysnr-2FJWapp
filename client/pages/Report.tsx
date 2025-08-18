@@ -41,6 +41,10 @@ const Report = () => {
   const [scrollContainer, setScrollContainer] = useState<HTMLDivElement | null>(
     null,
   );
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [rotation, setRotation] = useState(0);
+  const [brightness, setBrightness] = useState(100);
+  const [contrast, setContrast] = useState(100);
 
   useEffect(() => {
     // Check for specific slice selection from sessionStorage or URL
@@ -195,10 +199,30 @@ const Report = () => {
 
   const handleReset = () => {
     setCurrentSlice(1);
+    setZoomLevel(1);
+    setRotation(0);
+    setBrightness(100);
+    setContrast(100);
     // Reset scroll position to top
     if (scrollContainer) {
       scrollContainer.scrollTop = 0;
     }
+  };
+
+  const handleZoomIn = () => {
+    setZoomLevel(prev => Math.min(prev + 0.25, 5)); // Max zoom 5x
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel(prev => Math.max(prev - 0.25, 0.25)); // Min zoom 0.25x
+  };
+
+  const handleRotateClockwise = () => {
+    setRotation(prev => (prev + 90) % 360);
+  };
+
+  const handleRotateCounterClockwise = () => {
+    setRotation(prev => (prev - 90 + 360) % 360);
   };
 
   const handleEditMetadata = () => {
@@ -511,15 +535,19 @@ const Report = () => {
           {/* Controls moved to header row */}
           <div className="flex items-center space-x-2">
             <button
-              className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-1"
-              title="Zoom Out"
+              onClick={handleZoomOut}
+              disabled={zoomLevel <= 0.25}
+              className="bg-muted hover:bg-muted/80 disabled:bg-muted/50 disabled:cursor-not-allowed text-foreground p-2 rounded transition-colors flex items-center space-x-1"
+              title={`Zoom Out (${(zoomLevel * 100).toFixed(0)}%)`}
             >
               <ZoomOut className="w-4 h-4" />
               <span className="text-xs hidden sm:inline">Zoom Out</span>
             </button>
             <button
-              className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-1"
-              title="Zoom In"
+              onClick={handleZoomIn}
+              disabled={zoomLevel >= 5}
+              className="bg-muted hover:bg-muted/80 disabled:bg-muted/50 disabled:cursor-not-allowed text-foreground p-2 rounded transition-colors flex items-center space-x-1"
+              title={`Zoom In (${(zoomLevel * 100).toFixed(0)}%)`}
             >
               <ZoomIn className="w-4 h-4" />
               <span className="text-xs hidden sm:inline">Zoom In</span>
@@ -531,6 +559,14 @@ const Report = () => {
             >
               <RotateCw className="w-4 h-4" />
               <span className="text-xs hidden sm:inline">Reset</span>
+            </button>
+            <button
+              onClick={handleRotateClockwise}
+              className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-1"
+              title={`Rotate (${rotation}°)`}
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span className="text-xs hidden sm:inline">Rotate</span>
             </button>
             <button
               onClick={() => setShowFilterPopup(true)}
@@ -558,8 +594,15 @@ const Report = () => {
                     {/* Fixed DICOM Image */}
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
                       <div className="text-center">
-                        {/* MRI Image Placeholder - Fixed Position */}
-                        <div className="w-96 h-96 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg flex items-center justify-center border border-border shadow-inner">
+                        {/* MRI Image Placeholder - Fixed Position with Zoom and Rotation */}
+                        <div
+                          className="w-96 h-96 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg flex items-center justify-center border border-border shadow-inner transition-transform duration-300"
+                          style={{
+                            transform: `scale(${zoomLevel}) rotate(${rotation}deg)`,
+                            filter: `brightness(${brightness}%) contrast(${contrast}%)`,
+                            transformOrigin: 'center'
+                          }}
+                        >
                           <div className="text-center text-white">
                             <div className="text-2xl font-mono mb-2">MRI Slice {currentSlice}</div>
                             <div className="w-32 h-32 bg-slate-700 rounded-full mx-auto flex items-center justify-center">
@@ -567,6 +610,9 @@ const Report = () => {
                             </div>
                             <div className="text-xs mt-4 opacity-60">
                               Slice {currentSlice} of {totalSlices}
+                            </div>
+                            <div className="text-xs mt-2 opacity-40">
+                              Zoom: {(zoomLevel * 100).toFixed(0)}%
                             </div>
                           </div>
                         </div>
