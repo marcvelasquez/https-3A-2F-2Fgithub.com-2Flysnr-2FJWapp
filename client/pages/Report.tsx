@@ -22,7 +22,7 @@ const Report = () => {
   const [tempStatus, setTempStatus] = useState('');
   const [showStatusWarning, setShowStatusWarning] = useState(false);
   const [showNavigationWarning, setShowNavigationWarning] = useState(false);
-  const [showImageControls, setShowImageControls] = useState(false);
+  const [showFilterPopup, setShowFilterPopup] = useState(false);
 
   useEffect(() => {
     // Get uploaded study data from sessionStorage
