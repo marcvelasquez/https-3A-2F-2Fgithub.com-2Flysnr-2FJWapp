@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, RotateCw, ZoomIn, ZoomOut, RotateCcw, Info, X, Edit, Save, Settings } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RotateCw, ZoomIn, ZoomOut, RotateCcw, Info, X, Edit, Save, Settings, Filter } from 'lucide-react';
 
 const Report = () => {
   const { studyId } = useParams();
@@ -391,9 +391,10 @@ const Report = () => {
           <h3 className="text-lg font-semibold text-foreground">MRI Viewer</h3>
           <button
             onClick={() => setShowFilterPopup(true)}
-            className="text-sm bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 rounded transition-colors"
+            className="bg-card hover:bg-muted border border-border text-foreground p-2 rounded transition-colors"
+            title="ACL/Meniscal Filter"
           >
-            ACL/Meniscal Filter
+            <Filter className="w-4 h-4" />
           </button>
         </div>
 
@@ -403,7 +404,11 @@ const Report = () => {
           <div className="flex-1 bg-medical-blue rounded-lg relative overflow-hidden">
             {/* Scrollable MRI Image Container */}
             <div
-              className="w-full h-full overflow-auto cursor-grab active:cursor-grabbing"
+              className="w-full h-full overflow-auto cursor-grab active:cursor-grabbing scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent"
+              style={{
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'rgba(255,255,255,0.3) transparent'
+              }}
               onWheel={(e) => {
                 // Handle scroll wheel for slice navigation
                 e.preventDefault();
@@ -435,8 +440,7 @@ const Report = () => {
           </div>
 
           {/* Right Side Controls */}
-          <div className="w-16 flex flex-col space-y-2">
-            <div className="text-xs text-muted-foreground text-center mb-2">Controls</div>
+          <div className="w-12 flex flex-col space-y-2">
             <button
               className="bg-card hover:bg-muted border border-border text-foreground p-2 rounded transition-colors"
               title="Zoom Out"
