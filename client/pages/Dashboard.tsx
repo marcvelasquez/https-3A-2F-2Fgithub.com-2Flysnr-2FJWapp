@@ -97,21 +97,6 @@ const Dashboard = () => {
 
   // Patient data now loaded from localStorage in useEffect
 
-  const radiologistActivity = [
-    { day: 'Monday', value: 85, reports: 34, color: '#3b82f6' },
-    { day: 'Tuesday', value: 92, reports: 37, color: '#10b981' },
-    { day: 'Wednesday', value: 78, reports: 31, color: '#8b5cf6' },
-    { day: 'Thursday', value: 95, reports: 38, color: '#f97316' },
-    { day: 'Friday', value: 88, reports: 35, color: '#ec4899' },
-  ];
-
-  const progressData = [
-    { id: '01', completed: 75, inProgress: 20, pending: 5, label: 'Right Knee Cases' },
-    { id: '02', completed: 60, inProgress: 30, pending: 10, label: 'Left Knee Cases' },
-    { id: '03', completed: 85, inProgress: 10, pending: 5, label: 'Bilateral Cases' },
-    { id: '04', completed: 90, inProgress: 8, pending: 2, label: 'Follow-up Cases' },
-  ];
-
   return (
     <div className="p-6 bg-background min-h-full">
       {/* Header */}
