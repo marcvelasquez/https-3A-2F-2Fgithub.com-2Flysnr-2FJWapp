@@ -172,6 +172,43 @@
     background: #e5e7eb;
   }
 
+  /* Enhanced scrollbar specifically for DICOM image box */
+  .dicom-box-scrollbar::-webkit-scrollbar {
+    width: 18px;
+    height: 18px;
+  }
+
+  .dicom-box-scrollbar::-webkit-scrollbar-track {
+    background: rgba(229, 231, 235, 0.8);
+    border-radius: 9px;
+    border: 2px solid rgba(209, 213, 219, 0.8);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .dicom-box-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(145deg, #3b82f6, #2563eb);
+    border-radius: 9px;
+    border: 3px solid rgba(229, 231, 235, 0.8);
+    min-height: 40px;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  }
+
+  .dicom-box-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(145deg, #2563eb, #1d4ed8);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+  }
+
+  .dicom-box-scrollbar::-webkit-scrollbar-thumb:active {
+    background: #1d4ed8;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Firefox scrollbar for DICOM box */
+  .dicom-box-scrollbar {
+    scrollbar-width: auto;
+    scrollbar-color: #2563eb rgba(229, 231, 235, 0.8);
+  }
+
   /* Custom slider styles for slice navigation */
   .slider::-webkit-slider-thumb {
     appearance: none;
