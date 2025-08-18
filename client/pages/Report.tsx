@@ -532,44 +532,49 @@ const Report = () => {
           </div>
 
           {/* Right Side Controls Card */}
-          <div className="w-32">
+          <div className="w-40">
             <div className="bg-card border border-border rounded-lg p-3 shadow-sm">
               <div className="text-xs text-muted-foreground text-center mb-2 font-medium">
                 Controls
               </div>
               <div className="flex flex-col space-y-2">
                 <button
-                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors"
+                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-2"
                   title="Zoom Out"
                 >
                   <ZoomOut className="w-4 h-4" />
+                  <span className="text-xs">Zoom Out</span>
                 </button>
                 <button
-                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors"
+                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-2"
                   title="Zoom In"
                 >
                   <ZoomIn className="w-4 h-4" />
+                  <span className="text-xs">Zoom In</span>
                 </button>
                 <button
                   onClick={handleReset}
-                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors"
+                  className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors flex items-center space-x-2"
                   title="Reset View"
                 >
                   <RotateCw className="w-4 h-4" />
+                  <span className="text-xs">Reset</span>
                 </button>
                 <div className="border-t border-border pt-2 mt-2">
                   <button
                     onClick={() => setShowFilterPopup(true)}
-                    className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors w-full"
+                    className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors w-full flex items-center space-x-2"
                     title="ACL/Meniscal Filter"
                   >
                     <Filter className="w-4 h-4" />
+                    <span className="text-xs">Filter</span>
                   </button>
                   <button
-                    className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors w-full mt-2"
+                    className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors w-full mt-2 flex items-center space-x-2"
                     title="Sort Options"
                   >
                     <ArrowUpDown className="w-4 h-4" />
+                    <span className="text-xs">Sort</span>
                   </button>
                 </div>
               </div>
