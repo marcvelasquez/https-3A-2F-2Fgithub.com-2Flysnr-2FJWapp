@@ -45,7 +45,25 @@ const Report = () => {
     // Get uploaded study data from sessionStorage
     const uploadedStudy = sessionStorage.getItem("uploadedStudy");
     if (uploadedStudy) {
-      setStudyData(JSON.parse(uploadedStudy));
+      const study = JSON.parse(uploadedStudy);
+      setStudyData(study);
+
+      // Determine slice count from study data
+      if (study.files && study.files.length > 0) {
+        // For DICOM files, estimate slices based on file count or size
+        const dicomFiles = study.files.filter((f: any) =>
+          f.name.toLowerCase().includes('.dcm') ||
+          f.name.toLowerCase().includes('dicom') ||
+          f.name.toLowerCase().includes('mri')
+        );
+
+        if (dicomFiles.length > 0) {
+          // Simulate realistic slice counts (5-25 slices typical for knee MRI)
+          const totalSize = study.files.reduce((sum: number, f: any) => sum + f.size, 0);
+          const estimatedSlices = Math.max(5, Math.min(25, Math.round(totalSize / (1024 * 1024 * 2))));
+          setTotalSlices(estimatedSlices);
+        }
+      }
     }
 
     // Get current patient context
@@ -58,7 +76,13 @@ const Report = () => {
       const metadataKey = `metadata_${patient.id || studyId}`;
       const savedMetadata = localStorage.getItem(metadataKey);
       if (savedMetadata) {
-        setMetadata(JSON.parse(savedMetadata));
+        const meta = JSON.parse(savedMetadata);
+        setMetadata(meta);
+
+        // Check if metadata has slice information
+        if (meta.technicalParams && meta.technicalParams.numberOfSlices) {
+          setTotalSlices(parseInt(meta.technicalParams.numberOfSlices));
+        }
       }
     }
 
