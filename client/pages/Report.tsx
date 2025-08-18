@@ -824,6 +824,78 @@ const Report = () => {
             </div>
           </div>
         )}
+
+        {/* Image Controls Popup */}
+        {showImageControls && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-card p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-foreground">Image Controls</h3>
+                <button
+                  onClick={() => setShowImageControls(false)}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {/* Filter Options */}
+                <div>
+                  <h4 className="text-sm font-medium text-foreground mb-3">Filters</h4>
+                  <div className="space-y-2">
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
+                      />
+                      <span className="text-sm text-foreground">ACL Enhancement</span>
+                    </label>
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
+                      />
+                      <span className="text-sm text-foreground">Meniscal Enhancement</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Image Controls */}
+                <div>
+                  <h4 className="text-sm font-medium text-foreground mb-3">Image Controls</h4>
+                  <div className="flex items-center justify-center space-x-2">
+                    <button className="bg-muted hover:bg-muted/80 text-foreground p-3 rounded transition-colors" title="Zoom Out">
+                      <ZoomOut className="w-5 h-5" />
+                    </button>
+                    <button className="bg-muted hover:bg-muted/80 text-foreground p-3 rounded transition-colors" title="Zoom In">
+                      <ZoomIn className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={handleReset}
+                      className="bg-muted hover:bg-muted/80 text-foreground p-3 rounded transition-colors"
+                      title="Reset View"
+                    >
+                      <RotateCw className="w-5 h-5" />
+                    </button>
+                  </div>
+                  <p className="text-xs text-muted-foreground text-center mt-2">
+                    Use scroll wheel on image to navigate slices
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex justify-end mt-6">
+                <button
+                  onClick={() => setShowImageControls(false)}
+                  className="px-4 py-2 bg-medical-blue hover:bg-medical-blue-dark text-white rounded-lg transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
