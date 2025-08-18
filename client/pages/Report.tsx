@@ -483,8 +483,8 @@ const Report = () => {
           <div className="flex-1 bg-medical-blue rounded-lg relative overflow-hidden">
             {/* Scrollable MRI Image Container */}
             <div className="w-full h-full flex items-center justify-center bg-muted/30 relative">
-              {/* MRI Image Container - Clean design */}
-              <div className="w-[800px] h-[600px] bg-card border-2 border-border rounded-lg relative shadow-lg">
+              {/* MRI Image Container - Study information style */}
+              <div className="w-[800px] h-[600px] medical-card p-6 relative">
                 {/* DICOM Image Area - Fixed container */}
                 <div className="absolute inset-4 flex items-center justify-center">
                   <div className="relative w-96 h-96">
@@ -506,13 +506,13 @@ const Report = () => {
                       </div>
                     </div>
 
-                    {/* Scroll area contained within image bounds */}
+                    {/* Visible scroll area within image bounds */}
                     <div
                       ref={setScrollContainer}
                       className="absolute inset-0 overflow-y-scroll z-10 rounded-lg"
                       style={{
-                        scrollbarWidth: 'thin',
-                        scrollbarColor: '#3b82f6 #e5e7eb'
+                        scrollbarWidth: 'auto',
+                        scrollbarColor: '#3b82f6 #d1d5db'
                       }}
                       onScroll={(e) => {
                         const scrollTop = e.currentTarget.scrollTop;
@@ -527,17 +527,24 @@ const Report = () => {
                         }
                       }}
                     >
-                      {/* Virtual content - only for creating scroll height */}
-                      <div className="h-[1600px] w-full opacity-0">
-                        {/* Empty space to enable scrolling */}
+                      {/* Virtual content - creates visible scroll area */}
+                      <div className="h-[1200px] w-full">
+                        {/* Visible scroll track */}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Patient Info - Below image */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
-                  <div className="text-sm text-muted-foreground bg-card/80 backdrop-blur px-3 py-1 rounded">
+                {/* Slice Number Display - Top Right */}
+                <div className="absolute top-4 right-4">
+                  <div className="bg-black/70 text-white px-3 py-1 rounded text-sm font-mono">
+                    Slice {currentSlice}/{totalSlices}
+                  </div>
+                </div>
+
+                {/* Patient Info - Bottom Left */}
+                <div className="absolute bottom-4 left-4">
+                  <div className="text-sm text-muted-foreground bg-card/90 backdrop-blur px-3 py-2 rounded border border-border">
                     {(currentPatient || studyData) && (
                       <div>
                         <div className="font-medium text-foreground">
@@ -556,15 +563,6 @@ const Report = () => {
                 </div>
               </div>
 
-              {/* Slice Navigation Info */}
-              <div className="absolute bottom-4 left-4 bg-card border border-border text-foreground px-3 py-2 rounded-lg text-sm shadow-sm">
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-medical-blue rounded-full"></div>
-                  <span>
-                    Scroll to navigate • Slice {currentSlice} of {totalSlices}
-                  </span>
-                </div>
-              </div>
             </div>
           </div>
 
