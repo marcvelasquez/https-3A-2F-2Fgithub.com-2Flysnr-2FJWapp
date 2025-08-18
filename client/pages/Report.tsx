@@ -506,13 +506,13 @@ const Report = () => {
                       </div>
                     </div>
 
-                    {/* Visible scroll area within image bounds */}
+                    {/* Enhanced scroll area for slice navigation */}
                     <div
                       ref={setScrollContainer}
-                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg"
+                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg dicom-scrollbar"
                       style={{
                         scrollbarWidth: 'auto',
-                        scrollbarColor: '#3b82f6 #d1d5db'
+                        scrollbarColor: '#2563eb #f3f4f6'
                       }}
                       onScroll={(e) => {
                         const scrollTop = e.currentTarget.scrollTop;
@@ -527,9 +527,12 @@ const Report = () => {
                         }
                       }}
                     >
-                      {/* Virtual content - creates visible scroll area */}
-                      <div className="h-[1200px] w-full">
-                        {/* Visible scroll track */}
+                      {/* Extended virtual content for smooth scrolling */}
+                      <div className="h-[2000px] w-full relative">
+                        {/* Scroll indicators */}
+                        <div className="absolute top-4 right-4 text-gray-400 text-xs opacity-50">
+                          ↑ Scroll to navigate slices ↓
+                        </div>
                       </div>
                     </div>
                   </div>
