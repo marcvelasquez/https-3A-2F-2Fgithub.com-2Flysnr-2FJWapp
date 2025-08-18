@@ -384,20 +384,45 @@ const Report = () => {
         </button>
       </div>
 
-      {/* Diagnosis Cards */}
+      {/* Settings Panel and Filters */}
       <div className="p-6 bg-background">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-medical-blue rounded-lg p-6 text-white">
-            <div className="text-3xl font-bold mb-2">72%</div>
-            <div className="text-sm opacity-90">ACL Tear Probability</div>
-          </div>
-          <div className="bg-blue-600 rounded-lg p-6 text-white">
-            <div className="text-3xl font-bold mb-2">64%</div>
-            <div className="text-sm opacity-90">Meniscus Tear Probability</div>
-          </div>
-          <div className="bg-blue-500 rounded-lg p-6 text-white">
-            <div className="text-lg font-bold mb-2">Likely ACL Tear</div>
-            <div className="text-sm opacity-90">AI Final Diagnosis</div>
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-semibold text-foreground">Image Controls</h3>
+          <div className="flex items-center space-x-4">
+            {/* Filter Options */}
+            <div className="flex items-center space-x-3">
+              <span className="text-sm font-medium text-foreground">Filter:</span>
+              <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
+                />
+                <span className="text-sm text-foreground">ACL</span>
+              </label>
+              <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 text-medical-blue bg-background border-border rounded focus:ring-medical-blue focus:ring-2"
+                />
+                <span className="text-sm text-foreground">Meniscal</span>
+              </label>
+            </div>
+            {/* Zoom and Rotation Controls */}
+            <div className="flex items-center space-x-2">
+              <button className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors">
+                <ZoomOut className="w-4 h-4" />
+              </button>
+              <button className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors">
+                <ZoomIn className="w-4 h-4" />
+              </button>
+              <button
+                onClick={handleReset}
+                className="bg-muted hover:bg-muted/80 text-foreground p-2 rounded transition-colors"
+              >
+                <RotateCw className="w-4 h-4" />
+              </button>
+              <span className="text-sm text-foreground">Reset</span>
+            </div>
           </div>
         </div>
 
