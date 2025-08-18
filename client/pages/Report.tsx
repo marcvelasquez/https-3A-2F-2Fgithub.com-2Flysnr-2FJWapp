@@ -531,7 +531,7 @@ const Report = () => {
                       }}
                     >
                       {/* Virtual content for scrolling with visible background */}
-                      <div className="h-[1800px] w-full" style={{background: 'linear-gradient(to bottom, transparent 0%, rgba(59, 130, 246, 0.05) 50%, transparent 100%)'}}>
+                      <div className="h-[2400px] w-full" style={{background: 'linear-gradient(to bottom, transparent 0%, rgba(59, 130, 246, 0.05) 50%, transparent 100%)'}}>
                         {/* Scroll track indicator */}
                         <div className="absolute top-2 right-2 text-blue-500 text-xs font-medium">
                           ↕️ Scroll
