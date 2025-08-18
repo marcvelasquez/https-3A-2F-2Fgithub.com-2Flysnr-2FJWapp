@@ -21,7 +21,7 @@ const Report = () => {
   const navigate = useNavigate();
   const [studyData, setStudyData] = useState<any>(null);
   const [currentSlice, setCurrentSlice] = useState(4);
-  const [totalSlices] = useState(7);
+  const [totalSlices, setTotalSlices] = useState(7);
   const [showMetadata, setShowMetadata] = useState(false);
   const [currentPatient, setCurrentPatient] = useState<any>(null);
   const [metadata, setMetadata] = useState<any>(null);
