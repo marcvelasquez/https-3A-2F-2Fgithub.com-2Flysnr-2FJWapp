@@ -483,8 +483,8 @@ const Report = () => {
           <div className="flex-1 bg-medical-blue rounded-lg relative overflow-hidden">
             {/* Scrollable MRI Image Container */}
             <div className="w-full h-full flex items-center justify-center bg-muted/30 relative">
-              {/* MRI Image Container - Study information style */}
-              <div className="w-[800px] h-[600px] medical-card p-6 relative">
+              {/* MRI Image Container - Enhanced visibility */}
+              <div className="w-[800px] h-[600px] bg-white border-2 border-gray-300 rounded-lg shadow-lg p-6 relative" style={{boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'}}>
                 {/* DICOM Image Area - Fixed container */}
                 <div className="absolute inset-4 flex items-center justify-center">
                   <div className="relative w-96 h-96">
@@ -506,13 +506,14 @@ const Report = () => {
                       </div>
                     </div>
 
-                    {/* Enhanced scroll area for slice navigation */}
+                    {/* Visible scroll area for slice navigation */}
                     <div
                       ref={setScrollContainer}
-                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg dicom-scrollbar"
+                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg"
                       style={{
                         scrollbarWidth: 'auto',
-                        scrollbarColor: '#2563eb #f3f4f6'
+                        scrollbarColor: '#2563eb #e5e7eb',
+                        backgroundColor: 'rgba(0,0,0,0.02)'
                       }}
                       onScroll={(e) => {
                         const scrollTop = e.currentTarget.scrollTop;
@@ -527,11 +528,11 @@ const Report = () => {
                         }
                       }}
                     >
-                      {/* Extended virtual content for smooth scrolling */}
-                      <div className="h-[2000px] w-full relative">
-                        {/* Scroll indicators */}
-                        <div className="absolute top-4 right-4 text-gray-400 text-xs opacity-50">
-                          ↑ Scroll to navigate slices ↓
+                      {/* Virtual content for scrolling with visible background */}
+                      <div className="h-[1800px] w-full" style={{background: 'linear-gradient(to bottom, transparent 0%, rgba(59, 130, 246, 0.05) 50%, transparent 100%)'}}>
+                        {/* Scroll track indicator */}
+                        <div className="absolute top-2 right-2 text-blue-500 text-xs font-medium">
+                          ↕️ Scroll
                         </div>
                       </div>
                     </div>
