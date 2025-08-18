@@ -532,19 +532,12 @@ const Report = () => {
                     >
                       {/* Virtual content for scrolling with visible background */}
                       <div className="h-[2400px] w-full" style={{background: 'linear-gradient(to bottom, transparent 0%, rgba(59, 130, 246, 0.05) 50%, transparent 100%)'}}>
-                        {/* Scroll track indicator - Enhanced visibility */}
-                        <div className="absolute top-4 right-2 bg-red-600 text-white px-3 py-2 rounded-lg text-sm font-bold shadow-xl z-50">
-                          ↕️ SCROLL HERE
-                        </div>
-
-                        {/* Visual scrollbar track indicator - More prominent */}
-                        <div className="absolute top-16 right-0 w-8 h-40 bg-gray-400 border-4 border-gray-600 rounded-xl flex items-center justify-center shadow-xl z-50">
-                          <div className="w-6 h-20 bg-red-600 rounded-lg border-2 border-white shadow-lg animate-pulse"></div>
-                        </div>
-
-                        {/* Additional scroll instruction */}
-                        <div className="absolute bottom-4 right-2 bg-yellow-500 text-black px-2 py-1 rounded text-xs font-bold shadow-lg z-50">
-                          SCROLL TO CHANGE SLICE
+                        {/* Large visible scrollbar on the right edge */}
+                        <div className="absolute top-0 right-0 w-6 h-full bg-gradient-to-b from-gray-300 via-gray-400 to-gray-300 border-l-2 border-gray-600 shadow-lg z-50">
+                          <div className="absolute top-1/3 left-0 w-full h-16 bg-blue-600 rounded-r border-2 border-white shadow-xl animate-pulse"></div>
+                          <div className="absolute top-2 left-1 text-white text-xs font-bold transform -rotate-90 origin-left">
+                            SCROLL
+                          </div>
                         </div>
                       </div>
                     </div>
