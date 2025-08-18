@@ -209,6 +209,38 @@
     scrollbar-color: #2563eb rgba(229, 231, 235, 0.8);
   }
 
+  /* Force scrollbar to always be visible */
+  .dicom-visible-scrollbar {
+    overflow-y: scroll !important;
+    scrollbar-width: auto;
+    scrollbar-color: #3b82f6 #e5e7eb;
+  }
+
+  .dicom-visible-scrollbar::-webkit-scrollbar {
+    width: 20px !important;
+  }
+
+  .dicom-visible-scrollbar::-webkit-scrollbar-track {
+    background: #e5e7eb !important;
+    border-radius: 10px;
+    border: 2px solid #d1d5db;
+  }
+
+  .dicom-visible-scrollbar::-webkit-scrollbar-thumb {
+    background: #3b82f6 !important;
+    border-radius: 10px;
+    border: 3px solid #e5e7eb;
+    min-height: 50px;
+  }
+
+  .dicom-visible-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #2563eb !important;
+  }
+
+  .dicom-visible-scrollbar::-webkit-scrollbar-thumb:active {
+    background: #1d4ed8 !important;
+  }
+
   /* Custom slider styles for slice navigation */
   .slider::-webkit-slider-thumb {
     appearance: none;
