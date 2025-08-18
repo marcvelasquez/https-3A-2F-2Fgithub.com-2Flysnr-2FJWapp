@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, X, FileText, Plus, FolderOpen, Trash2, Minus, Edit } from 'lucide-react';
+import { Search, X, FileText, Plus, FolderOpen, Trash2, Minus, Edit, Download } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DeleteDialog from '../components/DeleteDialog';
 
@@ -33,6 +33,16 @@ const PatientRecord = () => {
   const getNextPatientId = (records: any[]) => {
     const nextNumber = records.length + 1;
     return `${nextNumber.toString().padStart(2, '0')}.)`;
+  };
+
+  // Function to generate subject ID based on patient data
+  const generateSubjectId = (record: any) => {
+    const initials = record.name.split(' ').map((n: string) => n.charAt(0)).join('');
+    const bodyPart = record.bodyPart === 'Left Knee' ? 'LK' :
+                     record.bodyPart === 'Right Knee' ? 'RK' :
+                     record.bodyPart === 'Bilateral Knees' ? 'BK' : 'UK';
+    const recordNumber = record.id.replace('.)', '');
+    return `${initials}${bodyPart}${recordNumber}`;
   };
 
   const [patientRecords, setPatientRecords] = useState(() => {
@@ -249,6 +259,42 @@ const PatientRecord = () => {
       status: firstRecord.status || 'Pending'
     });
     setEditDialog({ isOpen: true, records: recordsToEdit });
+  };
+
+  const handleDownloadSelected = () => {
+    if (selectedRecords.length === 0) {
+      alert('Please select records to download');
+      return;
+    }
+
+    const recordsToDownload = patientRecords.filter(record => selectedRecords.includes(record.id));
+
+    // Create downloadable data
+    const downloadData = recordsToDownload.map(record => ({
+      id: record.id,
+      subjectId: generateSubjectId(record),
+      patientName: record.name,
+      bodyPart: record.bodyPart,
+      date: record.date,
+      time: record.time,
+      status: record.status || 'Pending',
+      remarks: record.remarks || '',
+      downloadedAt: new Date().toISOString()
+    }));
+
+    // Convert to JSON and create download link
+    const dataStr = JSON.stringify(downloadData, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+
+    const exportFileDefaultName = `patient_records_${new Date().toISOString().split('T')[0]}.json`;
+
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+
+    // Clear selections after download
+    setSelectedRecords([]);
   };
 
   const handleEditSave = () => {
@@ -535,7 +581,7 @@ const PatientRecord = () => {
         </div>
       </div>
 
-      {/* Edit and Delete Options (shows when checkboxes are selected) */}
+      {/* Edit, Delete and Download Options (shows when checkboxes are selected) */}
       {selectedRecords.length > 0 && (
         <div className="mb-6 flex space-x-3">
           <button
@@ -544,6 +590,13 @@ const PatientRecord = () => {
           >
             <Edit className="w-4 h-4" />
             <span>Edit Selected ({selectedRecords.length})</span>
+          </button>
+          <button
+            onClick={handleDownloadSelected}
+            className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
+          >
+            <Download className="w-4 h-4" />
+            <span>Download Selected ({selectedRecords.length})</span>
           </button>
           <button
             onClick={handleBulkDelete}
@@ -570,6 +623,7 @@ const PatientRecord = () => {
                   />
                 </th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">No.</th>
+                <th className="text-left py-3 px-4 font-medium text-muted-foreground">Subject ID</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Patient Name</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Body Part</th>
                 <th className="text-left py-3 px-4 font-medium text-muted-foreground">Date</th>
@@ -592,6 +646,7 @@ const PatientRecord = () => {
                     />
                   </td>
                   <td className="py-3 px-4 text-foreground">{(startIndex + index + 1).toString().padStart(2, '0')}.)</td>
+                  <td className="py-3 px-4 text-foreground font-mono text-sm bg-gray-50 dark:bg-gray-800 rounded px-2 py-1">{generateSubjectId(record)}</td>
                   <td className="py-3 px-4 text-foreground">{record.name}</td>
                   <td className="py-3 px-4 text-foreground">{record.bodyPart}</td>
                   <td className="py-3 px-4 text-foreground">{record.date}</td>
