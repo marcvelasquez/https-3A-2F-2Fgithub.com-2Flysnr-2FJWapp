@@ -456,25 +456,35 @@ const Report = () => {
                   {studyData?.studyDescription && (
                     <div className="mt-1">{studyData?.studyDescription}</div>
                   )}
+                  {/* AI Final Diagnosis moved here */}
+                  <div className="mt-3 p-3 bg-black/20 rounded-lg">
+                    <div className="text-lg font-bold text-yellow-300">AI Final Diagnosis</div>
+                    <div className="text-base mt-1">Likely ACL Tear</div>
+                    <div className="text-xs mt-1 opacity-75">ACL: 72% | Meniscal: 64%</div>
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Top Controls */}
-            <div className="absolute top-4 right-4 flex items-center space-x-2">
-              <button className="bg-black/20 hover:bg-black/40 text-white p-2 rounded transition-colors">
-                <ZoomOut className="w-4 h-4" />
-              </button>
-              <button className="bg-black/20 hover:bg-black/40 text-white p-2 rounded transition-colors">
-                <ZoomIn className="w-4 h-4" />
-              </button>
+            {/* Slice Navigation */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center space-x-2">
               <button
-                onClick={handleReset}
-                className="bg-black/20 hover:bg-black/40 text-white p-2 rounded transition-colors"
+                onClick={handlePreviousSlice}
+                disabled={currentSlice === 1}
+                className="bg-black/20 hover:bg-black/40 text-white px-4 py-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <RotateCw className="w-4 h-4" />
+                Previous
               </button>
-              <span className="text-white text-sm">Reset</span>
+              <span className="text-white text-sm px-3 py-1 bg-black/20 rounded">
+                {currentSlice} / {totalSlices}
+              </span>
+              <button
+                onClick={handleNextSlice}
+                disabled={currentSlice === totalSlices}
+                className="bg-black/20 hover:bg-black/40 text-white px-4 py-2 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
