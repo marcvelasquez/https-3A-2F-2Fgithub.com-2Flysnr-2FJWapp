@@ -444,33 +444,15 @@ const Report = () => {
                 </div>
               </div>
 
-              {/* Slice Navigation Scrollbar */}
-              <div className="absolute bottom-4 left-4 bg-black/70 text-white p-3 rounded-lg">
-                <div className="text-xs mb-2 text-center">Slice Navigation</div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs">{currentSlice}</span>
-                  <input
-                    type="range"
-                    min="1"
-                    max={totalSlices}
-                    value={currentSlice}
-                    onChange={(e) => setCurrentSlice(parseInt(e.target.value))}
-                    className="w-32 h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
-                    style={{
-                      background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, #4b5563 ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, #4b5563 100%)`
-                    }}
-                  />
-                  <span className="text-xs">{totalSlices}</span>
-                </div>
-                <div className="text-xs text-center mt-1 opacity-75">
-                  Scroll image to pan
-                </div>
+              {/* MRI Info */}
+              <div className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded text-sm">
+                Scroll to pan around image
               </div>
             </div>
           </div>
 
           {/* Right Side Controls Card */}
-          <div className="w-20">
+          <div className="w-32">
             <div className="bg-card border border-border rounded-lg p-3 shadow-sm">
               <div className="text-xs text-muted-foreground text-center mb-2 font-medium">Controls</div>
               <div className="flex flex-col space-y-2">
@@ -507,6 +489,27 @@ const Report = () => {
                   >
                     <ArrowUpDown className="w-4 h-4" />
                   </button>
+                </div>
+
+                {/* Slice Navigation */}
+                <div className="border-t border-border pt-3 mt-3">
+                  <div className="text-xs text-muted-foreground text-center mb-2 font-medium">Slices</div>
+                  <div className="space-y-2">
+                    <div className="text-center">
+                      <span className="text-xs text-muted-foreground">{currentSlice} / {totalSlices}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max={totalSlices}
+                      value={currentSlice}
+                      onChange={(e) => setCurrentSlice(parseInt(e.target.value))}
+                      className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer slider"
+                      style={{
+                        background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, #d1d5db ${((currentSlice - 1) / (totalSlices - 1)) * 100}%, #d1d5db 100%)`
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
