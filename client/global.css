@@ -136,6 +136,42 @@
     background: #52525b;
   }
 
+  /* Traditional prominent scrollbar for MRI viewer */
+  .mri-traditional-scrollbar {
+    overflow-y: scroll !important;
+    scrollbar-width: auto;
+    scrollbar-color: #3b82f6 #e5e7eb;
+  }
+
+  .mri-traditional-scrollbar::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  .mri-traditional-scrollbar::-webkit-scrollbar-track {
+    background: #e5e7eb;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+  }
+
+  .mri-traditional-scrollbar::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 8px;
+    border: 2px solid #e5e7eb;
+    min-height: 40px;
+  }
+
+  .mri-traditional-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+  }
+
+  .mri-traditional-scrollbar::-webkit-scrollbar-thumb:active {
+    background: #1d4ed8;
+  }
+
+  .mri-traditional-scrollbar::-webkit-scrollbar-corner {
+    background: #e5e7eb;
+  }
+
   /* Custom slider styles for slice navigation */
   .slider::-webkit-slider-thumb {
     appearance: none;
