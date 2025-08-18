@@ -92,7 +92,6 @@ const Dashboard = () => {
 
   const stats = [
     { value: '24', label: 'Total Patients', bgColor: 'bg-gradient-to-br from-blue-500 to-blue-600' },
-    { value: '18', label: 'Completed Studies', bgColor: 'bg-gradient-to-br from-green-500 to-green-600' },
     { value: '6', label: 'Pending Reviews', bgColor: 'bg-gradient-to-br from-orange-500 to-orange-600' },
   ];
 
