@@ -515,30 +515,73 @@ const Report = () => {
         >
           {/* MRI Display Card */}
           <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-            <div className="flex flex-col space-y-4">
-              {/* MRI Image Display Card */}
-              <div className="bg-white border-4 border-gray-400 rounded-lg shadow-lg p-4 relative">
-                <div className="w-full h-96 flex items-center justify-center">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets%2F7801b78ee0e14b1588e246353c18a505%2Fe8a62d6eae8941df8ce08c2f8bc15ef9?format=webp&width=800"
-                    alt={`MRI Slice ${currentSlice}`}
-                    className="max-w-full max-h-full object-contain rounded"
-                  />
+            <div className="space-y-4">
+              {/* MRI Image Display Card with Embedded Scrollbar */}
+              <div className="bg-white border-4 border-gray-400 rounded-lg shadow-lg p-6 relative" style={{boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', outline: '2px solid #3b82f6', outlineOffset: '2px'}}>
+                {/* DICOM Image Area - Fixed container */}
+                <div className="absolute inset-4 flex items-center justify-center">
+                  <div className="relative w-96 h-96">
+                    {/* Fixed DICOM Image */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                      <div className="text-center">
+                        {/* MRI Image Placeholder - Fixed Position */}
+                        <div className="w-96 h-96 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg flex items-center justify-center border border-border shadow-inner">
+                          <div className="text-center text-white">
+                            <div className="text-2xl font-mono mb-2">MRI Slice {currentSlice}</div>
+                            <div className="w-32 h-32 bg-slate-700 rounded-full mx-auto flex items-center justify-center">
+                              <div className="text-xs opacity-75">DICOM Image</div>
+                            </div>
+                            <div className="text-xs mt-4 opacity-60">
+                              Slice {currentSlice} of {totalSlices}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Embedded Scrollbar for slice navigation */}
+                    <div
+                      ref={setScrollContainer}
+                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg dicom-enhanced-scrollbar"
+                      style={{
+                        scrollbarWidth: 'auto',
+                        scrollbarColor: '#2563eb #e5e7eb',
+                        backgroundColor: 'rgba(0,0,0,0.02)',
+                        scrollbarGutter: 'stable',
+                        overflowY: 'scroll'
+                      }}
+                      onScroll={(e) => {
+                        const scrollTop = e.currentTarget.scrollTop;
+                        const maxScroll =
+                          e.currentTarget.scrollHeight -
+                          e.currentTarget.clientHeight;
+                        const sliceProgress = scrollTop / maxScroll;
+                        const newSlice =
+                          Math.round(sliceProgress * (totalSlices - 1)) + 1;
+                        if (newSlice !== currentSlice) {
+                          setCurrentSlice(newSlice);
+                        }
+                      }}
+                    >
+                      {/* Virtual content for scrolling */}
+                      <div className="h-[2400px] w-full"></div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Slice Number Display - Top Right */}
-                <div className="absolute top-2 right-2">
+                <div className="absolute top-4 right-4">
                   <div className="bg-black/70 text-white px-3 py-1 rounded text-sm font-mono">
                     Slice {currentSlice}/{totalSlices}
                   </div>
                 </div>
 
                 {/* Patient Info - Bottom Left */}
-                <div className="absolute bottom-2 left-2">
+                <div className="absolute bottom-4 left-4">
                   <div className="text-sm text-muted-foreground bg-card/90 backdrop-blur px-3 py-2 rounded border border-border">
                     {(currentPatient || studyData) && (
                       <div>
-                        <div className="font-medium text-foreground text-xs">
+                        <div className="font-medium text-foreground">
                           {currentPatient?.name ||
                             studyData?.patientName ||
                             "Unknown Patient"}
@@ -552,73 +595,23 @@ const Report = () => {
                     )}
                   </div>
                 </div>
-              </div>
 
-              {/* Working Scrollbar for Slice Navigation */}
-              <div className="bg-muted/30 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-sm font-medium text-foreground">Slice Navigation</h4>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={handlePreviousSlice}
-                      disabled={currentSlice === 1}
-                      className="bg-medical-blue hover:bg-medical-blue-dark disabled:bg-muted disabled:cursor-not-allowed text-white p-1 rounded transition-colors"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={handleNextSlice}
-                      disabled={currentSlice === totalSlices}
-                      className="bg-medical-blue hover:bg-medical-blue-dark disabled:bg-muted disabled:cursor-not-allowed text-white p-1 rounded transition-colors"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Scrollable Area */}
-                <div
-                  ref={setScrollContainer}
-                  className="w-full h-32 overflow-y-scroll dicom-enhanced-scrollbar bg-background border border-border rounded"
-                  style={{
-                    scrollbarWidth: 'auto',
-                    scrollbarColor: '#2563eb #e5e7eb',
-                    scrollbarGutter: 'stable',
-                    overflowY: 'scroll'
-                  }}
-                  onScroll={(e) => {
-                    const scrollTop = e.currentTarget.scrollTop;
-                    const maxScroll =
-                      e.currentTarget.scrollHeight -
-                      e.currentTarget.clientHeight;
-                    const sliceProgress = scrollTop / maxScroll;
-                    const newSlice =
-                      Math.round(sliceProgress * (totalSlices - 1)) + 1;
-                    if (newSlice !== currentSlice) {
-                      setCurrentSlice(newSlice);
-                    }
-                  }}
-                >
-                  {/* Virtual content for scrolling through slices */}
-                  <div className="h-[800px] w-full p-2">
-                    <div className="text-center text-sm text-muted-foreground mb-2">
-                      Scroll to navigate through {totalSlices} slices
-                    </div>
-                    {/* Slice markers */}
-                    {Array.from({ length: totalSlices }, (_, i) => i + 1).map((slice) => (
-                      <div
-                        key={slice}
-                        className={`p-2 mb-2 rounded text-center text-sm cursor-pointer transition-colors ${
-                          slice === currentSlice
-                            ? "bg-medical-blue text-white"
-                            : "bg-muted hover:bg-muted/80 text-foreground"
-                        }`}
-                        onClick={() => setCurrentSlice(slice)}
-                      >
-                        Slice {slice}
-                      </div>
-                    ))}
-                  </div>
+                {/* Navigation Controls - Bottom Right */}
+                <div className="absolute bottom-4 right-4 flex items-center space-x-2">
+                  <button
+                    onClick={handlePreviousSlice}
+                    disabled={currentSlice === 1}
+                    className="bg-medical-blue/90 hover:bg-medical-blue disabled:bg-muted disabled:cursor-not-allowed text-white p-2 rounded transition-colors"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={handleNextSlice}
+                    disabled={currentSlice === totalSlices}
+                    className="bg-medical-blue/90 hover:bg-medical-blue disabled:bg-muted disabled:cursor-not-allowed text-white p-2 rounded transition-colors"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             </div>
