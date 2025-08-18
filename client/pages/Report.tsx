@@ -513,7 +513,9 @@ const Report = () => {
                       style={{
                         scrollbarWidth: 'auto',
                         scrollbarColor: '#2563eb #e5e7eb',
-                        backgroundColor: 'rgba(0,0,0,0.02)'
+                        backgroundColor: 'rgba(0,0,0,0.02)',
+                        scrollbarGutter: 'stable',
+                        overflowY: 'scroll'
                       }}
                       onScroll={(e) => {
                         const scrollTop = e.currentTarget.scrollTop;
