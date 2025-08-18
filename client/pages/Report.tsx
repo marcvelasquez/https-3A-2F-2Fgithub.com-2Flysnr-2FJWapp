@@ -576,7 +576,7 @@ const Report = () => {
                     {/* Prominent Scrollbar for slice navigation - always visible inside the box */}
                     <div
                       ref={setScrollContainer}
-                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg"
+                      className="absolute inset-0 overflow-y-scroll z-10 rounded-lg dicom-visible-scrollbar"
                       style={{
                         backgroundColor: 'rgba(0,0,0,0.02)',
                         scrollbarWidth: 'auto',
