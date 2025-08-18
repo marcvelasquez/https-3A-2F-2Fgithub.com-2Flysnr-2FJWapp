@@ -169,13 +169,15 @@ const Report = () => {
     }
   }, [currentSlice, totalSlices, scrollContainer]);
 
-  // Reset to slice 1 on component mount
+  // Sync scroll position when container is ready and slice is set
   useEffect(() => {
-    setCurrentSlice(1);
-    if (scrollContainer) {
-      scrollContainer.scrollTop = 0;
+    if (scrollContainer && initialSliceSet) {
+      const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+      const sliceProgress = (currentSlice - 1) / (totalSlices - 1);
+      const scrollPosition = sliceProgress * maxScroll;
+      scrollContainer.scrollTop = scrollPosition;
     }
-  }, [scrollContainer]);
+  }, [scrollContainer, initialSliceSet]);
 
   // Status warnings only triggered by back button - no automatic checking
 
